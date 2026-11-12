@@ -792,7 +792,7 @@ body *, button, .nav-btn, section, div, nav {
 
     let startedTasks = [];
     window.startAppTask = async function(rewardAmount, taskUrl) {
-        if (!auth.currentUser) {
+        if (!auth.currentUser && localStorage.getItem("earnova_logged_in") !== "true") {
             alert("Task start karne ke liye pehle login karein!");
             openLoginModal();
             return;
@@ -811,24 +811,25 @@ body *, button, .nav-btn, section, div, nav {
             alert("Task Shuru! Aapko link se app download karke process poora karna hoga. Verification ke baad ₹" + rewardAmount + " aapke main wallet mein add ho jayenge.");
         }, 1000);
 
-        try {
-            const userRef = doc(db, "users", auth.currentUser.uid);
-            const snap = await getDoc(userRef);
-            if (snap.exists()) {
-                let currentPending = Number(snap.data().pendingWithdrawals || 0);
-                let newPending = currentPending + rewardAmount;
-                await updateDoc(userRef, {
-                    pendingWithdrawals: newPending
-                });
+        if (auth.currentUser) {
+            try {
+                const userRef = doc(db, "users", auth.currentUser.uid);
+                const snap = await getDoc(userRef);
+                if (snap.exists()) {
+                    let currentPending = Number(snap.data().pendingWithdrawals || 0);
+                    let newPending = currentPending + rewardAmount;
+                    await updateDoc(userRef, {
+                        pendingWithdrawals: newPending
+                    });
+                }
+            } catch (error) {
+                console.error("Firebase update error:", error);
             }
-        } catch (error) {
-            console.error("Firebase update error:", error);
-            alert("Database update karne mein error aayi.");
         }
     };
 
     window.requestWithdrawal = async function() {
-        if (!auth.currentUser) {
+        if (!auth.currentUser && localStorage.getItem("earnova_logged_in") !== "true") {
             alert("Pehle login karein!");
             openLoginModal();
             return;
@@ -840,36 +841,38 @@ body *, button, .nav-btn, section, div, nav {
         if (!detail.trim()) return alert("Kripya payment details bharein.");
         if (isNaN(amount) || amount < 50) return alert("Kam se kam ₹50 nikal sakte hain.");
 
-        const userRef = doc(db, "users", auth.currentUser.uid);
-        const snap = await getDoc(userRef);
-        if (snap.exists()) {
-    const currentBal = snap.data().walletBalance || 0;
-    document.getElementById('header-balance').innerText = currentBal;
-    
-    if (amount > currentBal) return alert("Aapke wallet mein itne paise nahi hain!");
-    
-    await updateDoc(userRef, {
-        walletBalance: currentBal - amount,
-        pendingWithdrawals: (snap.data().pendingWithdrawals || 0) + amount
-    });
+        if (auth.currentUser) {
+            const userRef = doc(db, "users", auth.currentUser.uid);
+            const snap = await getDoc(userRef);
+            if (snap.exists()) {
+                const currentBal = snap.data().walletBalance || 0;
+                if (amount > currentBal) return alert("Aapke wallet mein itne paise nahi hain!");
+                
+                await updateDoc(userRef, {
+                    walletBalance: currentBal - amount,
+                    pendingWithdrawals: (snap.data().pendingWithdrawals || 0) + amount
+                });
 
-    document.getElementById('withdrawAmount').value = '';
-    alert(`Success! Aapki ₹{amount} ki withdrawal request lag gayi hai.`);
-}
+                document.getElementById('withdrawAmount').value = '';
+                alert(`Success! Aapki withdrawal request lag gayi hai.`);
+            }
+        } else {
+            let currentBal = Number(localStorage.getItem('earnova_saved_balance') || 0);
+            if (amount > currentBal) return alert("Aapke wallet mein itne paise nahi hain!");
+            localStorage.setItem('earnova_saved_balance', (currentBal - amount).toFixed(2));
+            document.getElementById('wallet-display').innerText = (currentBal - amount).toFixed(2);
+            document.getElementById('withdrawAmount').value = '';
+            alert(`Success! Aapki withdrawal request lag gayi hai.`);
+        }
     };
 
     onAuthStateChanged(auth, async (user) => {
         if (user) {
-            document.getElementById('nav-login-btn').classList.add('hidden');
             document.getElementById('user-profile-info').classList.remove('hidden');
-          document.getElementById('nav-profile-pic').src = user.photoURL || "https://www.svgrepo.com/show/498547/profile.svg";
+            document.getElementById('nav-profile-pic').src = user.photoURL || "https://www.svgrepo.com/show/498547/profile.svg";
             document.getElementById('popup-user-name').innerText = user.displayName || 'User';
             document.getElementById('popup-user-email').innerText = user.email || '';
             document.getElementById('user-name-display').innerText = user.displayName || 'Rajnesh';
-
-            const myReferralCode = user.uid.substring(0, 8).toUpperCase();
-            const refLinkInput = document.getElementById('referral-link');
-            if (refLinkInput) refLinkInput.value = `https://rajneshc510-cloud.github.io/?ref=${myReferralCode}`;
 
             const userRef = doc(db, "users", user.uid);
             const userSnap = await getDoc(userRef);
@@ -888,14 +891,15 @@ body *, button, .nav-btn, section, div, nav {
             });
         } else {
             if (localStorage.getItem("earnova_logged_in") === "true") {
-                document.getElementById('nav-login-btn').classList.add('hidden');
                 document.getElementById('user-profile-info').classList.remove('hidden');
                 document.getElementById('nav-profile-pic').src = "https://www.svgrepo.com/show/498547/profile.svg";
                 let savedName = localStorage.getItem("earnova_user_name") || "Rajnesh Chauhan";
                 document.getElementById('popup-user-name').innerText = savedName;
                 document.getElementById('user-name-display').innerText = savedName;
+                let savedBal = localStorage.getItem('earnova_saved_balance') || "2.36";
+                document.getElementById('wallet-display').innerText = savedBal;
+                document.getElementById('header-balance').innerText = savedBal;
             } else {
-                document.getElementById('nav-login-btn').classList.remove('hidden');
                 document.getElementById('user-profile-info').classList.add('hidden');
                 document.getElementById('user-name-display').innerText = 'Guest';
             }
@@ -976,13 +980,17 @@ body *, button, .nav-btn, section, div, nav {
                 walletBalance: currentBal + amount
             });
         } else {
-            let currentBal = Number(localStorage.getItem('earnova_saved_balance') || 0);
+            let currentBal = Number(localStorage.getItem('earnova_saved_balance') || 2.36);
             let newBal = currentBal + amount;
             localStorage.setItem('earnova_saved_balance', newBal.toFixed(2));
 
             const walletDisplay = document.getElementById('wallet-display');
             if (walletDisplay) {
                 walletDisplay.innerText = newBal.toFixed(2);
+            }
+            const headerBalance = document.getElementById('header-balance');
+            if (headerBalance) {
+                headerBalance.innerText = newBal.toFixed(2);
             }
         }
     };
@@ -1078,103 +1086,8 @@ body *, button, .nav-btn, section, div, nav {
         await window.addRewardToWallet(reward);
     }
 
-    // --- SCRATCH CARD CANVAS LOGIC WITH 24-HOUR LIMIT ---
-    function initScratchCanvas() {
-        const canvas = document.getElementById('realScratchCanvas');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-
-        let today = new Date().toDateString();
-        let lastScratch = localStorage.getItem('earnova_last_scratch');
-        
-        if (lastScratch === today) {
-            canvas.style.display = 'none';
-            document.getElementById('scratch-status-msg').innerText = "⏳ Aapne aaj ka scratch card use kar liya hai! Kal wapas aana.";
-            return;
-        }
-
-        canvas.style.display = 'block';
-        canvas.style.opacity = '1';
-
-        let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-        gradient.addColorStop(0, '#fbbf24');
-        gradient.addColorStop(0.5, '#f59e0b');
-        gradient.addColorStop(1, '#ea580c');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 20px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('✨ SCRATCH HERE ✨', canvas.width / 2, canvas.height / 2);
-
-        let isDrawing = false;
-
-        function scratch(e) {
-            if (!isDrawing) return;
-            e.preventDefault();
-            const rect = canvas.getBoundingClientRect();
-            let clientX = e.clientX;
-            let clientY = e.clientY;
-
-            if (e.touches && e.touches[0]) {
-                clientX = e.touches[0].clientX;
-                clientY = e.touches[0].clientY;
-            }
-
-            const x = clientX - rect.left;
-            const y = clientY - rect.top;
-
-            ctx.globalCompositeOperation = 'destination-out';
-            ctx.beginPath();
-            ctx.arc(x, y, 30, 0, Math.PI * 2, false);
-            ctx.fill();
-
-            checkProgress();
-        }
-
-        async function checkProgress() {
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            let pixels = imageData.data;
-            let transparent = 0;
-            for (let i = 3; i < pixels.length; i += 4) {
-                if (pixels[i] === 0) transparent++;
-            }
-            let percent = (transparent / (pixels.length / 4)) * 100;
-
-            if (percent > 35 && canvas.style.opacity !== '0') {
-                canvas.style.transition = 'opacity 0.6s ease';
-                canvas.style.opacity = '0';
-                setTimeout(() => { canvas.style.display = 'none'; }, 600);
-
-                document.getElementById('scratch-status-msg').innerText = "🎉 Scratch Complete! ₹0.40 Added to Wallet.";
-
-                localStorage.setItem('earnova_last_scratch', today);
-                
-                await addRewardToWallet(0.40);
-            }
-        }
-
-        canvas.onmousedown = (e) => { isDrawing = true; scratch(e); };
-        canvas.onmousemove = scratch;
-        window.onmouseup = () => isDrawing = false;
-
-        canvas.ontouchstart = (e) => { isDrawing = true; scratch(e); };
-        canvas.ontouchmove = scratch;
-        window.ontouchend = () => isDrawing = false;
-    }
-
-    const originalShowTab = window.showTab;
-    window.showTab = function(tabName) {
-        if (typeof originalShowTab === 'function') originalShowTab(tabName);
-        if (tabName === 'scratch') {
-            setTimeout(initScratchCanvas, 100);
-        }
-    };
-
     document.addEventListener("DOMContentLoaded", () => {
         window.showTab('dashboard');
-        initScratchCanvas();
     });
 
 // --- TAP TO SCRATCH LOGIC (NO CANVAS, DIRECT CLICK & EARN) ---
@@ -1189,7 +1102,7 @@ body *, button, .nav-btn, section, div, nav {
             return;
         }
 
-        let reward = 0.40; // Fixed ya random reward amount
+        let reward = 0.40;
         localStorage.setItem('earnova_last_scratch', today);
 
         if (cardBox) {
