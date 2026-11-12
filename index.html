@@ -837,16 +837,19 @@ body *, button, .nav-btn, section, div, nav {
         const userRef = doc(db, "users", auth.currentUser.uid);
         const snap = await getDoc(userRef);
         if (snap.exists()) {
-            if (amount > (snap.data().walletBalance || 0)) return alert("Aapke wallet mein itne paise nahi hain!");
+    const currentBal = snap.data().walletBalance || 0;
+    document.getElementById('header-balance').innerText = currentBal;
+    
+    if (amount > currentBal) return alert("Aapke wallet mein itne paise nahi hain!");
+    
+    await updateDoc(userRef, {
+        walletBalance: currentBal - amount,
+        pendingWithdrawals: (snap.data().pendingWithdrawals || 0) + amount
+    });
 
-            await updateDoc(userRef, {
-                walletBalance: (snap.data().walletBalance || 0) - amount,
-                pendingWithdrawals: (snap.data().pendingWithdrawals || 0) + amount
-            });
-
-            document.getElementById('withdrawAmount').value = '';
-            alert(`Success! Aapki ₹${amount} ki withdrawal request lag gayi hai.`);
-        }
+    document.getElementById('withdrawAmount').value = '';
+    alert(`Success! Aapki ₹{amount} ki withdrawal request lag gayi hai.`);
+}
     };
 
     onAuthStateChanged(auth, async (user) => {
