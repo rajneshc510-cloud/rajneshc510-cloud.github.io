@@ -227,7 +227,7 @@ body *, button, .nav-btn, section, div, nav {
         </div>
         
         <!-- Continue with Google Premium Button -->
-<div class="my-4 px-4">
+    <div id="google-login-section" class="my-4 px-4">
     <button onclick="loginWithGoogle()" class="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-slate-800 font-semibold py-3.5 px-6 rounded-2xl shadow-md border border-gray-200 transition-all duration-300 transform hover:scale-[1.01]">
     <!-- Google SVG Icon -->
     <svg class="w-5 h-5" viewBox="0 0 24 24">
@@ -868,6 +868,8 @@ body *, button, .nav-btn, section, div, nav {
 
     onAuthStateChanged(auth, async (user) => {
         if (user) {
+            let gBtn = document.getElementById('google-login-section');
+            if (gBtn) gBtn.classList.add('hidden');
             document.getElementById('user-profile-info').classList.remove('hidden');
             document.getElementById('nav-profile-pic').src = user.photoURL || "https://www.svgrepo.com/show/498547/profile.svg";
             document.getElementById('popup-user-name').innerText = user.displayName || 'User';
@@ -891,6 +893,8 @@ body *, button, .nav-btn, section, div, nav {
             });
         } else {
             if (localStorage.getItem("earnova_logged_in") === "true") {
+                let gBtn = document.getElementById('google-login-section');
+                if (gBtn) gBtn.classList.add('hidden');
                 document.getElementById('user-profile-info').classList.remove('hidden');
                 document.getElementById('nav-profile-pic').src = "https://www.svgrepo.com/show/498547/profile.svg";
                 let savedName = localStorage.getItem("earnova_user_name") || "Rajnesh Chauhan";
@@ -900,6 +904,8 @@ body *, button, .nav-btn, section, div, nav {
                 document.getElementById('wallet-display').innerText = savedBal;
                 document.getElementById('header-balance').innerText = savedBal;
             } else {
+                let gBtn = document.getElementById('google-login-section');
+                if (gBtn) gBtn.classList.remove('hidden');
                 document.getElementById('user-profile-info').classList.add('hidden');
                 document.getElementById('user-name-display').innerText = 'Guest';
             }
