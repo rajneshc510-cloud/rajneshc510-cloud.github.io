@@ -876,6 +876,7 @@ body *, button, .nav-btn, section, div, nav {
                     const data = docSnap.data();
                     const updateEl = (id, val) => { if(document.getElementById(id)) document.getElementById(id).innerText = val; };
                     updateEl('wallet-display', (data.walletBalance || 0).toFixed(2));
+                    updateEl('header-balance', (data.walletBalance || 0).toFixed(2));
                     updateEl('pending-display', (data.pendingWithdrawals || 0).toFixed(2));
                 }
             });
