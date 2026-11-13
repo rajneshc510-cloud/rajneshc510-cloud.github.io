@@ -89,7 +89,7 @@ body *, button, .nav-btn, section, div, nav {
             
             <button id="btn-wallet" class="nav-btn text-[11px] sm:text-sm font-semibold py-1.5 px-3 sm:px-4 rounded-full text-white transition-all outline-none border border-transparent" onclick="showTab('wallet')">Wallet</button>
             
-            <button id="btn-spin" class="nav-btn text-[11px] sm:text-sm font-semibold py-1.5 px-3 sm:px-4 rounded-full text-white transition-all outline-none border border-transparent" onclick="showTab('spin')">Spin</button>
+           <button id="btn-ludo" class="nav-btn text-[11px] sm:text-sm font-semibold py-1.5 px-3 sm:px-4 rounded-full text-white transition-all outline-none border border-transparent" onclick="showTab('ludo')">Ludo</button>
         </div>
 
           <div onclick="showTab('wallet')" class="cursor-pointer flex items-center bg-white/10 px-2.5 py-1 rounded-full text-white font-medium text-xs ml-auto mr-2">
@@ -260,46 +260,60 @@ body *, button, .nav-btn, section, div, nav {
 
     </section>
     
-   <!-- SPIN PAGE START -->
-   <section id="spin" class="tab-content hidden max-w-md mx-auto px-4 py-4">
-      <div class="relative bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-5 md:p-8 text-center space-y-4 overflow-hidden">
-        
-        <div class="absolute -top-20 -right-20 w-48 h-48 bg-cyan-200/30 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute -bottom-20 -left-20 w-48 h-48 bg-amber-200/30 rounded-full blur-3xl pointer-events-none"></div>
+<!-- LUDO GAME TAB -->
+<section id="ludo" class="tab-content max-w-xl mx-auto px-4 py-6 text-center">
+    <div class="bg-white p-6 rounded-3xl shadow-md border border-gray-200">
+        <h2 class="text-2xl font-black text-slate-800 mb-2">Mini Ludo Roll 🎲</h2>
+        <p class="text-xs text-gray-500 mb-6">Dice roll karein aur jeetein instant cash rewards (₹0.25 se ₹0.50 tak)!</p>
 
-        <div class="relative z-10">
-            <div class="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-teal-400 to-[#087E8B] rounded-full text-2xl mb-2 shadow-md border-2 border-white text-white">
-                🎡
+        <!-- Dice Box -->
+        <div class="my-6">
+            <div id="dice-box" class="w-24 h-24 mx-auto bg-teal-50 border-2 border-teal-500 rounded-2xl flex items-center justify-center text-4xl font-black text-[#087E8B] shadow-inner mb-4 transition-all transform hover:scale-105">
+                🎲
             </div>
-            <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#087E8B] to-teal-600">Lucky Spin & Win</h2>
-            <p class="text-gray-500 text-xs font-medium mt-0.5">Spin karo aur har roz naye rewards jeeto!</p>
+            <p id="ludo-result" class="text-sm font-bold text-slate-700 min-h-[24px]">Dice roll karne ke liye button dabayein!</p>
         </div>
 
-        <div class="relative z-10 flex items-center justify-center py-1">
-            <div id="spin-wheel" class="relative w-56 h-56 sm:w-64 sm:h-64 rounded-full border-8 border-amber-400 shadow-xl shadow-amber-500/20 bg-gradient-to-br from-teal-900 via-[#087E8B] to-slate-900 flex items-center justify-center overflow-hidden flex-shrink-0 transition-transform duration-1000">
-                <div class="absolute inset-2 rounded-full border-4 border-dashed border-white/30 flex items-center justify-center">
-                    <div class="absolute w-full h-0.5 bg-white/20"></div>
-                    <div class="absolute h-full w-0.5 bg-white/20"></div>
-                </div>
-                <div class="relative z-20 w-16 h-16 bg-gradient-to-br from-amber-300 to-orange-500 rounded-full shadow-lg border-2 border-white flex flex-col items-center justify-center text-slate-950 font-black text-[10px] tracking-tighter">
-                    <span>SPIN</span>
-                    <span class="text-[8px]">WIN</span>
-                </div>
-            </div>
-        </div>
+        <!-- Roll Button -->
+        <button onclick="playMiniLudo()" class="bg-[#087E8B] hover:bg-[#066570] text-white text-sm font-bold px-8 py-3 rounded-2xl shadow-md transition-all">
+            Roll Dice Now
+        </button>
+    </div>
+</section>
 
-        <div class="relative z-10 pt-1">
-            <button id="spinBtn" onclick="earnovaSpin()" class="w-full max-w-[220px] mx-auto bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-slate-950 font-black py-3 px-6 rounded-full shadow-lg shadow-amber-500/30 transition-all duration-300 text-xs md:text-sm flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
-                <span>SPIN NOW</span>
-                <span class="text-base">🎯</span>
-            </button>
-            <p id="spinResult" class="font-bold text-[#087E8B] text-xs mt-2"></p>
-        </div>
+<script>
+// Mini Ludo Game Logic with < ₹1 Reward
+function playMiniLudo() {
+    let diceBox = document.getElementById('dice-box');
+    let resultText = document.getElementById('ludo-result');
+    
+    diceBox.innerText = '⏳';
+    resultText.innerText = 'Rolling dice...';
 
-      </div>
-   </section>
-   <!-- SPIN PAGE END -->
+    setTimeout(() => {
+        let diceRoll = Math.floor(Math.random() * 6) + 1;
+        diceBox.innerText = diceRoll;
 
+        let rewards = [0.20, 0.25, 0.30, 0.40, 0.50, 0.75];
+        let wonAmount = rewards[Math.floor(Math.random() * rewards.length)];
+
+        if (diceRoll >= 4) {
+            resultText.innerHTML = `<span class="text-green-600 font-black">Congratulations! Aapne ₹${wonAmount} jeet liye! 🎉</span>`;
+            
+            let currentBal = parseFloat(localStorage.getItem('earnora_saved_balance') || '64.31');
+            let newBal = currentBal + wonAmount;
+            localStorage.setItem('earnora_saved_balance', newBal.toFixed(2));
+            
+            let headerBal = document.getElementById('header-balance');
+            if(headerBal) headerBal.innerText = '₹ ' + newBal.toFixed(2);
+
+        } else {
+            resultText.innerHTML = `<span class="text-orange-500 font-bold">Oops! Number ${diceRoll} aaya. Agli baar koshish karein!</span>`;
+        }
+    }, 600);
+}
+</script>
+    
 <!-- SCRATCH CARD PAGE START (BALANCED MOBILE & LAPTOP VIEW) -->
    <section id="scratch" class="tab-content hidden max-w-xl mx-auto px-4 py-6">
       <div class="relative bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-6 md:p-8 text-center space-y-4 overflow-hidden">
