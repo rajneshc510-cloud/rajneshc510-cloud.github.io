@@ -595,6 +595,27 @@
     </section>
 </main>
 
+<!-- WITHDRAWAL SUCCESS POPUP MODAL -->
+<div id="withdrawalSuccessModal" class="hidden fixed inset-0 bg-black/60 z-[110] flex items-center justify-center backdrop-blur-sm px-4">
+    <div class="bg-white p-6 md:p-8 rounded-3xl shadow-2xl max-w-sm w-full relative text-center transform transition-all">
+        
+        <!-- Success Icon -->
+        <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 shadow-inner">
+            ✓
+        </div>
+        
+        <h3 class="text-xl font-black text-slate-900 tracking-tight mb-2">Withdrawal Successful!</h3>
+        
+        <p class="text-xs md:text-sm text-gray-500 font-medium leading-relaxed mb-6">
+            Your withdrawal request has been submitted successfully and will be credited to your account within 24 hours.
+        </p>
+        
+        <button onclick="closeWithdrawalSuccessModal()" class="w-full bg-[#087E8B] hover:bg-[#066570] text-white font-bold py-3 rounded-2xl shadow-lg shadow-teal-700/20 transition text-sm">
+            Okay, Thanks
+        </button>
+    </div>
+</div>
+    
 <!-- LOGIN MODAL -->
 <div id="login-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-[100] flex items-center justify-center backdrop-blur-sm px-4">
     <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-sm w-full relative text-center">
@@ -1105,6 +1126,28 @@
     document.addEventListener("DOMContentLoaded", () => {
         window.showTab('dashboard');
     });
+
+document.addEventListener("DOMContentLoaded", () => {
+            window.showTab('dashboard');
+        });
+
+        // YAHAN PASTE KARNA HAI:
+        function showWithdrawalSuccessModal() {
+            const modal = document.getElementById('withdrawalSuccessModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeWithdrawalSuccessModal() {
+            const modal = document.getElementById('withdrawalSuccessModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+    
 </script>
         
 </body>
