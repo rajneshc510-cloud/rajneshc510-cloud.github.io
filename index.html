@@ -671,9 +671,15 @@ body *, button, .nav-btn, section, div, nav {
             </div>
 
             <div class="mb-5">
-                <label class="block text-[11px] font-black text-gray-400 uppercase tracking-wider mb-1.5">Withdrawal Amount (Min ₹50)</label>
-                <input type="number" id="withdrawAmount" placeholder="Enter amount (e.g. 50)" class="w-full border-2 border-gray-100 rounded-xl md:rounded-2xl px-3.5 py-3 text-sm font-semibold focus:outline-none focus:border-[#087E8B] focus:bg-white bg-gray-50 transition-all">
-            </div>
+    <label class="block text-xs font-bold text-gray-600 uppercase tracking-wider mb-2">WITHDRAWAL AMOUNT (MIN ₹30)</label>
+    <div class="grid grid-cols-4 gap-2.5">
+        <button type="button" onclick="selectAmount(30, this)" class="amount-btn bg-gray-50 border-2 border-gray-200 hover:border-[#044E54] text-slate-800 font-bold py-2.5 rounded-xl text-sm transition-all focus:outline-none">₹30</button>
+        <button type="button" onclick="selectAmount(50, this)" class="amount-btn bg-gray-50 border-2 border-gray-200 hover:border-[#044E54] text-slate-800 font-bold py-2.5 rounded-xl text-sm transition-all focus:outline-none">₹50</button>
+        <button type="button" onclick="selectAmount(100, this)" class="amount-btn bg-gray-50 border-2 border-gray-200 hover:border-[#044E54] text-slate-800 font-bold py-2.5 rounded-xl text-sm transition-all focus:outline-none">₹100</button>
+        <button type="button" onclick="selectAmount(500, this)" class="amount-btn bg-gray-50 border-2 border-gray-200 hover:border-[#044E54] text-slate-800 font-bold py-2.5 rounded-xl text-sm transition-all focus:outline-none">₹500</button>
+    </div>
+    <input type="hidden" id="selectedWithdrawAmount" value="">
+</div>
 
             <button onclick="requestWithdrawal()" class="w-full bg-gradient-to-r from-[#087E8B] to-teal-600 hover:from-teal-600 hover:to-[#087E8B] text-white font-black py-3.5 md:py-4 rounded-xl md:rounded-2xl shadow-lg shadow-teal-700/25 transition-all text-sm md:text-base transform hover:-translate-y-0.5">
                 Request Withdrawal ➔
@@ -1152,6 +1158,16 @@ body *, button, .nav-btn, section, div, nav {
 
         await addRewardToWallet(reward);
     }
+
+function selectAmount(amount, btn) {
+    document.getElementById('selectedWithdrawAmount').value = amount;
+    document.querySelectorAll('.amount-btn').forEach(b => {
+        b.classList.remove('border-[#044E54]', 'bg-teal-50', 'text-[#044E54]');
+        b.classList.add('bg-gray-50', 'border-gray-200', 'text-slate-800');
+    });
+    btn.classList.remove('bg-gray-50', 'border-gray-200', 'text-slate-800');
+    btn.classList.add('border-[#044E54]', 'bg-teal-50', 'text-[#044E54]');
+}
     
 </script>
 
