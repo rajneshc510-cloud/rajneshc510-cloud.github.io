@@ -831,7 +831,7 @@
                     b.classList.remove('border-[#044E54]', 'bg-teal-50', 'text-[#044E54]');
                     b.classList.add('bg-gray-50', 'border-gray-200', 'text-slate-800');
                 });
-                alert(`Success! Aapki withdrawal request lag gayi hai.`);
+               showWithdrawalSuccessModal();
             }
         } else {
             let currentBal = Number(localStorage.getItem('earnova_saved_balance') || 0);
@@ -843,7 +843,7 @@
                 b.classList.remove('border-[#044E54]', 'bg-teal-50', 'text-[#044E54]');
                 b.classList.add('bg-gray-50', 'border-gray-200', 'text-slate-800');
             });
-            alert(`Success! Aapki withdrawal request lag gayi hai.`);
+           showWithdrawalSuccessModal();
         }
     };
 
