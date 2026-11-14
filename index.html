@@ -1159,18 +1159,6 @@ body *, button, .nav-btn, section, div, nav {
         await addRewardToWallet(reward);
     }
 
-function selectAmount(amount, btn) {
-    document.getElementById('selectedWithdrawAmount').value = amount;
-    document.querySelectorAll('.amount-btn').forEach(b => {
-        b.classList.remove('border-[#044E54]', 'bg-teal-50', 'text-[#044E54]');
-        b.classList.add('bg-gray-50', 'border-gray-200', 'text-slate-800');
-    });
-    btn.classList.remove('bg-gray-50', 'border-gray-200', 'text-slate-800');
-    btn.classList.add('border-[#044E54]', 'bg-teal-50', 'text-[#044E54]');
-}
-    
-</script>
-
 <ul id="terms-paytmmoney" class="hidden">
     <li>1. Open a Paytm Money Demat Account using the link[cite: 16].</li>
     <li>2. Complete the full KYC process successfully[cite: 16].</li>
@@ -1191,6 +1179,22 @@ function selectAmount(amount, btn) {
     <li>3. Confirm address, basic details, and enter primary email-address[cite: 17].</li>
     <li>4. Enter bank details and complete photo/signature capture for KYC[cite: 17].</li>
 </ul>
-    
+
+ function selectAmount(amount, btn) {
+        const hiddenInput = document.getElementById('selectedWithdrawAmount');
+        if (hiddenInput) {
+            hiddenInput.value = amount;
+        }
+        
+        document.querySelectorAll('.amount-btn').forEach(b => {
+            b.classList.remove('border-[#044E54]', 'bg-teal-50', 'text-[#044E54]');
+            b.classList.add('bg-gray-50', 'border-gray-200', 'text-slate-800');
+        });
+        
+        btn.classList.remove('bg-gray-50', 'border-gray-200', 'text-slate-800');
+        btn.classList.add('border-[#044E54]', 'bg-teal-50', 'text-[#044E54]');
+    }   
+</script>
+        
 </body>
 </html>
