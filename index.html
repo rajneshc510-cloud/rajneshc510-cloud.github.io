@@ -210,6 +210,71 @@
                 <span class="text-base font-medium">Continue with Google</span>
             </button>
         </div>
+
+<!-- FEATURED HIGH-PAYING TASKS ON HOME PAGE -->
+<div class="bg-white rounded-3xl p-5 md:p-6 shadow-md border border-gray-100 my-4">
+    <div class="flex items-center justify-between mb-4">
+        <h3 class="font-black text-slate-800 text-sm md:text-base flex items-center gap-2">
+            <span>🔥</span> Featured High-Paying Tasks
+        </h3>
+        <button onclick="showTab('tasks')" class="text-xs font-bold text-[#087E8B] hover:underline">
+            View All Tasks →
+        </button>
+    </div>
+
+    <div class="space-y-3">
+        <!-- Bajaj Securities Task Box -->
+        <div class="bg-gray-50/80 px-3.5 py-3 rounded-2xl border border-gray-200 flex items-center justify-between hover:border-teal-300 transition-all">
+            <div class="flex items-center gap-3">
+                <div class="h-10 w-10 shrink-0 rounded-xl overflow-hidden bg-white border border-gray-100 flex items-center justify-center">
+                    <img src="bajaj.png.jpg" class="w-full h-full object-cover" alt="Bajaj Securities">
+                </div>
+                <div class="flex flex-col justify-center text-left">
+                    <h4 class="font-bold text-slate-800 text-xs leading-tight">Bajaj Securities Demat</h4>
+                    <p class="text-[10px] text-gray-400 font-medium leading-tight mt-0.5">Open Account & Trade (Min ₹525)</p>
+                </div>
+            </div>
+            <div class="flex flex-col items-end shrink-0 ml-2">
+                <span class="font-black text-[#087E8B] text-xs mb-1">₹550</span>
+                <button onclick="openPopup('Bajaj Securities Demat', 550, 'https://sales.gromo.in/bs/ldyTpEeMg2', 'terms-bajajsec')" class="bg-[#087E8B] hover:bg-[#066570] text-white text-[10px] font-bold px-3.5 py-1 rounded-xl shadow transition">Start</button>
+            </div>
+        </div>
+
+        <!-- Upstox App Box -->
+        <div class="bg-gray-50/80 px-3.5 py-3 rounded-2xl border border-gray-200 flex items-center justify-between hover:border-teal-300 transition-all">
+            <div class="flex items-center gap-3">
+                <div class="h-10 w-10 shrink-0 rounded-xl overflow-hidden bg-white border border-gray-100 flex items-center justify-center">
+                    <img src="upstox.png.jpg" class="w-full h-full object-cover" alt="Upstox">
+                </div>
+                <div class="flex flex-col justify-center text-left">
+                    <h4 class="font-bold text-slate-800 text-xs leading-tight">Upstox App</h4>
+                    <p class="text-[10px] text-gray-400 font-medium leading-tight mt-0.5">Free Demat Account</p>
+                </div>
+            </div>
+            <div class="flex flex-col items-end shrink-0 ml-2">
+                <span class="font-black text-[#087E8B] text-xs mb-1">₹180</span>
+                <button onclick="openPopup('Upstox App', 180, 'https://sales.gromo.in/up/ldyTpEeMg2', 'terms-upstox')" class="bg-[#087E8B] hover:bg-[#066570] text-white text-[10px] font-bold px-3.5 py-1 rounded-xl shadow transition">Start</button>
+            </div>
+        </div>
+
+        <!-- Kotak Securities Task Box -->
+        <div class="bg-gray-50/80 px-3.5 py-3 rounded-2xl border border-gray-200 flex items-center justify-between hover:border-teal-300 transition-all">
+            <div class="flex items-center gap-3">
+                <div class="h-10 w-10 shrink-0 rounded-xl overflow-hidden bg-white border border-gray-100 flex items-center justify-center">
+                    <img src="kotak.png.jpg" class="w-full h-full object-cover" alt="Kotak Securities">
+                </div>
+                <div class="flex flex-col justify-center text-left">
+                    <h4 class="font-bold text-slate-800 text-xs leading-tight">Kotak Securities Demat</h4>
+                    <p class="text-[10px] text-gray-400 font-medium leading-tight mt-0.5">Open Account & Complete KYC</p>
+                </div>
+            </div>
+            <div class="flex flex-col items-end shrink-0 ml-2">
+                <span class="font-black text-[#087E8B] text-xs mb-1">₹350</span>
+                <button onclick="openPopup('Kotak Securities Demat', 350, 'https://sales.gromo.in/ks/ldyTpEeMg2', 'terms-kotaksec')" class="bg-[#087E8B] hover:bg-[#066570] text-white text-[10px] font-bold px-3.5 py-1 rounded-xl shadow transition">Start</button>
+            </div>
+        </div>
+    </div>
+</div>
         
         <!-- RECENT PAYOUTS TICKER -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-2.5 overflow-hidden">
