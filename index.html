@@ -532,45 +532,44 @@ body *, button, .nav-btn, section, div, nav {
 </div>
     </section>
     
-    <!-- REFER & EARN TAB -->
-   <section id="refer" class="tab-content hidden max-w-xl mx-auto px-4 py-6">
-      <div class="relative bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-6 md:p-8 text-center space-y-5 overflow-hidden">
+    <!-- REFER & EARN TAB START -->
+<section id="refer" class="tab-content hidden p-4 max-w-2xl mx-auto w-full">
+    <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 md:p-8 text-center relative overflow-hidden">
         
-        <div class="flex justify-start">
-            <button onclick="showTab('dashboard')" class="text-[#087e8b] font-extrabold text-xs md:text-sm hover:underline">
-              ← Back to Home
+        <!-- Back to Home -->
+        <div class="text-left mb-4">
+            <button onclick="showTab('dashboard')" class="text-[#044E54] hover:text-[#087E8B] font-bold text-sm flex items-center gap-1 transition">
+                ← Back to Home
             </button>
         </div>
 
-        <div class="relative z-10">
-            <span class="text-[#087e8b] font-extrabold tracking-widest text-xs uppercase">EARNOVA REFERRAL</span>
-            <h2 class="text-2xl md:text-3xl font-black text-slate-800 mt-1">Invite Friends & Earn</h2>
-            <p class="text-gray-500 text-xs md:text-sm mt-1">Share your unique link and earn cash instantly.</p>
-        </div>
+        <span class="text-xs font-bold uppercase tracking-widest text-[#087E8B] bg-teal-50 px-3 py-1 rounded-full">Earnova Referral</span>
+        
+        <h2 class="text-2xl md:text-3xl font-black text-slate-900 mt-2 tracking-tight">Invite Friends & Earn ₹25</h2>
+        <p class="text-xs md:text-sm text-gray-500 mt-1">Share your link and earn ₹25 cash reward per referral instantly.</p>
 
-        <!-- YOUR INVITE LINK BOX -->
-        <div class="bg-slate-900 rounded-2xl p-4 text-white shadow-inner flex items-center justify-between gap-2 border border-slate-800">
-            <input type="text" id="userInviteLink" readonly class="bg-transparent text-xs md:text-sm text-cyan-300 font-mono w-full focus:outline-none truncate px-2" value="https://rajneshc510-cloud.github.io/">
-            <button onclick="copyReferralLink()" class="bg-amber-400 hover:bg-amber-500 text-slate-950 font-black text-xs px-4 py-2.5 rounded-xl transition-all shadow-md shrink-0">
+        <!-- Referral Link Box -->
+        <div class="mt-6 bg-[#033F43] p-3 rounded-2xl flex items-center justify-between shadow-inner border border-teal-500/30 gap-2">
+            <input type="text" id="userInviteLink" readonly value="https://rajnesh510-cloud.github.io/" class="bg-transparent text-white text-xs md:text-sm px-2 w-full outline-none font-mono truncate">
+            <button onclick="copyReferralLink()" class="bg-teal-400 hover:bg-teal-300 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl shadow transition shrink-0">
                 Copy Link
             </button>
         </div>
 
-        <!-- REFERRAL TERMS & CONDITIONS -->
-        <div class="bg-teal-50/70 border border-teal-100 rounded-2xl p-5 text-left space-y-3">
-            <h3 class="font-black text-slate-800 text-xs md:text-sm uppercase tracking-wider flex items-center gap-2">
-                <span>📄</span> Referral Terms & Conditions
-            </h3>
-            <ul class="text-gray-600 text-[11px] md:text-xs space-y-2 font-medium list-disc list-inside">
-                <li>Har successful invite par aapko instant cash reward milta hai.</li>
-                <li>Jise aap invite kar rahe hain, use aapke unique link se sign up karna zaroori hai.</li>
-                <li>Fake ya duplicate accounts banane par referral bonus cancel kiya ja sakta hai.</li>
-                <li>Reward ki rashi seedhe aapke Earnova wallet mein add ho jayegi.</li>
+        <!-- Short Terms & Conditions (Only 2 Lines as requested) -->
+        <div class="mt-6 text-left bg-teal-50/60 border border-teal-100 p-4 rounded-2xl">
+            <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                📄 Referral Terms & Conditions
+            </h4>
+            <ul class="text-xs text-gray-600 space-y-1.5 list-disc pl-4 font-medium">
+                <li>Is link ko apne doston ke sath share karein.</li>
+                <li>Jaise hi user login karke 7 days is website par active rahega, aapko ₹25 inam mil jayega.</li>
             </ul>
         </div>
 
-      </div>
-   </section>
+    </div>
+</section>
+<!-- REFER & EARN TAB END -->
 
    <script>
       // Initialize Refer Link
