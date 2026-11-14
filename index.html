@@ -1131,8 +1131,8 @@ document.addEventListener("DOMContentLoaded", () => {
             window.showTab('dashboard');
         });
 
-        // YAHAN PASTE KARNA HAI:
-        function showWithdrawalSuccessModal() {
+        // In functions ko window. se define karein taaki HTML onclick inhein pehchan sake:
+        window.showWithdrawalSuccessModal = function() {
             const modal = document.getElementById('withdrawalSuccessModal');
             if (modal) {
                 modal.classList.remove('hidden');
@@ -1140,7 +1140,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        function closeWithdrawalSuccessModal() {
+        window.closeWithdrawalSuccessModal = function() {
             const modal = document.getElementById('withdrawalSuccessModal');
             if (modal) {
                 modal.classList.add('hidden');
