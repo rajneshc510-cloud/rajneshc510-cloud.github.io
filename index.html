@@ -1156,14 +1156,18 @@
         }
     };
 
-    window.earnovaSpin = async function() {
+   window.earnovaSpin = async function() {
         const today = new Date().toDateString();
-        const result = document.getElementById('spinResult');
         const btn = document.getElementById('spinBtn');
         const wheel = document.getElementById('spin-wheel');
 
         if (localStorage.getItem('earnova_spin_date') === today) {
-            result.textContent = 'Aaj ka Spin pehle hi use ho chuka hai.';
+            // Show Custom Warning Modal
+            const warningModal = document.getElementById('taskWarningModal');
+            if (warningModal) {
+                warningModal.classList.remove('hidden');
+                warningModal.classList.add('flex');
+            }
             return;
         }
 
@@ -1190,7 +1194,6 @@
         btn.disabled = true;
         btn.textContent = 'Spinning...';
         btn.classList.add('opacity-50', 'cursor-not-allowed');
-        result.textContent = 'Charkhi ghum rahi hai... 🎡';
 
         if (wheel) {
             let spinDegree = Math.floor(Math.random() * 360) + 1440;
@@ -1199,23 +1202,34 @@
 
         setTimeout(async () => {
             localStorage.setItem('earnova_spin_date', today);
-            result.textContent = '🎉 Badhai ho! Aap jeete ₹' + selected.toFixed(2);
             btn.textContent = 'Come Back Tomorrow';
+
+            // Show Celebration Popup with Spin Reward Amount
+            document.getElementById('taskModalAmountDisplay').innerText = "Spin Reward: ₹" + selected.toFixed(2);
+            const successModal = document.getElementById('taskSuccessModal');
+            if (successModal) {
+                successModal.classList.remove('hidden');
+                successModal.classList.add('flex');
+            }
 
             await addRewardToWallet(selected);
         }, 3000);
-    }
-
+    };
+    
     const earnovaDailyRewards = [0.01, 0.02, 0.03, 0.05, 0.07, 0.08, 0.10];
     window.earnovaCheckin = async function() {
         const today = new Date().toDateString();
         const lastDate = localStorage.getItem('earnova_checkin_date');
-        const result = document.getElementById('checkinResult');
         const btn = document.getElementById('checkinBtn');
         let streak = Number(localStorage.getItem('earnova_checkin_streak') || 0);
 
         if (lastDate === today) {
-            result.textContent = 'Aaj ka Daily Check-in pehle hi ho chuka hai.';
+            // Show Custom Warning Modal
+            const warningModal = document.getElementById('taskWarningModal');
+            if (warningModal) {
+                warningModal.classList.remove('hidden');
+                warningModal.classList.add('flex');
+            }
             return;
         }
 
@@ -1237,13 +1251,20 @@
             streakDisplay.textContent = 'Day ' + streak + ' of 7';
         }
 
-        result.textContent = '🎉 Badhai ho! Daily reward ₹' + reward.toFixed(2) + ' wallet mein add ho gaye!';
         btn.disabled = true;
         btn.textContent = 'Claimed Today ✓';
         btn.classList.add('bg-gray-400', 'cursor-not-allowed');
 
+        // Show Celebration Popup with Check-in Reward
+        document.getElementById('taskModalAmountDisplay').innerText = "Check-in Reward (Day " + streak + "): ₹" + reward.toFixed(2);
+        const successModal = document.getElementById('taskSuccessModal');
+        if (successModal) {
+            successModal.classList.remove('hidden');
+            successModal.classList.add('flex');
+        }
+
         await window.addRewardToWallet(reward);
-    }
+    };
 
    window.claimTapScratch = async function() {
         const today = new Date().toDateString();
