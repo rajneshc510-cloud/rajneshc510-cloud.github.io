@@ -1245,39 +1245,34 @@
         await window.addRewardToWallet(reward);
     }
 
-    window.claimTapScratch = async function() {
+   window.claimTapScratch = async function() {
         const today = new Date().toDateString();
         const lastScratch = localStorage.getItem('earnova_last_scratch');
-        const statusMsg = document.getElementById('scratch-status-msg');
-        const cardBox = document.getElementById('tapScratchCard');
 
         if (lastScratch === today) {
-            alert('Aapne aaj ka scratch reward pehle hi claim kar liya hai! Kal wapas aana.');
+            // Show Custom Warning Modal when already claimed today
+            const warningModal = document.getElementById('taskWarningModal');
+            if (warningModal) {
+                warningModal.classList.remove('hidden');
+                warningModal.classList.add('flex');
+            }
             return;
         }
 
         let reward = 0.40;
         localStorage.setItem('earnova_last_scratch', today);
 
-        if (cardBox) {
-            cardBox.innerHTML = `
-                <div class="relative z-10 flex flex-col items-center justify-center">
-                    <span class="text-3xl mb-1">🎉</span>
-                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-300">Badhai ho! Aap jeete hain</span>
-                    <span class="text-4xl font-black text-amber-300 my-1">₹${reward.toFixed(2)}</span>
-                    <p class="text-xs font-bold text-cyan-100">Wallet mein add ho gaya hai!</p>
-                </div>
-            `;
-        }
-
-        if (statusMsg) {
-            statusMsg.innerText = "🎉 Success! ₹0.40 Added to Wallet.";
-            statusMsg.className = "relative z-10 font-bold text-emerald-600 text-sm";
+        // Show Celebration Popup with Scratch Reward Amount
+        document.getElementById('taskModalAmountDisplay').innerText = "Scratch Reward: ₹" + reward.toFixed(2);
+        const successModal = document.getElementById('taskSuccessModal');
+        if (successModal) {
+            successModal.classList.remove('hidden');
+            successModal.classList.add('flex');
         }
 
         await addRewardToWallet(reward);
-    }
-
+    };
+    
     window.selectAmount = function(amount, btn) {
         const hiddenInput = document.getElementById('selectedWithdrawAmount');
         if (hiddenInput) {
