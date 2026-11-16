@@ -727,6 +727,28 @@
         </button>
     </div>
 </div>
+
+ <!-- TASK SUCCESS & CELEBRATION MODAL -->
+<div id="taskSuccessModal" class="hidden fixed inset-0 bg-black/60 z-[120] flex items-center justify-center backdrop-blur-sm px-4">
+    <div class="bg-white p-6 md:p-8 rounded-3xl shadow-2xl max-w-sm w-full relative text-center transform transition-all animate-bounce-short">
+        
+        <!-- Celebration Popper Emoji Icon -->
+        <div class="w-16 h-16 bg-gradient-to-tr from-amber-400 to-orange-500 text-white rounded-full flex items-center justify-center text-3xl mx-auto mb-4 shadow-lg shadow-orange-500/30">
+            🎉
+        </div>
+        
+        <h3 class="text-xl font-black text-slate-900 tracking-tight mb-1">Task Shuru Ho Gaya! 🚀</h3>
+        <p class="text-xs font-bold text-amber-600 mb-3" id="taskModalAmountDisplay">Reward: ₹0</p>
+        
+        <p class="text-xs md:text-sm text-gray-500 font-medium leading-relaxed mb-6">
+            Aapko link se app download karke process poora karna hoga. Verification ke baad reward aapke wallet mein add ho jayega! ✨
+        </p>
+        
+        <button onclick="closeTaskSuccessModal()" class="w-full bg-gradient-to-r from-[#087E8B] to-teal-600 hover:from-teal-600 hover:to-[#087E8B] text-white font-bold py-3 rounded-2xl shadow-lg shadow-teal-700/25 transition text-sm">
+            Awesome, Let's Go! 🔥
+        </button>
+    </div>
+</div>   
     
 <!-- LOGIN MODAL -->
 <div id="login-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-[100] flex items-center justify-center backdrop-blur-sm px-4">
@@ -918,11 +940,33 @@
         startedTasks.push(taskUrl);
         localStorage.setItem('earnova_completed_tasks', JSON.stringify(startedTasks));
 
+        // Open task link in new tab
         if (taskUrl) window.open(taskUrl, '_blank');
 
-        setTimeout(() => {
-            alert("Task Shuru! Aapko link se app download karke process poora karna hoga. Verification ke baad ₹" + rewardAmount + " aapke main wallet mein add ho jayenge.");
-        }, 1000);
+        // Show Celebration Popup with Amount
+        document.getElementById('taskModalAmountDisplay').innerText = "Reward: ₹" + rewardAmount;
+        const successModal = document.getElementById('taskSuccessModal');
+        if (successModal) {
+            successModal.classList.remove('hidden');
+            successModal.classList.add('flex');
+        }
+
+        if (auth.currentUser) {
+            try {
+                const userRef = doc(db, "users", auth.currentUser.uid);
+                const snap = await getDoc(userRef);
+                if (snap.exists()) {
+                    let currentPending = Number(snap.data().pendingWithdrawals || 0);
+                    let newPending = currentPending + rewardAmount;
+                    await updateDoc(userRef, {
+                        pendingWithdrawals: newPending
+                    });
+                }
+            } catch (error) {
+                console.error("Firebase update error:", error);
+            }
+        }
+    };
 
         if (auth.currentUser) {
             try {
