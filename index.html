@@ -703,6 +703,27 @@
         <button onclick="closeTaskSuccessModal()" class="w-full bg-gradient-to-r from-[#087E8B] to-teal-600 hover:from-teal-600 hover:to-[#087E8B] text-white font-bold py-3 rounded-2xl shadow-lg shadow-teal-700/25 transition text-sm">Awesome, Let's Go! 🔥</button>
     </div>
 </div>
+
+    <!-- TASK ALREADY STARTED WARNING MODAL -->
+<div id="taskWarningModal" class="hidden fixed inset-0 bg-black/60 z-[125] flex items-center justify-center backdrop-blur-sm px-4">
+    <div class="bg-white p-6 md:p-8 rounded-3xl shadow-2xl max-w-sm w-full relative text-center transform transition-all">
+        
+        <!-- Warning Icon -->
+        <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 shadow-inner">
+            ⚠️
+        </div>
+        
+        <h3 class="text-xl font-black text-slate-900 tracking-tight mb-2">Task Already Started!</h3>
+        
+        <p class="text-xs md:text-sm text-gray-500 font-medium leading-relaxed mb-6">
+            Aap yeh task pehle hi shuru kar chuke hain! Dobara reward nahi milega. Kripya process complete karein.
+        </p>
+        
+        <button onclick="closeTaskWarningModal()" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-2xl shadow-lg shadow-amber-500/20 transition text-sm">
+            Okay, Understood
+        </button>
+    </div>
+</div>
     
 <!-- LOGIN MODAL -->
 <div id="login-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-[100] flex items-center justify-center backdrop-blur-sm px-4">
@@ -882,7 +903,12 @@
         }
 
         if (startedTasks.includes(taskUrl)) {
-            alert("Aap yeh task pehle hi shuru kar chuke hain! Dobara reward nahi milega.");
+            // Show Custom Warning Modal instead of browser alert
+            const warningModal = document.getElementById('taskWarningModal');
+            if (warningModal) {
+                warningModal.classList.remove('hidden');
+                warningModal.classList.add('flex');
+            }
             if (taskUrl) window.open(taskUrl, '_blank');
             return;
         }
