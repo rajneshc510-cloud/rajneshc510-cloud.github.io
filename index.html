@@ -892,7 +892,9 @@
         }
     };
 
-    let startedTasks = [];
+    // Load already started tasks from localStorage so it never resets
+    let startedTasks = JSON.parse(localStorage.getItem('earnova_completed_tasks') || '[]');
+
     window.startAppTask = async function(rewardAmount, taskUrl) {
         if (!auth.currentUser && localStorage.getItem("earnova_logged_in") !== "true") {
             alert("Task start karne ke liye pehle login karein!");
@@ -900,15 +902,39 @@
             return;
         }
 
+        // Check if this specific task was already started before
         if (startedTasks.includes(taskUrl)) {
-            alert("Aapne yeh task pehle hi shuru kar diya hai! Kripya link se app install karke registration poora karein.");
-            window.open(taskUrl, '_blank');
+            alert("Aap yeh task pehle hi shuru kar chuke hain! Dobara reward nahi milega.");
+            if (taskUrl) window.open(taskUrl, '_blank');
             return;
         }
 
+        // Save this task as started permanently
         startedTasks.push(taskUrl);
+        localStorage.setItem('earnova_completed_tasks', JSON.stringify(startedTasks));
+
         if (taskUrl) window.open(taskUrl, '_blank');
 
+        setTimeout(() => {
+            alert("Task Shuru! Aapko link se app download karke process poora karna hoga. Verification ke baad ₹" + rewardAmount + " aapke main wallet mein add ho jayenge.");
+        }, 1000);
+
+        if (auth.currentUser) {
+            try {
+                const userRef = doc(db, "users", auth.currentUser.uid);
+                const snap = await getDoc(userRef);
+                if (snap.exists()) {
+                    let currentPending = Number(snap.data().pendingWithdrawals || 0);
+                    let newPending = currentPending + rewardAmount;
+                    await updateDoc(userRef, {
+                        pendingWithdrawals: newPending
+                    });
+                }
+            } catch (error) {
+                console.error("Firebase update error:", error);
+            }
+        }
+    };
         setTimeout(() => {
             alert("Task Shuru! Aapko link se app download karke process poora karna hoga. Verification ke baad ₹" + rewardAmount + " aapke main wallet mein add ho jayenge.");
         }, 1000);
