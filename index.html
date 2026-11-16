@@ -21,14 +21,10 @@
         }
     </script>
     <style>
-    /* Final Mobile Touch Force Fix */
     body *, button, .nav-btn, section, div, nav {
         pointer-events: auto !important;
         touch-action: manipulation !important;
         -webkit-tap-highlight-color: transparent;
-    }
-    .relative, .absolute {
-        pointer-events: auto !important;
     }
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8fafc; }
     .tab-content { display: none; }
@@ -69,7 +65,6 @@
     <div class="max-w-7xl mx-auto px-4 py-3">
         <div class="flex flex-wrap items-center justify-between">
 
-<!-- Clean Logo Section -->
 <div class="flex items-center gap-2.5">
     <div class="h-9 w-9 rounded-xl flex items-center justify-center overflow-hidden">
         <img src="logo.png" class="w-full h-full object-contain" alt="Earnova Logo">
@@ -77,7 +72,6 @@
     <span class="text-white font-black text-lg tracking-wide drop-shadow-md">Earnova</span>
 </div>
             
-            <!-- 2. MENU -->
             <div class="w-full md:w-auto md:flex-1 order-last md:order-none mt-4 md:mt-0 flex items-center justify-between md:justify-center px-1 md:px-0 sm:gap-4">
                 <button id="btn-dashboard" class="nav-btn text-[11px] sm:text-sm font-semibold py-1.5 px-3 sm:px-4 rounded-full text-white transition-all outline-none border border-transparent" onclick="showTab('dashboard')">Home</button>
                 <button id="btn-tasks" class="nav-btn text-[11px] sm:text-sm font-semibold py-1.5 px-3 sm:px-4 rounded-full text-white transition-all outline-none border border-transparent" onclick="showTab('tasks')">Tasks</button>
@@ -94,7 +88,6 @@
             <div id="user-profile-info" class="hidden relative flex items-center">
                 <img id="nav-profile-pic" src="" alt="Profile" onclick="window.toggleProfilePopup()" class="w-9 h-9 rounded-full border-2 border-green-400 cursor-pointer shadow-md hover:scale-105 transition-transform object-cover">
                 
-                <!-- PREMIUM PROFILE DROPDOWN POPUP -->
                 <div id="profile-popup" class="hidden absolute right-0 top-12 w-72 bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden z-50 text-left transition-all">
                     
                     <div class="bg-gradient-to-br from-[#087E8B] to-[#054e56] p-4 text-white relative">
@@ -163,7 +156,6 @@
         <div>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
                 
-                <!-- 1. Scratch Card Box (Updated with Icon) -->
                 <div onclick="showTab('scratch')" class="group relative bg-white hover:bg-gradient-to-br hover:from-teal-50/50 hover:to-white p-4 md:p-6 rounded-2xl md:rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-200 hover:border-teal-300 text-center flex flex-col justify-center items-center overflow-hidden transform hover:scale-[1.02]">
                     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#087E8B] to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-teal-50 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform shadow-inner overflow-hidden p-1">
@@ -173,7 +165,6 @@
                     <p class="text-[10px] md:text-[11px] text-gray-400 mt-0.5 font-medium">Scratch & earn cash.</p>
                 </div>
 
-                <!-- 2. Spin Box (Updated with Icon) -->
                 <div onclick="showTab('spin')" class="group relative bg-white hover:bg-gradient-to-br hover:from-amber-50/50 hover:to-white p-4 md:p-6 rounded-2xl md:rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-200 hover:border-amber-300 text-center flex flex-col justify-center items-center overflow-hidden transform hover:scale-[1.02]">
                     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 to-orange-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-amber-50 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform shadow-inner overflow-hidden p-1">
@@ -183,7 +174,6 @@
                     <p class="text-[10px] md:text-[11px] text-gray-400 mt-0.5 font-medium">Spin daily for rewards.</p>
                 </div>
 
-                <!-- 3. Check-in Box (Updated with Icon) -->
                 <div onclick="showTab('checkin')" class="group relative bg-white hover:bg-gradient-to-br hover:from-emerald-50/50 hover:to-white p-4 md:p-6 rounded-2xl md:rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-200 hover:border-emerald-300 text-center flex flex-col justify-center items-center overflow-hidden transform hover:scale-[1.02]">
                     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-teal-400 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-emerald-50 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform shadow-inner overflow-hidden p-1">
@@ -193,7 +183,6 @@
                     <p class="text-[10px] md:text-[11px] text-gray-400 mt-0.5 font-medium">Claim streak rewards.</p>
                 </div>
 
-                <!-- 4. Referral Box (Updated with Icon) -->
                 <div onclick="showTab('refer')" class="group relative bg-white hover:bg-gradient-to-br hover:from-cyan-50/50 hover:to-white p-4 md:p-6 rounded-2xl md:rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-200 hover:border-cyan-300 text-center flex flex-col justify-center items-center overflow-hidden transform hover:scale-[1.02]">
                     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-600 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-cyan-50 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform shadow-inner overflow-hidden p-1">
@@ -206,7 +195,6 @@
             </div>
         </div>
         
-        <!-- Continue with Google Premium Button -->
         <div id="google-login-section" class="my-4 px-4">
             <button onclick="loginWithGoogle()" class="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-slate-800 font-semibold py-3.5 px-6 rounded-2xl shadow-md border border-gray-200 transition-all duration-300 transform hover:scale-[1.01]">
                 <svg class="w-5 h-5" viewBox="0 0 24 24">
@@ -231,7 +219,6 @@
     </div>
 
     <div class="space-y-3">
-      <!-- Upstox App Box -->
         <div class="bg-gray-50/80 px-3.5 py-3 rounded-2xl border border-gray-200 flex items-center justify-between hover:border-teal-300 transition-all">
             <div class="flex items-center gap-3">
                 <div class="h-10 w-10 shrink-0 rounded-xl overflow-hidden bg-white border border-gray-100 flex items-center justify-center">
@@ -248,7 +235,6 @@
             </div>
         </div>
 
-         <!-- Bajaj Securities Task Box -->
         <div class="bg-gray-50/80 px-3.5 py-3 rounded-2xl border border-gray-200 flex items-center justify-between hover:border-teal-300 transition-all">
             <div class="flex items-center gap-3">
                 <div class="h-10 w-10 shrink-0 rounded-xl overflow-hidden bg-white border border-gray-100 flex items-center justify-center">
@@ -265,7 +251,6 @@
             </div>
         </div>
 
-        <!-- Kotak Securities Task Box -->
         <div class="bg-gray-50/80 px-3.5 py-3 rounded-2xl border border-gray-200 flex items-center justify-between hover:border-teal-300 transition-all">
             <div class="flex items-center gap-3">
                 <div class="h-10 w-10 shrink-0 rounded-xl overflow-hidden bg-white border border-gray-100 flex items-center justify-center">
@@ -284,7 +269,6 @@
     </div>
 </div>
         
-        <!-- RECENT PAYOUTS TICKER -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-2.5 overflow-hidden">
             <div class="flex items-center gap-2">
                 <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500 bg-gray-50 px-2 py-0.5 rounded border">PAYOUTS</span>
@@ -448,7 +432,6 @@
         </div>
         
         <div class="w-full">
-            <!-- Bajaj Securities Task Box -->
             <div class="bg-white px-3.5 py-3 rounded-2xl shadow-sm border border-gray-200 flex items-center justify-between mb-3 hover:border-teal-300 transition-all h-[68px]">
                 <div class="flex items-center gap-3">
                     <div class="h-10 w-10 shrink-0 rounded-xl overflow-hidden bg-white border border-gray-100 flex items-center justify-center">
@@ -465,7 +448,6 @@
                 </div>
             </div>
 
-            <!-- Upstox App Box -->
             <div class="bg-white px-3.5 py-3 rounded-2xl shadow-sm border border-gray-200 flex items-center justify-between mb-3 hover:border-teal-300 transition-all h-[68px]">
                 <div class="flex items-center gap-3">
                     <div class="h-10 w-10 shrink-0 rounded-xl overflow-hidden bg-white border border-gray-100 flex items-center justify-center">
@@ -482,7 +464,6 @@
                 </div>
             </div>
 
-            <!-- Kotak Securities Task Box -->
             <div class="bg-white px-3.5 py-3 rounded-2xl shadow-sm border border-gray-200 flex items-center justify-between mb-3 hover:border-teal-300 transition-all h-[68px]">
                 <div class="flex items-center gap-3">
                     <div class="h-10 w-10 shrink-0 rounded-xl overflow-hidden bg-white border border-gray-100 flex items-center justify-center">
@@ -499,7 +480,6 @@
                 </div>
             </div>
 
-            <!-- Angel One Box -->
             <div class="bg-white px-3.5 py-3 rounded-2xl shadow-sm border border-gray-200 flex items-center justify-between mb-3 hover:border-teal-300 transition-all h-[68px]">
                 <div class="flex items-center gap-3">
                     <div class="h-10 w-10 shrink-0 rounded-xl overflow-hidden bg-white border border-gray-100 flex items-center justify-center">
@@ -516,7 +496,6 @@
                 </div>
             </div>
 
-            <!-- Paytm Money Task Box -->
             <div class="bg-white px-3.5 py-3 rounded-2xl shadow-sm border border-gray-200 flex items-center justify-between mb-3 hover:border-teal-300 transition-all h-[68px]">
                 <div class="flex items-center gap-3">
                     <div class="h-10 w-10 shrink-0 rounded-xl overflow-hidden bg-white border border-gray-100 flex items-center justify-center">
@@ -533,7 +512,6 @@
                 </div>
             </div>
 
-            <!-- Navi App Box -->
             <div class="bg-white px-3.5 py-3 rounded-2xl shadow-sm border border-gray-200 flex items-center justify-between mb-3 hover:border-teal-300 transition-all h-[68px]">
                 <div class="flex items-center gap-3">
                     <div class="h-10 w-10 shrink-0 rounded-xl overflow-hidden bg-white border border-gray-100 flex items-center justify-center">
@@ -555,7 +533,6 @@
     <!-- EXTRA TAB CONTENT -->
     <section id="extra" class="tab-content max-w-4xl mx-auto px-4 py-6">
         <div class="w-full">
-            <!-- Kotak 811 Classic Account Box -->
             <div class="bg-white px-3.5 py-3 rounded-2xl shadow-sm border border-gray-200 flex items-center justify-between mb-3 hover:border-teal-300 transition-all h-[68px]">
                 <div class="flex items-center gap-3">
                     <div class="h-10 w-10 shrink-0 rounded-xl overflow-hidden bg-white border border-gray-100 flex items-center justify-center">
@@ -573,7 +550,6 @@
             </div>
         </div>
 
-<!-- Jio Payments Bank Compact Box -->
             <div class="bg-white px-3.5 py-3 rounded-2xl shadow-sm border border-gray-200 flex items-center justify-between mb-3 hover:border-teal-300 transition-all h-[68px]">
                 <div class="flex items-center gap-3">
                     <div class="h-10 w-10 shrink-0 rounded-xl overflow-hidden bg-white border border-gray-100 flex items-center justify-center">
@@ -710,45 +686,23 @@
 <!-- WITHDRAWAL SUCCESS POPUP MODAL -->
 <div id="withdrawalSuccessModal" class="hidden fixed inset-0 bg-black/60 z-[110] flex items-center justify-center backdrop-blur-sm px-4">
     <div class="bg-white p-6 md:p-8 rounded-3xl shadow-2xl max-w-sm w-full relative text-center transform transition-all">
-        
-        <!-- Success Icon -->
-        <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 shadow-inner">
-            ✓
-        </div>
-        
+        <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4 shadow-inner">✓</div>
         <h3 class="text-xl font-black text-slate-900 tracking-tight mb-2">Withdrawal Successful!</h3>
-        
-        <p class="text-xs md:text-sm text-gray-500 font-medium leading-relaxed mb-6">
-            Your withdrawal request has been submitted successfully and will be credited to your account within 24 hours.
-        </p>
-        
-        <button onclick="closeWithdrawalSuccessModal()" class="w-full bg-[#087E8B] hover:bg-[#066570] text-white font-bold py-3 rounded-2xl shadow-lg shadow-teal-700/20 transition text-sm">
-            Okay, Thanks
-        </button>
+        <p class="text-xs md:text-sm text-gray-500 font-medium leading-relaxed mb-6">Your withdrawal request has been submitted successfully and will be credited to your account within 24 hours.</p>
+        <button onclick="closeWithdrawalSuccessModal()" class="w-full bg-[#087E8B] hover:bg-[#066570] text-white font-bold py-3 rounded-2xl shadow-lg shadow-teal-700/20 transition text-sm">Okay, Thanks</button>
     </div>
 </div>
 
- <!-- TASK SUCCESS & CELEBRATION MODAL -->
+<!-- TASK SUCCESS & CELEBRATION MODAL -->
 <div id="taskSuccessModal" class="hidden fixed inset-0 bg-black/60 z-[120] flex items-center justify-center backdrop-blur-sm px-4">
     <div class="bg-white p-6 md:p-8 rounded-3xl shadow-2xl max-w-sm w-full relative text-center transform transition-all animate-bounce-short">
-        
-        <!-- Celebration Popper Emoji Icon -->
-        <div class="w-16 h-16 bg-gradient-to-tr from-amber-400 to-orange-500 text-white rounded-full flex items-center justify-center text-3xl mx-auto mb-4 shadow-lg shadow-orange-500/30">
-            🎉
-        </div>
-        
+        <div class="w-16 h-16 bg-gradient-to-tr from-amber-400 to-orange-500 text-white rounded-full flex items-center justify-center text-3xl mx-auto mb-4 shadow-lg shadow-orange-500/30">🎉</div>
         <h3 class="text-xl font-black text-slate-900 tracking-tight mb-1">Task Shuru Ho Gaya! 🚀</h3>
         <p class="text-xs font-bold text-amber-600 mb-3" id="taskModalAmountDisplay">Reward: ₹0</p>
-        
-        <p class="text-xs md:text-sm text-gray-500 font-medium leading-relaxed mb-6">
-            Aapko link se app download karke process poora karna hoga. Verification ke baad reward aapke wallet mein add ho jayega! ✨
-        </p>
-        
-        <button onclick="closeTaskSuccessModal()" class="w-full bg-gradient-to-r from-[#087E8B] to-teal-600 hover:from-teal-600 hover:to-[#087E8B] text-white font-bold py-3 rounded-2xl shadow-lg shadow-teal-700/25 transition text-sm">
-            Awesome, Let's Go! 🔥
-        </button>
+        <p class="text-xs md:text-sm text-gray-500 font-medium leading-relaxed mb-6">Aapko link se app download karke process poora karna hoga. Verification ke baad reward aapke wallet mein add ho jayega! ✨</p>
+        <button onclick="closeTaskSuccessModal()" class="w-full bg-gradient-to-r from-[#087E8B] to-teal-600 hover:from-teal-600 hover:to-[#087E8B] text-white font-bold py-3 rounded-2xl shadow-lg shadow-teal-700/25 transition text-sm">Awesome, Let's Go! 🔥</button>
     </div>
-</div>   
+</div>
     
 <!-- LOGIN MODAL -->
 <div id="login-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-[100] flex items-center justify-center backdrop-blur-sm px-4">
@@ -821,7 +775,7 @@
         <li>1. Download Navi app and setup UPI.</li>
     </ul>
 
-<ul id="terms-kotak811">
+    <ul id="terms-kotak811">
         <li>1. Sirf wohi customers eligible hain jo pehle se Kotak ke customer nahi hain (New-to-Kotak). App par apna pincode zaroor check kar lein.</li>
         <li>2. MIS tracking ke liye VKYC (Video KYC) 48 ghante ke andar poora hona chahiye; sirf Aadhaar se linked mobile number ka hi use karein.</li>
         <li>3. Account mein shuru mein ₹2,000 ki funding karni zaroori hai (kam se kam ₹1,000 balance maintain karein aur usi mahine mein paise na nikalein).</li>
@@ -829,14 +783,13 @@
         <li>5. PAN, Aadhaar aur Mobile number mein koi mismatch nahi hona chahiye, warna Physical KYC karni padegi aur payout nahi milega.</li>
     </ul>
 
-<ul id="terms-jiopayments">
+    <ul id="terms-jiopayments">
         <li>1. Yeh ek zero balance savings account hai jismein koi maintenance charges nahi lagte[cite: 21].</li>
         <li>2. Payout details: Full KYC complete karne par ₹100 aur Debit Card milne par ₹100 milta hai (Total ₹200)[cite: 21]. Status 7 din mein update hota hai[cite: 21].</li>
         <li>3. Sirf naye Jio Payments Bank customers eligible hain; ek unique device aur mobile number se ek hi account ban sakta hai[cite: 22, 23].</li>
         <li>4. Customer ko apna KYC process (Video KYC sahit) asli documents ke sath poora karna zaroori hai[cite: 22].</li>
         <li>5. Customer se kisi bhi tarah ke extra paise na lein aur na hi unhein koi incentive dein, warna account block ho sakta hai[cite: 22, 23].</li>
     </ul>
-    
 </div>
 
 <!-- FIREBASE & APP LOGIC SCRIPT -->
@@ -919,31 +872,26 @@
         }
     };
 
-    // Load already started tasks from localStorage so it never resets
     let startedTasks = JSON.parse(localStorage.getItem('earnova_completed_tasks') || '[]');
 
-  window.startAppTask = async function(rewardAmount, taskUrl) {
+    window.startAppTask = async function(rewardAmount, taskUrl) {
         if (!auth.currentUser && localStorage.getItem("earnova_logged_in") !== "true") {
             alert("Task start karne ke liye pehle login karein!");
             openLoginModal();
             return;
         }
 
-        // Check if this specific task was already started before
         if (startedTasks.includes(taskUrl)) {
             alert("Aap yeh task pehle hi shuru kar chuke hain! Dobara reward nahi milega.");
             if (taskUrl) window.open(taskUrl, '_blank');
             return;
         }
 
-        // Save this task as started permanently
         startedTasks.push(taskUrl);
         localStorage.setItem('earnova_completed_tasks', JSON.stringify(startedTasks));
 
-        // Open task link in new tab
         if (taskUrl) window.open(taskUrl, '_blank');
 
-        // Show Celebration Popup with Amount
         document.getElementById('taskModalAmountDisplay').innerText = "Reward: ₹" + rewardAmount;
         const successModal = document.getElementById('taskSuccessModal');
         if (successModal) {
@@ -968,20 +916,11 @@
         }
     };
 
-        if (auth.currentUser) {
-            try {
-                const userRef = doc(db, "users", auth.currentUser.uid);
-                const snap = await getDoc(userRef);
-                if (snap.exists()) {
-                    let currentPending = Number(snap.data().pendingWithdrawals || 0);
-                    let newPending = currentPending + rewardAmount;
-                    await updateDoc(userRef, {
-                        pendingWithdrawals: newPending
-                    });
-                }
-            } catch (error) {
-                console.error("Firebase update error:", error);
-            }
+    window.closeTaskSuccessModal = function() {
+        const successModal = document.getElementById('taskSuccessModal');
+        if (successModal) {
+            successModal.classList.add('hidden');
+            successModal.classList.remove('flex');
         }
     };
 
@@ -1031,7 +970,7 @@
         }
     };
     
-onAuthStateChanged(auth, async (user) => {
+    onAuthStateChanged(auth, async (user) => {
         let gBtn = document.getElementById('google-login-section');
         let profileInfo = document.getElementById('user-profile-info');
 
@@ -1183,7 +1122,6 @@ onAuthStateChanged(auth, async (user) => {
         }
     };
 
-    // --- SPIN LOGIC ---
     window.earnovaSpin = async function() {
         const today = new Date().toDateString();
         const result = document.getElementById('spinResult');
@@ -1234,7 +1172,6 @@ onAuthStateChanged(auth, async (user) => {
         }, 3000);
     }
 
-    // --- CHECK-IN LOGIC ---
     const earnovaDailyRewards = [0.01, 0.02, 0.03, 0.05, 0.07, 0.08, 0.10];
     window.earnovaCheckin = async function() {
         const today = new Date().toDateString();
@@ -1274,7 +1211,6 @@ onAuthStateChanged(auth, async (user) => {
         await window.addRewardToWallet(reward);
     }
 
-    // --- TAP TO SCRATCH LOGIC ---
     window.claimTapScratch = async function() {
         const today = new Date().toDateString();
         const lastScratch = localStorage.getItem('earnova_last_scratch');
@@ -1308,7 +1244,6 @@ onAuthStateChanged(auth, async (user) => {
         await addRewardToWallet(reward);
     }
 
-    // --- WITHDRAWAL AMOUNT SELECTOR ---
     window.selectAmount = function(amount, btn) {
         const hiddenInput = document.getElementById('selectedWithdrawAmount');
         if (hiddenInput) {
@@ -1344,6 +1279,6 @@ onAuthStateChanged(auth, async (user) => {
         }
     }
 </script>
-        
+    
 </body>
 </html>
