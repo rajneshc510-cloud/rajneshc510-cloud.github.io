@@ -693,14 +693,25 @@
     </div>
 </div>
 
-<!-- TASK SUCCESS & CELEBRATION MODAL -->
+<!-- TASK START SUCCESS MODAL -->
 <div id="taskSuccessModal" class="hidden fixed inset-0 bg-black/60 z-[120] flex items-center justify-center backdrop-blur-sm px-4">
+    <div class="bg-white p-6 md:p-8 rounded-3xl shadow-2xl max-w-sm w-full relative text-center transform transition-all animate-bounce-short">
+        <div class="w-16 h-16 bg-gradient-to-tr from-amber-400 to-orange-500 text-white rounded-full flex items-center justify-center text-3xl mx-auto mb-4 shadow-lg shadow-orange-500/30">🚀</div>
+        <h3 class="text-xl font-black text-slate-900 tracking-tight mb-1">Task Shuru Ho Gaya!</h3>
+        <p class="text-xs font-bold text-amber-600 mb-3" id="taskModalAmountDisplay">Reward: ₹0</p>
+        <p class="text-xs md:text-sm text-gray-500 font-medium leading-relaxed mb-6">Aapko link se app download karke process poora karna hoga. Verification ke baad reward aapke wallet mein add ho jayega! ✨</p>
+        <button onclick="closeTaskSuccessModal()" class="w-full bg-gradient-to-r from-[#087E8B] to-teal-600 hover:from-teal-600 hover:to-[#087E8B] text-white font-bold py-3 rounded-2xl shadow-lg shadow-teal-700/25 transition text-sm">Awesome, Let's Go! 🔥</button>
+    </div>
+</div>
+
+<!-- SPIN / SCRATCH / CHECK-IN REWARD CLAIMED MODAL -->
+<div id="rewardClaimModal" class="hidden fixed inset-0 bg-black/60 z-[120] flex items-center justify-center backdrop-blur-sm px-4">
     <div class="bg-white p-6 md:p-8 rounded-3xl shadow-2xl max-w-sm w-full relative text-center transform transition-all animate-bounce-short">
         <div class="w-16 h-16 bg-gradient-to-tr from-amber-400 to-orange-500 text-white rounded-full flex items-center justify-center text-3xl mx-auto mb-4 shadow-lg shadow-orange-500/30">🎉</div>
         <h3 class="text-xl font-black text-slate-900 tracking-tight mb-1">Reward Claimed! 🚀</h3>
-        <p class="text-xs font-bold text-amber-600 mb-3" id="taskModalAmountDisplay">Reward: ₹0</p>
+        <p class="text-xs font-bold text-amber-600 mb-3" id="rewardModalAmountDisplay">Reward: ₹0</p>
         <p class="text-xs md:text-sm text-gray-500 font-medium leading-relaxed mb-6">Aapka reward aapke wallet mein successfully add ho gaya hai! ✨</p>
-        <button onclick="closeTaskSuccessModal()" class="w-full bg-gradient-to-r from-[#087E8B] to-teal-600 hover:from-teal-600 hover:to-[#087E8B] text-white font-bold py-3 rounded-2xl shadow-lg shadow-teal-700/25 transition text-sm">Awesome, Thanks! 🔥</button>
+        <button onclick="closeRewardClaimModal()" class="w-full bg-gradient-to-r from-[#087E8B] to-teal-600 hover:from-teal-600 hover:to-[#087E8B] text-white font-bold py-3 rounded-2xl shadow-lg shadow-teal-700/25 transition text-sm">Awesome, Thanks! 🔥</button>
     </div>
 </div>
 
@@ -1204,12 +1215,12 @@
             localStorage.setItem('earnova_spin_date', today);
             btn.textContent = 'Come Back Tomorrow';
 
-            // Show Celebration Popup with Spin Reward Amount
-            document.getElementById('taskModalAmountDisplay').innerText = "Spin Reward: ₹" + selected.toFixed(2);
-            const successModal = document.getElementById('taskSuccessModal');
-            if (successModal) {
-                successModal.classList.remove('hidden');
-                successModal.classList.add('flex');
+           // Show Reward Claim Modal for Spin
+            document.getElementById('rewardModalAmountDisplay').innerText = "Spin Reward: ₹" + selected.toFixed(2);
+            const rewardModal = document.getElementById('rewardClaimModal');
+            if (rewardModal) {
+                rewardModal.classList.remove('hidden');
+                rewardModal.classList.add('flex');
             }
 
             await addRewardToWallet(selected);
@@ -1255,12 +1266,13 @@
         btn.textContent = 'Claimed Today ✓';
         btn.classList.add('bg-gray-400', 'cursor-not-allowed');
 
-        // Show Celebration Popup with Check-in Reward
-        document.getElementById('taskModalAmountDisplay').innerText = "Check-in Reward (Day " + streak + "): ₹" + reward.toFixed(2);
-        const successModal = document.getElementById('taskSuccessModal');
-        if (successModal) {
-            successModal.classList.remove('hidden');
-            successModal.classList.add('flex');
+        
+        // Show Reward Claim Modal for Check-in
+        document.getElementById('rewardModalAmountDisplay').innerText = "Check-in Reward (Day " + streak + "): ₹" + reward.toFixed(2);
+        const rewardModal = document.getElementById('rewardClaimModal');
+        if (rewardModal) {
+            rewardModal.classList.remove('hidden');
+            rewardModal.classList.add('flex');
         }
 
         await window.addRewardToWallet(reward);
@@ -1283,12 +1295,12 @@
         let reward = 0.40;
         localStorage.setItem('earnova_last_scratch', today);
 
-        // Show Celebration Popup with Scratch Reward Amount
-        document.getElementById('taskModalAmountDisplay').innerText = "Scratch Reward: ₹" + reward.toFixed(2);
-        const successModal = document.getElementById('taskSuccessModal');
-        if (successModal) {
-            successModal.classList.remove('hidden');
-            successModal.classList.add('flex');
+        // Show Reward Claim Modal
+        document.getElementById('rewardModalAmountDisplay').innerText = "Scratch Reward: ₹" + reward.toFixed(2);
+        const rewardModal = document.getElementById('rewardClaimModal');
+        if (rewardModal) {
+            rewardModal.classList.remove('hidden');
+            rewardModal.classList.add('flex');
         }
 
         await addRewardToWallet(reward);
