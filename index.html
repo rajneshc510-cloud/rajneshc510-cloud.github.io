@@ -950,6 +950,14 @@
         }
     };
 
+    window.closeTaskWarningModal = function() {
+        const warningModal = document.getElementById('taskWarningModal');
+        if (warningModal) {
+            warningModal.classList.add('hidden');
+            warningModal.classList.remove('flex');
+        }
+    };
+
     window.requestWithdrawal = async function() {
         if (!auth.currentUser && localStorage.getItem("earnova_logged_in") !== "true") {
             alert("Pehle login karein!");
