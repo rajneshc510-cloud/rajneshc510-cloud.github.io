@@ -1001,16 +1001,26 @@
            showWithdrawalSuccessModal();
         }
     };
+    
+onAuthStateChanged(auth, async (user) => {
+        let gBtn = document.getElementById('google-login-section');
+        let profileInfo = document.getElementById('user-profile-info');
 
-    onAuthStateChanged(auth, async (user) => {
         if (user) {
-            let gBtn = document.getElementById('google-login-section');
             if (gBtn) gBtn.classList.add('hidden');
-            document.getElementById('user-profile-info').classList.remove('hidden');
-            document.getElementById('nav-profile-pic').src = user.photoURL || "https://www.svgrepo.com/show/498547/profile.svg";
-            document.getElementById('popup-user-name').innerText = user.displayName || 'User';
-            document.getElementById('popup-user-email').innerText = user.email || '';
-            document.getElementById('user-name-display').innerText = user.displayName || 'Rajnesh';
+            if (profileInfo) profileInfo.classList.remove('hidden');
+            
+            const profilePic = document.getElementById('nav-profile-pic');
+            if (profilePic) profilePic.src = user.photoURL || "https://www.svgrepo.com/show/498547/profile.svg";
+            
+            const popupName = document.getElementById('popup-user-name');
+            if (popupName) popupName.innerText = user.displayName || 'User';
+            
+            const popupEmail = document.getElementById('popup-user-email');
+            if (popupEmail) popupEmail.innerText = user.email || '';
+            
+            const userNameDisplay = document.getElementById('user-name-display');
+            if (userNameDisplay) userNameDisplay.innerText = user.displayName || 'Rajnesh';
 
             const userRef = doc(db, "users", user.uid);
             const userSnap = await getDoc(userRef);
@@ -1029,21 +1039,28 @@
             });
         } else {
             if (localStorage.getItem("earnova_logged_in") === "true") {
-                let gBtn = document.getElementById('google-login-section');
                 if (gBtn) gBtn.classList.add('hidden');
-                document.getElementById('user-profile-info').classList.remove('hidden');
-                document.getElementById('nav-profile-pic').src = "https://www.svgrepo.com/show/498547/profile.svg";
+                if (profileInfo) profileInfo.classList.remove('hidden');
+                
+                const profilePic = document.getElementById('nav-profile-pic');
+                if (profilePic) profilePic.src = "https://www.svgrepo.com/show/498547/profile.svg";
+                
                 let savedName = localStorage.getItem("earnova_user_name") || "Rajnesh Chauhan";
-                document.getElementById('popup-user-name').innerText = savedName;
-                document.getElementById('user-name-display').innerText = savedName;
+                const popupName = document.getElementById('popup-user-name');
+                if (popupName) popupName.innerText = savedName;
+                
+                const userNameDisplay = document.getElementById('user-name-display');
+                if (userNameDisplay) userNameDisplay.innerText = savedName;
+                
                 let savedBal = localStorage.getItem('earnova_saved_balance') || "2.36";
-                document.getElementById('wallet-display').innerText = savedBal;
-                document.getElementById('header-balance').innerText = savedBal;
+                const updateEl = (id, val) => { if(document.getElementById(id)) document.getElementById(id).innerText = val; };
+                updateEl('wallet-display', savedBal);
+                updateEl('header-balance', savedBal);
             } else {
-                let gBtn = document.getElementById('google-login-section');
                 if (gBtn) gBtn.classList.remove('hidden');
-                document.getElementById('user-profile-info').classList.add('hidden');
-                document.getElementById('user-name-display').innerText = 'Guest';
+                if (profileInfo) profileInfo.classList.add('hidden');
+                const userNameDisplay = document.getElementById('user-name-display');
+                if (userNameDisplay) userNameDisplay.innerText = 'Guest';
             }
         }
     });
