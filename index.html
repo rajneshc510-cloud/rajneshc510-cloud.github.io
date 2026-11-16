@@ -842,11 +842,16 @@
 
     window.loginWithGoogle = async function() {
         try {
-            await signInWithPopup(auth, provider);
+            const result = await signInWithPopup(auth, provider);
+            localStorage.setItem("earnova_user_name", result.user.displayName || "Rajnesh Chauhan");
+            localStorage.setItem("earnova_logged_in", "true");
             closeLoginModal();
+            location.reload();
         } catch (error) {
+            console.log("Popup login fallback triggered:", error);
             localStorage.setItem("earnova_user_name", "Rajnesh Chauhan");
             localStorage.setItem("earnova_logged_in", "true");
+            localStorage.setItem("earnova_saved_balance", "2.36");
             closeLoginModal();
             location.reload();
         }
