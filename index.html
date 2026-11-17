@@ -19,29 +19,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-                    },
-                    colors: {
-                        royalblue: '#087E8B',
-                        cyan: '#087E8B',
-                        brand: {
-                            50: '#effbfc',
-                            100: '#d7f4f7',
-                            500: '#087E8B',
-                            600: '#066570',
-                            700: '#054E56',
-                            900: '#03343A'
-                        }
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+                },
+                colors: {
+                    royalblue: '#087E8B',
+                    brand: {
+                        50: '#effbfc',
+                        100: '#d7f4f7',
+                        500: '#087E8B',
+                        600: '#066570',
+                        700: '#054E56',
+                        900: '#03343A'
                     }
                 }
             }
         }
-    </script>
+    }
+</script>
     <style>
         body {
             font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
@@ -204,57 +203,60 @@
     <!-- DASHBOARD TAB -->
     <section id="dashboard" class="tab-content active space-y-5 md:space-y-6">
 
-        <!-- HERO BANNER -->
-        <div class="relative text-white rounded-3xl overflow-hidden py-7 px-5 md:py-10 md:px-10 shadow-xl bg-gradient-to-br from-[#043d44] via-[#065F66] to-[#087E8B] border border-white/10">
-            <div class="absolute inset-0 opacity-35" style="background-image: url('hero-banner.png.jpg'); background-size: cover; background-position: center;"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-[#03343A]/90 via-[#043d44]/65 to-[#043d44]/50"></div>
+     <!-- COMPACT HERO BANNER (Mobile Friendly) -->
+<div class="relative text-white rounded-2xl md:rounded-3xl overflow-hidden py-4 px-4 md:py-9 md:px-10 shadow-lg bg-gradient-to-br from-[#043d44] via-[#065F66] to-[#087E8B] border border-white/10">
+    <div class="absolute inset-0 opacity-35" style="background-image: url('hero-banner.png.jpg'); background-size: cover; background-position: center;"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#03343A]/90 via-[#043d44]/65 to-[#043d44]/50"></div>
 
-            <div class="relative z-10 flex flex-col items-center text-center space-y-3 max-w-2xl mx-auto">
-                <div class="inline-flex items-center gap-2 bg-white/15 border border-white/20 text-white text-[11px] md:text-xs font-bold px-3.5 py-1 rounded-full backdrop-blur-md">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    Welcome, <span id="user-name-display" class="text-amber-300">Guest</span>! 👋
-                </div>
-                <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight tracking-tight">
-                    Your <span class="text-amber-300">Financial Future</span> Starts Here
-                </h1>
-                <p class="text-cyan-100/90 text-xs md:text-sm max-w-lg leading-relaxed">
-                    Complete verified app tasks, spin the lucky wheel & earn daily rewards with direct UPI & Bank payouts — zero investment required.
-                </p>
-                <div class="pt-1 flex flex-wrap items-center justify-center gap-3">
-                    <button onclick="showTab('tasks')" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold px-6 py-2.5 rounded-full shadow-lg shadow-amber-500/20 transition transform hover:-translate-y-0.5 text-xs md:text-sm">
-                        Start Earning Now ➔
-                    </button>
-                    <button onclick="showTab('wallet')" class="bg-white/10 hover:bg-white/20 border border-white/25 text-white font-bold px-5 py-2.5 rounded-full backdrop-blur-sm transition text-xs md:text-sm">
-                        View Wallet
-                    </button>
-                </div>
-            </div>
+    <div class="relative z-10 flex flex-col items-center text-center space-y-2 md:space-y-3 max-w-2xl mx-auto">
+        <div class="inline-flex items-center gap-1.5 bg-white/15 border border-white/20 text-white text-[10px] md:text-xs font-bold px-3 py-0.5 md:py-1 rounded-full backdrop-blur-md">
+            <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Welcome, <span id="user-name-display" class="text-amber-300">Guest</span> 👋</span>
         </div>
 
-        <!-- TRUST & PLATFORM HIGHLIGHTS BAR -->
-        <div class="grid grid-cols-3 gap-2.5 md:gap-4">
-            <div class="bg-white rounded-2xl p-3 md:p-4 border border-slate-200/80 shadow-sm flex items-center gap-2.5">
-                <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg shrink-0">⚡</div>
-                <div>
-                    <p class="text-[11px] md:text-xs font-extrabold text-slate-800 leading-tight">Instant UPI</p>
-                    <p class="text-[10px] text-slate-400 font-medium hidden sm:block">Fast 24h settlement</p>
-                </div>
-            </div>
-            <div class="bg-white rounded-2xl p-3 md:p-4 border border-slate-200/80 shadow-sm flex items-center gap-2.5">
-                <div class="w-9 h-9 rounded-xl bg-cyan-50 text-[#087E8B] flex items-center justify-center text-lg shrink-0">🛡️</div>
-                <div>
-                    <p class="text-[11px] md:text-xs font-extrabold text-slate-800 leading-tight">100% Free</p>
-                    <p class="text-[10px] text-slate-400 font-medium hidden sm:block">Zero investment needed</p>
-                </div>
-            </div>
-            <div class="bg-white rounded-2xl p-3 md:p-4 border border-slate-200/80 shadow-sm flex items-center gap-2.5">
-                <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg shrink-0">🏆</div>
-                <div>
-                    <p class="text-[11px] md:text-xs font-extrabold text-slate-800 leading-tight">Top Partners</p>
-                    <p class="text-[10px] text-slate-400 font-medium hidden sm:block">SEBI & RBI regulated apps</p>
-                </div>
-            </div>
+        <h1 class="text-lg sm:text-2xl md:text-4xl font-extrabold leading-tight tracking-tight">
+            Your <span class="text-amber-300">Financial Future</span> Starts Here
+        </h1>
+
+        <p class="text-cyan-100 text-[11px] md:text-sm max-w-md leading-snug">
+            Complete simple tasks &amp; spin daily for instant UPI payouts — zero investment.
+        </p>
+
+        <div class="pt-1 flex flex-row items-center justify-center gap-2.5 w-full">
+            <button onclick="showTab('tasks')" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold px-4 py-2 md:px-6 md:py-2.5 rounded-full shadow-md transition text-[11px] md:text-sm whitespace-nowrap">
+                Start Earning ➔
+            </button>
+            <button onclick="showTab('wallet')" class="bg-white/15 hover:bg-white/25 border border-white/25 text-white font-bold px-4 py-2 md:px-5 md:py-2.5 rounded-full backdrop-blur-sm transition text-[11px] md:text-sm whitespace-nowrap">
+                View Wallet
+            </button>
         </div>
+    </div>
+</div>
+
+<!-- CLEAN TRUST & PLATFORM HIGHLIGHTS BAR -->
+<div class="grid grid-cols-3 gap-2 md:gap-4">
+    <div class="bg-white rounded-2xl p-2.5 md:p-4 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center text-center sm:text-left gap-1.5 sm:gap-2.5">
+        <div class="w-8 h-8 md:w-9 md:h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm md:text-lg shrink-0">⚡</div>
+        <div>
+            <p class="text-[10px] md:text-xs font-extrabold text-slate-800 whitespace-nowrap">Instant UPI</p>
+            <p class="text-[10px] text-slate-400 font-medium hidden sm:block">Fast 24h settlement</p>
+        </div>
+    </div>
+    <div class="bg-white rounded-2xl p-2.5 md:p-4 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center text-center sm:text-left gap-1.5 sm:gap-2.5">
+        <div class="w-8 h-8 md:w-9 md:h-9 rounded-xl bg-cyan-50 text-[#087E8B] flex items-center justify-center text-sm md:text-lg shrink-0">🛡️</div>
+        <div>
+            <p class="text-[10px] md:text-xs font-extrabold text-slate-800 whitespace-nowrap">100% Free</p>
+            <p class="text-[10px] text-slate-400 font-medium hidden sm:block">Zero investment</p>
+        </div>
+    </div>
+    <div class="bg-white rounded-2xl p-2.5 md:p-4 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center text-center sm:text-left gap-1.5 sm:gap-2.5">
+        <div class="w-8 h-8 md:w-9 md:h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm md:text-lg shrink-0">🏆</div>
+        <div>
+            <p class="text-[10px] md:text-xs font-extrabold text-slate-800 whitespace-nowrap">Top Partners</p>
+            <p class="text-[10px] text-slate-400 font-medium hidden sm:block">Verified offers</p>
+        </div>
+    </div>
+</div>
 
         <!-- DAILY REWARDS & FEATURES GRID -->
         <div>
