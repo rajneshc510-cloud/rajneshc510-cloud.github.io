@@ -1533,7 +1533,7 @@
     <div class="bg-white p-6 md:p-8 rounded-3xl shadow-2xl max-w-sm w-full text-center">
         <div class="w-16 h-16 bg-gradient-to-tr from-[#2563EB] to-indigo-600 text-white rounded-full flex items-center justify-center text-3xl mx-auto mb-4 shadow-lg">🚀</div>
         <h3 class="text-xl font-extrabold text-slate-900 mb-1">Task Started!</h3>
-        <p class="text-xs font-bold text-[#2563EB] mb-3" id="taskModalAmountDisplay">Pending Reward: ₹0</p>
+        <p class="text-xs font-bold text-[#2563EB] mb-3" id="taskModalAmountDisplay">Reward: ₹0</p>
         <p class="text-xs md:text-sm text-slate-500 font-medium leading-relaxed mb-6">Link se app download karke sabhi steps poora karein. Verification ke baad reward aapke wallet mein credit ho jayega! ✨</p>
         <button onclick="closeTaskSuccessModal()" class="w-full bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold py-3 rounded-2xl shadow transition text-sm">Awesome, Let's Go! 🔥</button>
     </div>
@@ -1658,7 +1658,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot, collection, addDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyCHTnkaOHGfpE8xDQuPKijuBI8KgnL1rhI",
@@ -1677,7 +1677,7 @@
     window.auth = auth;
     window.db = db;
 
-    // Profile Dropdown Controls
+    // Profile Dropdown Controls (Globally accessible)
     window.toggleProfileMenu = function() {
         const dropdown = document.getElementById('profileDropdown');
         if (dropdown) dropdown.classList.toggle('active');
@@ -1771,112 +1771,49 @@
         }
     };
 
-    // ================= TASK TRACKING & ONE-TIME REWARD LOGIC =================
     let startedTasks = JSON.parse(localStorage.getItem('earnova_completed_tasks') || '[]');
-    let isProcessingTask = false;
 
-    window.updateTaskButtonsUI = function(list) {
-        if (!Array.isArray(list)) return;
-        document.querySelectorAll('button[onclick*="openPopup("]').forEach(btn => {
-            const onclickAttr = btn.getAttribute('onclick') || '';
-            const alreadyStarted = list.some(url => onclickAttr.includes(url));
-            if (alreadyStarted) {
-                btn.innerText = 'Started ✓';
-                btn.classList.remove('bg-[#2563EB]', 'hover:bg-[#1D4ED8]', 'text-white');
-                btn.classList.add('bg-emerald-50', 'text-emerald-700', 'border', 'border-emerald-200');
-            }
-        });
-    };
-
-    window.startAppTask = async function(rewardAmount, taskUrl, taskName = 'Partner Task') {
+    window.startAppTask = async function(rewardAmount, taskUrl) {
         if (!auth.currentUser && localStorage.getItem("earnova_logged_in") !== "true") {
             showToast("Task start karne ke liye pehle login karein!", true);
             openLoginModal();
             return;
         }
 
-        if (isProcessingTask) return;
-        isProcessingTask = true;
+        if (startedTasks.includes(taskUrl)) {
+            showWarningModal(
+                "Task Already Started!",
+                "Aap yeh task pehle hi shuru kar chuke hain. Dobara reward nahi milega — kripya app mein apna process poora karein."
+            );
+            if (taskUrl) window.open(taskUrl, '_blank');
+            return;
+        }
 
-        try {
-            // 1. Check in local memory first
-            let alreadyCompleted = startedTasks.includes(taskUrl);
+        startedTasks.push(taskUrl);
+        localStorage.setItem('earnova_completed_tasks', JSON.stringify(startedTasks));
 
-            // 2. Also check permanently in Firebase Firestore (so logout/cache clear cannot bypass)
-            if (auth.currentUser && !alreadyCompleted) {
+        if (taskUrl) window.open(taskUrl, '_blank');
+
+        document.getElementById('taskModalAmountDisplay').innerText = "Reward: ₹" + rewardAmount;
+        const successModal = document.getElementById('taskSuccessModal');
+        if (successModal) {
+            successModal.classList.remove('hidden');
+            successModal.classList.add('flex');
+        }
+
+        if (auth.currentUser) {
+            try {
                 const userRef = doc(db, "users", auth.currentUser.uid);
                 const snap = await getDoc(userRef);
                 if (snap.exists()) {
-                    const dbTasks = snap.data().startedTasks || [];
-                    if (dbTasks.includes(taskUrl)) {
-                        alreadyCompleted = true;
-                        startedTasks = Array.from(new Set([...startedTasks, ...dbTasks]));
-                        localStorage.setItem('earnova_completed_tasks', JSON.stringify(startedTasks));
-                        updateTaskButtonsUI(startedTasks);
-                    }
-                }
-            }
-
-            // 3. Block duplicate reward completely
-            if (alreadyCompleted) {
-                showWarningModal(
-                    "Task Already Started!",
-                    "Aap yeh task pehle hi start kar chuke hain. Ek task par sirf 1 baar hi reward milta hai — dobara paise add nahi honge."
-                );
-                return;
-            }
-
-            // 4. First-time start: save locally & update button UI immediately
-            startedTasks.push(taskUrl);
-            localStorage.setItem('earnova_completed_tasks', JSON.stringify(startedTasks));
-            updateTaskButtonsUI(startedTasks);
-
-            if (taskUrl) window.open(taskUrl, '_blank');
-
-            document.getElementById('taskModalAmountDisplay').innerText = "Pending Reward: ₹" + rewardAmount;
-            const successModal = document.getElementById('taskSuccessModal');
-            if (successModal) {
-                successModal.classList.remove('hidden');
-                successModal.classList.add('flex');
-            }
-
-            // 5. Save permanently in Firebase + Log click details for Admin
-            if (auth.currentUser) {
-                const userRef = doc(db, "users", auth.currentUser.uid);
-                const snap = await getDoc(userRef);
-                const currentPending = snap.exists() ? Number(snap.data().pendingWithdrawals || 0) : 0;
-
-                const clickRecord = {
-                    taskName: taskName,
-                    taskUrl: taskUrl,
-                    reward: rewardAmount,
-                    clickedAt: new Date().toISOString(),
-                    status: "Pending Verification"
-                };
-
-                await setDoc(userRef, {
-                    pendingWithdrawals: currentPending + rewardAmount,
-                    startedTasks: arrayUnion(taskUrl),
-                    taskHistory: arrayUnion(clickRecord)
-                }, { merge: true });
-
-                // Optional global log collection so you can see all clicks in one place in Firebase Console
-                try {
-                    await addDoc(collection(db, "task_clicks"), {
-                        uid: auth.currentUser.uid,
-                        userName: auth.currentUser.displayName || "User",
-                        userEmail: auth.currentUser.email || "",
-                        ...clickRecord
+                    let currentPending = Number(snap.data().pendingWithdrawals || 0);
+                    await updateDoc(userRef, {
+                        pendingWithdrawals: currentPending + rewardAmount
                     });
-                } catch (logErr) {
-                    console.log("Global task_clicks log skipped (check Firestore rules):", logErr.message);
                 }
+            } catch (error) {
+                console.error("Firebase update error:", error);
             }
-        } catch (error) {
-            console.error("Task start error:", error);
-            showToast("Kuch technical error aaya, kripya dobara try karein.", true);
-        } finally {
-            isProcessingTask = false;
         }
     };
 
@@ -1972,15 +1909,7 @@
             const userRef = doc(db, "users", user.uid);
             const userSnap = await getDoc(userRef);
             if (!userSnap.exists()) {
-                await setDoc(userRef, {
-                    name: user.displayName,
-                    email: user.email,
-                    walletBalance: 0,
-                    pendingWithdrawals: 0,
-                    startedTasks: [],
-                    taskHistory: [],
-                    joinedAt: new Date()
-                });
+                await setDoc(userRef, { name: user.displayName, email: user.email, walletBalance: 0, pendingWithdrawals: 0, joinedAt: new Date() });
             }
 
             onSnapshot(userRef, (docSnap) => {
@@ -1990,12 +1919,6 @@
                     updateEl('wallet-display', (data.walletBalance || 0).toFixed(2));
                     updateEl('header-balance', (data.walletBalance || 0).toFixed(2));
                     updateEl('pending-display', (data.pendingWithdrawals || 0).toFixed(2));
-
-                    // Sync started tasks from Firestore to UI
-                    const dbTasks = data.startedTasks || [];
-                    startedTasks = Array.from(new Set([...startedTasks, ...dbTasks]));
-                    localStorage.setItem('earnova_completed_tasks', JSON.stringify(startedTasks));
-                    updateTaskButtonsUI(startedTasks);
                 }
             });
         } else {
@@ -2015,7 +1938,6 @@
                 const updateEl = (id, val) => { if (document.getElementById(id)) document.getElementById(id).innerText = val; };
                 updateEl('wallet-display', savedBal);
                 updateEl('header-balance', savedBal);
-                updateTaskButtonsUI(startedTasks);
             } else {
                 if (gBtn) gBtn.classList.remove('hidden');
                 if (headerLoginBtn) headerLoginBtn.classList.remove('hidden');
@@ -2044,7 +1966,6 @@
 
         if (tabId === 'scratch') initScratchCanvas();
         if (tabId === 'checkin') renderCheckinUI();
-        updateTaskButtonsUI(startedTasks);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
@@ -2070,7 +1991,7 @@
         document.getElementById('popupTerms').innerHTML = document.getElementById(termsId).innerHTML;
         document.getElementById('popupStartBtn').onclick = function() {
             closePopup();
-            startAppTask(amount, link, title);
+            startAppTask(amount, link);
         };
         document.getElementById('taskPopup').classList.remove('hidden');
         document.getElementById('taskPopup').classList.add('flex');
@@ -2384,7 +2305,6 @@
         window.showTab('dashboard');
         renderCheckinUI();
         startAutoSlide();
-        updateTaskButtonsUI(startedTasks);
 
         const carousel = document.getElementById('heroCarousel');
         if (carousel) {
