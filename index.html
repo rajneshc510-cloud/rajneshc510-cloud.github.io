@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,244 +20,490 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com"></script>
-<script>
-    tailwind.config = {
-        theme: {
-            extend: {
-                fontFamily: {
-                    sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-                },
-                colors: {
-                    royalblue: '#087E8B',
-                    brand: {
-                        50: '#effbfc',
-                        100: '#d7f4f7',
-                        500: '#087E8B',
-                        600: '#066570',
-                        700: '#054E56',
-                        900: '#03343A'
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        royalblue: '#087E8B',
+                        brand: {
+                            50: '#effbfc',
+                            100: '#d7f4f7',
+                            500: '#087E8B',
+                            600: '#066570',
+                            700: '#054E56',
+                            900: '#03343A'
+                        }
                     }
                 }
             }
         }
-    }
-</script>
+    </script>
+
     <style>
-        .profile-menu-wrapper {
-  position: relative;
-  display: inline-block;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-/* Navbar Avatar Button */
-.profile-trigger {
-  background: none;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  padding: 0;
-  cursor: pointer;
-  transition: border-color 0.2s ease;
-}
-
-.profile-trigger:hover {
-  border-color: #facc15;
-}
-
-.nav-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Main Popup Container */
-.profile-dropdown {
-  position: absolute;
-  top: calc(100% + 12px);
-  right: 0;
-  width: 272px;
-  background: #ffffff;
-  border-radius: 14px;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: 0 16px 38px -8px rgba(15, 23, 42, 0.16), 
-              0 4px 12px -2px rgba(15, 23, 42, 0.06);
-  padding: 6px;
-  z-index: 1000;
-
-  /* Smooth Open/Close Animation */
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-8px) scale(0.97);
-  transform-origin: top right;
-  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.profile-dropdown.active {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0) scale(1);
-}
-
-/* Header Style */
-.dropdown-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 10px;
-  background: #f8fafc;
-  border-radius: 10px;
-}
-
-.dropdown-avatar {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #0d4a4b;
-  flex-shrink: 0;
-}
-
-.user-meta {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.user-name-row {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.user-name {
-  font-size: 14px;
-  font-weight: 700;
-  color: #0f172a;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.verified-icon {
-  width: 15px;
-  height: 15px;
-  color: #0d9488;
-  flex-shrink: 0;
-}
-
-.user-email {
-  font-size: 12px;
-  color: #64748b;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-top: 1px;
-}
-
-.member-badge {
-  font-size: 11px;
-  font-weight: 600;
-  color: #0d9488;
-  margin-top: 4px;
-}
-
-/* Thin Divider */
-.dropdown-divider {
-  height: 1px;
-  background: #f1f5f9;
-  margin: 6px 4px;
-}
-
-/* Menu Items */
-.dropdown-group {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 10px;
-  border-radius: 8px;
-  font-size: 13.5px;
-  font-weight: 500;
-  color: #334155;
-  text-decoration: none;
-  background: transparent;
-  border: none;
-  width: 100%;
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
-  box-sizing: border-box;
-}
-
-.dropdown-item svg {
-  width: 17px;
-  height: 17px;
-  color: #64748b;
-  transition: color 0.15s ease;
-  flex-shrink: 0;
-}
-
-.dropdown-item:hover {
-  background: #f1f5f9;
-  color: #0d4a4b;
-}
-
-.dropdown-item:hover svg {
-  color: #0d4a4b;
-}
-
-/* Subtle Tag */
-.hot-tag {
-  margin-left: auto;
-  font-size: 10px;
-  font-weight: 700;
-  background: #fef3c7;
-  color: #b45309;
-  padding: 2px 6px;
-  border-radius: 99px;
-}
-
-/* Logout Button */
-.logout-btn {
-  color: #dc2626;
-}
-
-.logout-btn svg {
-  color: #dc2626;
-}
-
-.logout-btn:hover {
-  background: #fef2f2;
-  color: #b91c1c;
-}
-
-.logout-btn:hover svg {
-  color: #b91c1c;
-}
-
-        
         body {
             font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-            background-color: #f3f6f9;
+            background-color: #f4f7fa;
             -webkit-font-smoothing: antialiased;
         }
         button, .nav-btn, [onclick] {
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
         }
-        .tab-content { display: none; animation: fadeUp 0.25s ease-out; }
+        .tab-content { display: none; animation: fadeUp 0.28s cubic-bezier(0.16, 1, 0.3, 1); }
         .tab-content.active { display: block; }
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(6px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Smooth Infinite Payout Ticker */
+        /* ================= PROFILE DROPDOWN ================= */
+        .profile-menu-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .profile-menu-wrapper.hidden {
+            display: none !important;
+        }
+        .profile-trigger {
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.28);
+            border-radius: 50%;
+            padding: 0;
+            cursor: pointer;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+        .profile-trigger:hover {
+            border-color: #fbbf24;
+            transform: scale(1.04);
+        }
+        .nav-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+        .profile-dropdown {
+            position: absolute;
+            top: calc(100% + 12px);
+            right: 0;
+            width: 274px;
+            max-width: calc(100vw - 24px);
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 20px 44px -10px rgba(15, 23, 42, 0.18), 0 4px 12px -2px rgba(15, 23, 42, 0.06);
+            padding: 6px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px) scale(0.97);
+            transform-origin: top right;
+            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .profile-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+        .dropdown-header {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 11px 10px;
+            background: #f8fafc;
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+        }
+        .dropdown-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #087E8B;
+            flex-shrink: 0;
+        }
+        .user-meta {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+        .user-name-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .user-name {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #0f172a;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .verified-icon {
+            width: 14px;
+            height: 14px;
+            color: #087E8B;
+            flex-shrink: 0;
+        }
+        .user-email {
+            font-size: 11.5px;
+            color: #64748b;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 1px;
+        }
+        .member-badge {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #059669;
+            margin-top: 3px;
+        }
+        .dropdown-divider {
+            height: 1px;
+            background: #f1f5f9;
+            margin: 6px 4px;
+        }
+        .dropdown-group {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 10px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            text-decoration: none;
+            background: transparent;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.15s ease, color 0.15s ease;
+            box-sizing: border-box;
+        }
+        .dropdown-item svg {
+            width: 16px;
+            height: 16px;
+            color: #64748b;
+            transition: color 0.15s ease;
+            flex-shrink: 0;
+        }
+        .dropdown-item:hover {
+            background: #f1f5f9;
+            color: #054E56;
+        }
+        .dropdown-item:hover svg {
+            color: #087E8B;
+        }
+        .hot-tag {
+            margin-left: auto;
+            font-size: 9.5px;
+            font-weight: 800;
+            background: #fef3c7;
+            color: #b45309;
+            padding: 2px 7px;
+            border-radius: 99px;
+        }
+        .logout-btn { color: #dc2626; }
+        .logout-btn svg { color: #dc2626; }
+        .logout-btn:hover { background: #fef2f2; color: #b91c1c; }
+        .logout-btn:hover svg { color: #b91c1c; }
+
+        /* ================= 3-SLIDE HERO CAROUSEL ================= */
+        .hero-carousel {
+            position: relative;
+            width: 100%;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 18px 40px -12px rgba(4, 51, 58, 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform;
+        }
+        .carousel-slide {
+            position: relative;
+            min-width: 100%;
+            min-height: 270px;
+            display: flex;
+            align-items: center;
+            padding: 36px 48px 46px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        .slide-1 {
+            background: radial-gradient(circle at 85% 20%, #0d7a87 0%, #054E56 55%, #032d32 100%);
+        }
+        .slide-2 {
+            background: radial-gradient(circle at 85% 20%, #0f766e 0%, #064e3b 55%, #022c22 100%);
+        }
+        .slide-3 {
+            background: radial-gradient(circle at 85% 20%, #0e7490 0%, #054E56 55%, #03272b 100%);
+        }
+        .slide-bg-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.28;
+            mix-blend-mode: luminosity;
+            pointer-events: none;
+        }
+        .slide-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(95deg, rgba(3, 45, 50, 0.94) 0%, rgba(3, 45, 50, 0.72) 56%, rgba(3, 45, 50, 0.32) 100%);
+            pointer-events: none;
+        }
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 28px;
+        }
+        .slide-text { max-width: 570px; }
+        .slide-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 13px;
+            border-radius: 99px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(8px);
+            color: #e2e8f0;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            margin-bottom: 12px;
+        }
+        .pulse-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #2dd4bf;
+            box-shadow: 0 0 8px #2dd4bf;
+            flex-shrink: 0;
+        }
+        .pulse-dot.green { background: #34d399; box-shadow: 0 0 8px #34d399; }
+        .pulse-dot.gold { background: #fbbf24; box-shadow: 0 0 8px #fbbf24; }
+        .slide-text h1, .slide-text h2 {
+            margin: 0 0 10px 0;
+            font-size: 32px;
+            line-height: 1.18;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+        .highlight-gold { color: #fbbf24; }
+        .slide-text p {
+            margin: 0 0 22px 0;
+            font-size: 14px;
+            line-height: 1.55;
+            color: #cbd5e1;
+            max-width: 480px;
+        }
+        .slide-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn-hero-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: #fbbf24;
+            color: #0f172a;
+            font-size: 13.5px;
+            font-weight: 800;
+            padding: 11px 22px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+            box-shadow: 0 8px 20px -4px rgba(251, 191, 36, 0.38);
+        }
+        .btn-hero-primary:hover {
+            background: #fde047;
+            transform: translateY(-2px);
+        }
+        .btn-hero-glass {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            color: #ffffff;
+            font-size: 13.5px;
+            font-weight: 700;
+            padding: 11px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            transition: background 0.2s ease;
+        }
+        .btn-hero-glass:hover { background: rgba(255, 255, 255, 0.22); }
+
+        /* Right Side Floating Glass UI Card */
+        .slide-visual { flex-shrink: 0; }
+        .glass-card {
+            width: 265px;
+            padding: 18px 20px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.22);
+            color: #ffffff;
+        }
+        .glass-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11.5px;
+            margin-bottom: 8px;
+        }
+        .gc-label { color: #cbd5e1; font-weight: 600; }
+        .gc-status { color: #34d399; font-weight: 700; }
+        .gc-amount {
+            font-size: 26px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 3px;
+            letter-spacing: -0.5px;
+        }
+        .gc-sub { font-size: 11.5px; color: #94a3b8; margin-bottom: 13px; font-weight: 500; }
+        .gc-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.14);
+            border-radius: 99px;
+            overflow: hidden;
+        }
+        .gc-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #34d399);
+            border-radius: 99px;
+        }
+        .gc-bar-fill.gold-fill {
+            background: linear-gradient(90deg, #f59e0b, #fbbf24);
+        }
+        .gc-avatars { display: flex; align-items: center; }
+        .mini-av {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #0d9488;
+            border: 2px solid #064e3b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            margin-right: -8px;
+        }
+        .mini-av-more {
+            margin-left: 16px;
+            font-size: 11px;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        /* Carousel Arrows & Progress Dots */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 5;
+            opacity: 0;
+            backdrop-filter: blur(8px);
+            transition: opacity 0.25s ease, background 0.2s ease;
+        }
+        .hero-carousel:hover .carousel-arrow { opacity: 1; }
+        .carousel-arrow:hover { background: rgba(255, 255, 255, 0.28); }
+        .carousel-arrow.prev { left: 12px; }
+        .carousel-arrow.next { right: 12px; }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 16px;
+            left: 48px;
+            display: flex;
+            gap: 8px;
+            z-index: 5;
+        }
+        .carousel-dots .dot {
+            width: 8px;
+            height: 6px;
+            border-radius: 99px;
+            border: none;
+            padding: 0;
+            background: rgba(255, 255, 255, 0.28);
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+            transition: width 0.3s ease, background 0.3s ease;
+        }
+        .carousel-dots .dot.active {
+            width: 32px;
+            background: rgba(255, 255, 255, 0.28);
+        }
+        .carousel-dots .dot.active span {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: #fbbf24;
+            border-radius: 99px;
+            animation: dotProgress 4.5s linear forwards;
+        }
+        .hero-carousel:hover .carousel-dots .dot.active span {
+            animation-play-state: paused;
+        }
+        @keyframes dotProgress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            .carousel-slide { padding: 24px 20px 42px; min-height: 225px; }
+            .slide-content { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .slide-text h1, .slide-text h2 { font-size: 22px; }
+            .slide-text p { font-size: 12.5px; margin-bottom: 16px; }
+            .btn-hero-primary, .btn-hero-glass { padding: 9px 16px; font-size: 12px; border-radius: 10px; }
+            .slide-visual { display: none; }
+            .carousel-dots { left: 20px; bottom: 14px; }
+            .carousel-arrow { display: none; }
+        }
+
+        /* ================= TICKER, NAV, WHEEL ================= */
         .ticker-wrap { overflow: hidden; white-space: nowrap; mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent); }
         .ticker { display: inline-flex; width: max-content; animation: ticker 32s linear infinite; }
         .ticker:hover { animation-play-state: paused; }
@@ -265,15 +512,10 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* Nav Tab Active Indicator */
-        .nav-btn {
-            position: relative;
-            border: none;
-            background: transparent;
-        }
+        .nav-btn { position: relative; border: none; background: transparent; }
         .nav-btn.active-tab {
             color: #fde68a !important;
-            background: rgba(255, 255, 255, 0.12) !important;
+            background: rgba(255, 255, 255, 0.14) !important;
         }
         .nav-btn.active-tab::after {
             content: '';
@@ -287,7 +529,6 @@
             border-radius: 99px;
         }
 
-        /* Check-in States */
         .checked-in {
             background: linear-gradient(135deg, #10b981, #087E8B) !important;
             color: white !important;
@@ -295,7 +536,6 @@
             box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
         }
 
-        /* Authentic 6-Slice Spin Wheel */
         .wheel-gradient {
             background: conic-gradient(
                 #0d9488 0deg 60deg,
@@ -310,7 +550,6 @@
             transition: transform 3.8s cubic-bezier(0.15, 0.85, 0.18, 1);
         }
 
-        /* Custom subtle scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
     </style>
@@ -337,12 +576,12 @@
             </div>
 
             <!-- Navigation Tabs -->
-            <div class="w-full md:w-auto md:flex-1 order-last md:order-none mt-1 md:mt-0 pt-2 md:pt-0 border-t border-white/10 md:border-none flex items-center justify-between md:justify-center gap-1 sm:gap-2">
-                <button id="btn-dashboard" class="nav-btn text-[11px] sm:text-xs font-semibold py-1.5 px-3 sm:px-4 rounded-full text-white/90 hover:text-white hover:bg-white/10 transition-all outline-none" onclick="showTab('dashboard')">Home</button>
-                <button id="btn-tasks" class="nav-btn text-[11px] sm:text-xs font-semibold py-1.5 px-3 sm:px-4 rounded-full text-white/90 hover:text-white hover:bg-white/10 transition-all outline-none" onclick="showTab('tasks')">Tasks</button>
-                <button id="btn-refer" class="nav-btn text-[11px] sm:text-xs font-semibold py-1.5 px-3 sm:px-4 rounded-full text-white/90 hover:text-white hover:bg-white/10 transition-all outline-none" onclick="showTab('refer')">Refer</button>
-                <button id="btn-wallet" class="nav-btn text-[11px] sm:text-xs font-semibold py-1.5 px-3 sm:px-4 rounded-full text-white/90 hover:text-white hover:bg-white/10 transition-all outline-none" onclick="showTab('wallet')">Wallet</button>
-                <button id="btn-extra" class="nav-btn text-[11px] sm:text-xs font-semibold py-1.5 px-3 sm:px-4 rounded-full text-white/90 hover:text-white hover:bg-white/10 transition-all outline-none" onclick="showTab('extra')">Banking</button>
+            <div class="w-full md:w-auto md:flex-1 order-last md:order-none mt-1 md:mt-0 pt-2 md:pt-0 border-t border-white/10 md:border-none flex items-center justify-between md:justify-center gap-1 sm:gap-2 overflow-x-auto">
+                <button id="btn-dashboard" class="nav-btn text-[11px] sm:text-xs font-semibold py-1.5 px-3 sm:px-4 rounded-full text-white/90 hover:text-white hover:bg-white/10 transition-all outline-none shrink-0" onclick="showTab('dashboard')">Home</button>
+                <button id="btn-tasks" class="nav-btn text-[11px] sm:text-xs font-semibold py-1.5 px-3 sm:px-4 rounded-full text-white/90 hover:text-white hover:bg-white/10 transition-all outline-none shrink-0" onclick="showTab('tasks')">Tasks</button>
+                <button id="btn-refer" class="nav-btn text-[11px] sm:text-xs font-semibold py-1.5 px-3 sm:px-4 rounded-full text-white/90 hover:text-white hover:bg-white/10 transition-all outline-none shrink-0" onclick="showTab('refer')">Refer</button>
+                <button id="btn-wallet" class="nav-btn text-[11px] sm:text-xs font-semibold py-1.5 px-3 sm:px-4 rounded-full text-white/90 hover:text-white hover:bg-white/10 transition-all outline-none shrink-0" onclick="showTab('wallet')">Wallet</button>
+                <button id="btn-extra" class="nav-btn text-[11px] sm:text-xs font-semibold py-1.5 px-3 sm:px-4 rounded-full text-white/90 hover:text-white hover:bg-white/10 transition-all outline-none shrink-0" onclick="showTab('extra')">Banking</button>
             </div>
 
             <!-- Right Controls: Wallet Pill + Login/Profile -->
@@ -357,239 +596,348 @@
                     Login
                 </button>
 
-               <!-- Profile Trigger Button (Navbar mein) -->
-<div class="profile-menu-wrapper">
-  <button class="profile-trigger" id="profileBtn" onclick="toggleProfileMenu()">
-    <img src="your-avatar.jpg" alt="Rajnesh" class="nav-avatar">
-  </button>
+                <!-- Profile Menu Wrapper (Shown when logged in) -->
+                <div id="user-profile-info" class="profile-menu-wrapper hidden">
+                    <button class="profile-trigger" id="profileBtn" onclick="toggleProfileMenu()" aria-label="Profile Menu">
+                        <img id="nav-profile-pic" src="https://www.svgrepo.com/show/498547/profile.svg" onerror="this.src='https://www.svgrepo.com/show/498547/profile.svg'" alt="Profile" class="nav-avatar">
+                    </button>
 
-  <!-- Modern Dropdown Popup -->
-  <div class="profile-dropdown" id="profileDropdown">
-    
-    <!-- Header Section -->
-    <div class="dropdown-header">
-      <img src="your-avatar.jpg" alt="Rajnesh" class="dropdown-avatar">
-      <div class="user-meta">
-        <div class="user-name-row">
-          <span class="user-name">Rajnesh Chauhan</span>
-          <!-- Verified Blue/Teal Tick -->
-          <svg class="verified-icon" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.9 14.7L6 12.6l1.5-1.5 2.6 2.6 6.4-6.4 1.5 1.5-7.9 7.9z"/>
-          </svg>
+                    <!-- Modern Dropdown Popup -->
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header">
+                            <img id="dropdown-profile-pic" src="https://www.svgrepo.com/show/498547/profile.svg" onerror="this.src='https://www.svgrepo.com/show/498547/profile.svg'" alt="User" class="dropdown-avatar">
+                            <div class="user-meta">
+                                <div class="user-name-row">
+                                    <span id="popup-user-name" class="user-name">User</span>
+                                    <svg class="verified-icon" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.9 14.7L6 12.6l1.5-1.5 2.6 2.6 6.4-6.4 1.5 1.5-7.9 7.9z"/>
+                                    </svg>
+                                </div>
+                                <span id="popup-user-email" class="user-email">Verified Account</span>
+                                <span class="member-badge">● Active Member</span>
+                            </div>
+                        </div>
+
+                        <div class="dropdown-divider"></div>
+
+                        <div class="dropdown-group">
+                            <button onclick="showTab('dashboard'); closeProfileMenu();" class="dropdown-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                                <span>Dashboard</span>
+                            </button>
+
+                            <button onclick="showTab('wallet'); closeProfileMenu();" class="dropdown-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
+                                <span>Wallet &amp; Payouts</span>
+                            </button>
+
+                            <button onclick="showTab('tasks'); closeProfileMenu();" class="dropdown-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                <span>High-Paying Tasks</span>
+                                <span class="hot-tag">HOT</span>
+                            </button>
+                        </div>
+
+                        <div class="dropdown-divider"></div>
+
+                        <div class="dropdown-group">
+                            <a href="mailto:rajneshc510@gmail.com" onclick="closeProfileMenu();" class="dropdown-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+                                <span>Help &amp; Support</span>
+                            </a>
+
+                            <a href="privacy.html" target="_blank" onclick="closeProfileMenu();" class="dropdown-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                <span>Privacy Policy</span>
+                            </a>
+                        </div>
+
+                        <div class="dropdown-divider"></div>
+
+                        <div class="dropdown-group">
+                            <button onclick="logout()" class="dropdown-item logout-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                                <span>Logout Account</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <span class="user-email">rajneshc510@gmail.com</span>
-        <span class="member-badge">● Active Member</span>
-      </div>
     </div>
-
-    <div class="dropdown-divider"></div>
-
-    <!-- Main Navigation Links -->
-    <div class="dropdown-group">
-      <a href="#dashboard" class="dropdown-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
-        <span>Dashboard</span>
-      </a>
-
-      <a href="#wallet" class="dropdown-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
-        <span>Wallet & Payouts</span>
-      </a>
-
-      <a href="#tasks" class="dropdown-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        <span>High-Paying Tasks</span>
-        <span class="hot-tag">HOT</span>
-      </a>
-    </div>
-
-    <div class="dropdown-divider"></div>
-
-    <!-- Support & Legal Links -->
-    <div class="dropdown-group">
-      <a href="#support" class="dropdown-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
-        <span>Help & Support</span>
-      </a>
-
-      <a href="#privacy" class="dropdown-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <span>Privacy Policy</span>
-      </a>
-    </div>
-
-    <div class="dropdown-divider"></div>
-
-    <!-- Logout Action -->
-    <div class="dropdown-group">
-      <button onclick="logoutUser()" class="dropdown-item logout-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
-        <span>Logout Account</span>
-      </button>
-    </div>
-
-  </div>
-</div>
-</div>                
 </nav>
 <!-- MAIN HEADER END -->
 
 <!-- MAIN CONTENT -->
-<main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
+<main class="max-w-7xl mx-auto px-4 py-5 md:py-6 flex-1 w-full">
 
     <!-- DASHBOARD TAB -->
     <section id="dashboard" class="tab-content active space-y-5 md:space-y-6">
 
-     <!-- COMPACT HERO BANNER (Mobile Friendly) -->
-<div class="relative text-white rounded-2xl md:rounded-3xl overflow-hidden py-4 px-4 md:py-9 md:px-10 shadow-lg bg-gradient-to-br from-[#043d44] via-[#065F66] to-[#087E8B] border border-white/10">
-    <div class="absolute inset-0 opacity-35" style="background-image: url('hero-banner.png.jpg'); background-size: cover; background-position: center;"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-[#03343A]/90 via-[#043d44]/65 to-[#043d44]/50"></div>
+        <!-- PREMIUM 3-SLIDE AUTO-ROTATING HERO CAROUSEL -->
+        <div class="hero-carousel" id="heroCarousel">
+            <div class="carousel-track" id="carouselTrack">
 
-    <div class="relative z-10 flex flex-col items-center text-center space-y-2 md:space-y-3 max-w-2xl mx-auto">
-        <div class="inline-flex items-center gap-1.5 bg-white/15 border border-white/20 text-white text-[10px] md:text-xs font-bold px-3 py-0.5 md:py-1 rounded-full backdrop-blur-md">
-            <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Welcome, <span id="user-name-display" class="text-amber-300">Guest</span> 👋</span>
-        </div>
+                <!-- SLIDE 1: Verified Partner Tasks -->
+                <div class="carousel-slide slide-1">
+                    <!-- Banner 1 Image (Apni banner1.jpg ya hero-banner.png.jpg lagayein) -->
+                    <img src="banner1.jpg" onerror="this.onerror=null; this.src='hero-banner.png.jpg';" alt="Verified Tasks" class="slide-bg-img">
+                    <div class="slide-overlay"></div>
 
-        <h1 class="text-lg sm:text-2xl md:text-4xl font-extrabold leading-tight tracking-tight">
-            Your <span class="text-amber-300">Financial Future</span> Starts Here
-        </h1>
+                    <div class="slide-content">
+                        <div class="slide-text">
+                            <span class="slide-badge">
+                                <span class="pulse-dot"></span>
+                                <span>Welcome, <span id="user-name-display" class="text-amber-300 font-extrabold">Guest</span> • Verified Tasks</span>
+                            </span>
+                            <h1>Earn up to <span class="highlight-gold">₹550</span> on Verified Partner Tasks</h1>
+                            <p>Complete simple KYC &amp; app tasks from India's top financial brands with fast 24-hour UPI settlement — zero investment.</p>
+                            <div class="slide-actions">
+                                <button onclick="showTab('tasks')" class="btn-hero-primary">
+                                    <span>Start Earning</span>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </button>
+                                <button onclick="showTab('wallet')" class="btn-hero-glass">View Wallet</button>
+                            </div>
+                        </div>
 
-        <p class="text-cyan-100 text-[11px] md:text-sm max-w-md leading-snug">
-            Complete simple tasks &amp; spin daily for instant UPI payouts — zero investment.
-        </p>
+                        <div class="slide-visual">
+                            <div class="glass-card">
+                                <div class="glass-card-top">
+                                    <span class="gc-label">Recent Verified Payout</span>
+                                    <span class="gc-status">● Settled</span>
+                                </div>
+                                <div class="gc-amount">+ ₹350.00</div>
+                                <div class="gc-sub">Kotak Securities Demat • UPI Instant</div>
+                                <div class="gc-bar"><div class="gc-bar-fill" style="width: 84%;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="pt-1 flex flex-row items-center justify-center gap-2.5 w-full">
-            <button onclick="showTab('tasks')" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold px-4 py-2 md:px-6 md:py-2.5 rounded-full shadow-md transition text-[11px] md:text-sm whitespace-nowrap">
-                Start Earning ➔
+                <!-- SLIDE 2: Refer & Earn ₹25 -->
+                <div class="carousel-slide slide-2">
+                    <!-- Banner 2 Image (Apne GitHub repo mein banner2.jpg upload karein) -->
+                    <img src="banner2.jpg" onerror="this.style.display='none'" alt="Refer and Earn" class="slide-bg-img">
+                    <div class="slide-overlay"></div>
+
+                    <div class="slide-content">
+                        <div class="slide-text">
+                            <span class="slide-badge">
+                                <span class="pulse-dot green"></span>
+                                <span>REFER &amp; EARN PROGRAM</span>
+                            </span>
+                            <h2>Invite Friends &amp; Get <span class="highlight-gold">₹25 Instant</span> Bonus</h2>
+                            <p>Share your unique Earnova referral link with friends and receive guaranteed cash rewards directly in your wallet.</p>
+                            <div class="slide-actions">
+                                <button onclick="showTab('refer')" class="btn-hero-primary">
+                                    <span>Invite Friends</span>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </button>
+                                <button onclick="copyReferralLink()" class="btn-hero-glass">Copy Invite Link</button>
+                            </div>
+                        </div>
+
+                        <div class="slide-visual">
+                            <div class="glass-card">
+                                <div class="glass-card-top">
+                                    <span class="gc-label">Referral Bonus</span>
+                                    <span class="gc-status">Unlimited</span>
+                                </div>
+                                <div class="gc-amount">₹25 <span style="font-size:14px; font-weight:600; color:#cbd5e1;">/ Friend</span></div>
+                                <div class="gc-sub">Zero invite limit • Direct Wallet Credit</div>
+                                <div class="gc-avatars">
+                                    <span class="mini-av">R</span>
+                                    <span class="mini-av">A</span>
+                                    <span class="mini-av">P</span>
+                                    <span class="mini-av-more">+10k users earning</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 3: Daily Spin & 7-Day Streak -->
+                <div class="carousel-slide slide-3">
+                    <!-- Banner 3 Image (Apne GitHub repo mein banner3.jpg upload karein) -->
+                    <img src="banner3.jpg" onerror="this.style.display='none'" alt="Daily Rewards" class="slide-bg-img">
+                    <div class="slide-overlay"></div>
+
+                    <div class="slide-content">
+                        <div class="slide-text">
+                            <span class="slide-badge">
+                                <span class="pulse-dot gold"></span>
+                                <span>DAILY REWARDS • 7-DAY STREAK</span>
+                            </span>
+                            <h2>Spin Daily &amp; Claim <span class="highlight-gold">Guaranteed</span> Cash</h2>
+                            <p>Keep your daily check-in streak alive! Unlock lucky spins, scratch cards, and daily bonus multipliers every 24 hours.</p>
+                            <div class="slide-actions">
+                                <button onclick="showTab('spin')" class="btn-hero-primary">
+                                    <span>Play Lucky Spin</span>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                </button>
+                                <button onclick="showTab('checkin')" class="btn-hero-glass">Daily Check-in</button>
+                            </div>
+                        </div>
+
+                        <div class="slide-visual">
+                            <div class="glass-card">
+                                <div class="glass-card-top">
+                                    <span class="gc-label">Daily Streak Bonus</span>
+                                    <span class="gc-status" style="color:#fbbf24;">● Active</span>
+                                </div>
+                                <div class="gc-amount">Free Spin</div>
+                                <div class="gc-sub">Scratch Card + Spin Ready to Claim</div>
+                                <div class="gc-bar"><div class="gc-bar-fill gold-fill" style="width: 100%;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Carousel Prev/Next Arrows -->
+            <button class="carousel-arrow prev" onclick="moveSlide(-1)" aria-label="Previous slide">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
             </button>
-            <button onclick="showTab('wallet')" class="bg-white/15 hover:bg-white/25 border border-white/25 text-white font-bold px-4 py-2 md:px-5 md:py-2.5 rounded-full backdrop-blur-sm transition text-[11px] md:text-sm whitespace-nowrap">
-                View Wallet
+            <button class="carousel-arrow next" onclick="moveSlide(1)" aria-label="Next slide">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
             </button>
-        </div>
-    </div>
-</div>
 
-<!-- CLEAN TRUST & PLATFORM HIGHLIGHTS BAR -->
-<div class="grid grid-cols-3 gap-2 md:gap-4">
-    <div class="bg-white rounded-2xl p-2.5 md:p-4 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center text-center sm:text-left gap-1.5 sm:gap-2.5">
-        <div class="w-8 h-8 md:w-9 md:h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm md:text-lg shrink-0">⚡</div>
+            <!-- Animated Progress Bar Dots -->
+            <div class="carousel-dots" id="carouselDots">
+                <button class="dot active" onclick="goToSlide(0)" aria-label="Slide 1"><span></span></button>
+                <button class="dot" onclick="goToSlide(1)" aria-label="Slide 2"><span></span></button>
+                <button class="dot" onclick="goToSlide(2)" aria-label="Slide 3"><span></span></button>
+            </div>
+        </div>
+
+        <!-- CLEAN TRUST & PLATFORM HIGHLIGHTS BAR (Crisp Vector Icons) -->
+        <div class="grid grid-cols-3 gap-2.5 md:gap-4">
+            <div class="bg-white rounded-2xl p-3 md:p-4 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center text-center sm:text-left gap-2 sm:gap-3 hover:border-teal-200 transition">
+                <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <div>
+                    <p class="text-[11px] md:text-xs font-extrabold text-slate-800 whitespace-nowrap">Instant UPI</p>
+                    <p class="text-[10px] md:text-[11px] text-slate-400 font-medium hidden sm:block">Fast 24h settlement</p>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-3 md:p-4 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center text-center sm:text-left gap-2 sm:gap-3 hover:border-teal-200 transition">
+                <div class="w-9 h-9 rounded-xl bg-cyan-50 border border-cyan-100 text-[#087E8B] flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                </div>
+                <div>
+                    <p class="text-[11px] md:text-xs font-extrabold text-slate-800 whitespace-nowrap">100% Free</p>
+                    <p class="text-[10px] md:text-[11px] text-slate-400 font-medium hidden sm:block">Zero investment</p>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-3 md:p-4 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center text-center sm:text-left gap-2 sm:gap-3 hover:border-teal-200 transition">
+                <div class="w-9 h-9 rounded-xl bg-amber-50 border border-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                </div>
+                <div>
+                    <p class="text-[11px] md:text-xs font-extrabold text-slate-800 whitespace-nowrap">Top Partners</p>
+                    <p class="text-[10px] md:text-[11px] text-slate-400 font-medium hidden sm:block">Verified offers</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- DAILY REWARDS & GAMES GRID -->
         <div>
-            <p class="text-[10px] md:text-xs font-extrabold text-slate-800 whitespace-nowrap">Instant UPI</p>
-            <p class="text-[10px] text-slate-400 font-medium hidden sm:block">Fast 24h settlement</p>
-        </div>
-    </div>
-    <div class="bg-white rounded-2xl p-2.5 md:p-4 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center text-center sm:text-left gap-1.5 sm:gap-2.5">
-        <div class="w-8 h-8 md:w-9 md:h-9 rounded-xl bg-cyan-50 text-[#087E8B] flex items-center justify-center text-sm md:text-lg shrink-0">🛡️</div>
-        <div>
-            <p class="text-[10px] md:text-xs font-extrabold text-slate-800 whitespace-nowrap">100% Free</p>
-            <p class="text-[10px] text-slate-400 font-medium hidden sm:block">Zero investment</p>
-        </div>
-    </div>
-    <div class="bg-white rounded-2xl p-2.5 md:p-4 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center text-center sm:text-left gap-1.5 sm:gap-2.5">
-        <div class="w-8 h-8 md:w-9 md:h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm md:text-lg shrink-0">🏆</div>
-        <div>
-            <p class="text-[10px] md:text-xs font-extrabold text-slate-800 whitespace-nowrap">Top Partners</p>
-            <p class="text-[10px] text-slate-400 font-medium hidden sm:block">Verified offers</p>
-        </div>
-    </div>
-</div>
+            <div class="flex items-center justify-between mb-3 px-1">
+                <h2 class="text-sm md:text-base font-extrabold text-slate-800 tracking-tight">Daily Rewards &amp; Games</h2>
+                <span class="text-[11px] font-bold text-[#087E8B] bg-teal-50 border border-teal-100 px-2.5 py-0.5 rounded-full">Updated Daily</span>
+            </div>
 
-       <!-- DAILY REWARDS & GAMES GRID (Modern Fintech Tiles) -->
-<div>
-    <div class="flex items-center justify-between mb-3 px-1">
-        <h2 class="text-sm md:text-base font-extrabold text-slate-800 tracking-tight">Daily Rewards &amp; Games</h2>
-        <span class="text-[11px] font-bold text-[#087E8B] bg-teal-50 border border-teal-100 px-2.5 py-0.5 rounded-full">Updated Daily</span>
-    </div>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
 
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-
-        <!-- 1. Scratch Card -->
-        <div onclick="showTab('scratch')" class="group relative bg-white hover:bg-teal-50/40 p-4 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 cursor-pointer border border-slate-200/80 hover:border-[#087E8B]/50 flex flex-col justify-between text-left overflow-hidden">
-            <div class="flex items-start justify-between mb-3">
-                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#087E8B] to-emerald-500 flex items-center justify-center shadow-md shadow-teal-600/20 group-hover:scale-110 transition-transform">
-                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-                    </svg>
+                <!-- 1. Scratch Card -->
+                <div onclick="showTab('scratch')" class="group relative bg-white hover:bg-teal-50/40 p-4 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 cursor-pointer border border-slate-200/80 hover:border-[#087E8B]/50 flex flex-col justify-between text-left overflow-hidden">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#087E8B] to-emerald-500 flex items-center justify-center shadow-md shadow-teal-600/20 group-hover:scale-110 transition-transform">
+                            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                            </svg>
+                        </div>
+                        <span class="text-[10px] font-extrabold text-emerald-700 bg-emerald-50 border border-emerald-200/70 px-2 py-0.5 rounded-full">Win ₹0.40</span>
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-slate-800 text-xs md:text-sm group-hover:text-[#087E8B] transition-colors flex items-center justify-between">
+                            <span>Scratch Card</span>
+                            <span class="text-slate-300 group-hover:text-[#087E8B] group-hover:translate-x-0.5 transition-all">→</span>
+                        </h4>
+                        <p class="text-[10px] md:text-[11px] text-slate-400 mt-0.5 font-medium">Scratch &amp; win instant cash</p>
+                    </div>
                 </div>
-                <span class="text-[10px] font-extrabold text-emerald-700 bg-emerald-50 border border-emerald-200/70 px-2 py-0.5 rounded-full">Win ₹0.40</span>
-            </div>
-            <div>
-                <h4 class="font-extrabold text-slate-800 text-xs md:text-sm group-hover:text-[#087E8B] transition-colors flex items-center justify-between">
-                    <span>Scratch Card</span>
-                    <span class="text-slate-300 group-hover:text-[#087E8B] group-hover:translate-x-0.5 transition-all">→</span>
-                </h4>
-                <p class="text-[10px] md:text-[11px] text-slate-400 mt-0.5 font-medium">Scratch &amp; win instant cash</p>
-            </div>
-        </div>
 
-        <!-- 2. Lucky Spin & Win -->
-        <div onclick="showTab('spin')" class="group relative bg-white hover:bg-amber-50/40 p-4 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 cursor-pointer border border-slate-200/80 hover:border-amber-400/60 flex flex-col justify-between text-left overflow-hidden">
-            <div class="flex items-start justify-between mb-3">
-                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-md shadow-amber-500/25 group-hover:rotate-45 transition-transform duration-500">
-                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="9"/>
-                        <circle cx="12" cy="12" r="2.5"/>
-                        <path stroke-linecap="round" d="M12 3v6.5M12 14.5V21M3 12h6.5M14.5 12H21M5.64 5.64l4.6 4.6M13.76 13.76l4.6 4.6M18.36 5.64l-4.6 4.6M10.24 13.76l-4.6 4.6"/>
-                    </svg>
+                <!-- 2. Lucky Spin & Win -->
+                <div onclick="showTab('spin')" class="group relative bg-white hover:bg-amber-50/40 p-4 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 cursor-pointer border border-slate-200/80 hover:border-amber-400/60 flex flex-col justify-between text-left overflow-hidden">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-md shadow-amber-500/25 group-hover:rotate-45 transition-transform duration-500">
+                            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="9"/>
+                                <circle cx="12" cy="12" r="2.5"/>
+                                <path stroke-linecap="round" d="M12 3v6.5M12 14.5V21M3 12h6.5M14.5 12H21M5.64 5.64l4.6 4.6M13.76 13.76l4.6 4.6M18.36 5.64l-4.6 4.6M10.24 13.76l-4.6 4.6"/>
+                            </svg>
+                        </div>
+                        <span class="text-[10px] font-extrabold text-amber-700 bg-amber-50 border border-amber-200/70 px-2 py-0.5 rounded-full">Free Spin</span>
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-slate-800 text-xs md:text-sm group-hover:text-amber-600 transition-colors flex items-center justify-between">
+                            <span>Lucky Spin &amp; Win</span>
+                            <span class="text-slate-300 group-hover:text-amber-500 group-hover:translate-x-0.5 transition-all">→</span>
+                        </h4>
+                        <p class="text-[10px] md:text-[11px] text-slate-400 mt-0.5 font-medium">Spin daily for rewards</p>
+                    </div>
                 </div>
-                <span class="text-[10px] font-extrabold text-amber-700 bg-amber-50 border border-amber-200/70 px-2 py-0.5 rounded-full">Free Spin</span>
-            </div>
-            <div>
-                <h4 class="font-extrabold text-slate-800 text-xs md:text-sm group-hover:text-amber-600 transition-colors flex items-center justify-between">
-                    <span>Lucky Spin &amp; Win</span>
-                    <span class="text-slate-300 group-hover:text-amber-500 group-hover:translate-x-0.5 transition-all">→</span>
-                </h4>
-                <p class="text-[10px] md:text-[11px] text-slate-400 mt-0.5 font-medium">Spin daily for rewards</p>
-            </div>
-        </div>
 
-        <!-- 3. Daily Check-in -->
-        <div onclick="showTab('checkin')" class="group relative bg-white hover:bg-emerald-50/40 p-4 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 cursor-pointer border border-slate-200/80 hover:border-emerald-400/60 flex flex-col justify-between text-left overflow-hidden">
-            <div class="flex items-start justify-between mb-3">
-                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-500 to-[#054E56] flex items-center justify-center shadow-md shadow-emerald-600/20 group-hover:scale-110 transition-transform">
-                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.5 15.5l1.5 1.5 3.5-3.5"/>
-                    </svg>
+                <!-- 3. Daily Check-in -->
+                <div onclick="showTab('checkin')" class="group relative bg-white hover:bg-emerald-50/40 p-4 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 cursor-pointer border border-slate-200/80 hover:border-emerald-400/60 flex flex-col justify-between text-left overflow-hidden">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-500 to-[#054E56] flex items-center justify-center shadow-md shadow-emerald-600/20 group-hover:scale-110 transition-transform">
+                            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.5 15.5l1.5 1.5 3.5-3.5"/>
+                            </svg>
+                        </div>
+                        <span class="text-[10px] font-extrabold text-[#087E8B] bg-teal-50 border border-teal-200/70 px-2 py-0.5 rounded-full">7-Day Streak</span>
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-slate-800 text-xs md:text-sm group-hover:text-emerald-600 transition-colors flex items-center justify-between">
+                            <span>Daily Check-in</span>
+                            <span class="text-slate-300 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all">→</span>
+                        </h4>
+                        <p class="text-[10px] md:text-[11px] text-slate-400 mt-0.5 font-medium">Claim daily login bonus</p>
+                    </div>
                 </div>
-                <span class="text-[10px] font-extrabold text-[#087E8B] bg-teal-50 border border-teal-200/70 px-2 py-0.5 rounded-full">7-Day Streak</span>
-            </div>
-            <div>
-                <h4 class="font-extrabold text-slate-800 text-xs md:text-sm group-hover:text-emerald-600 transition-colors flex items-center justify-between">
-                    <span>Daily Check-in</span>
-                    <span class="text-slate-300 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all">→</span>
-                </h4>
-                <p class="text-[10px] md:text-[11px] text-slate-400 mt-0.5 font-medium">Claim daily login bonus</p>
-            </div>
-        </div>
 
-        <!-- 4. Refer & Earn ₹25 -->
-        <div onclick="showTab('refer')" class="group relative bg-white hover:bg-cyan-50/40 p-4 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 cursor-pointer border border-slate-200/80 hover:border-cyan-400/60 flex flex-col justify-between text-left overflow-hidden">
-            <div class="flex items-start justify-between mb-3">
-                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-cyan-500 to-[#065F66] flex items-center justify-center shadow-md shadow-cyan-600/20 group-hover:scale-110 transition-transform">
-                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                    </svg>
+                <!-- 4. Refer & Earn ₹25 -->
+                <div onclick="showTab('refer')" class="group relative bg-white hover:bg-cyan-50/40 p-4 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 cursor-pointer border border-slate-200/80 hover:border-cyan-400/60 flex flex-col justify-between text-left overflow-hidden">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-cyan-500 to-[#065F66] flex items-center justify-center shadow-md shadow-cyan-600/20 group-hover:scale-110 transition-transform">
+                            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                        </div>
+                        <span class="text-[10px] font-extrabold text-cyan-700 bg-cyan-50 border border-cyan-200/70 px-2 py-0.5 rounded-full">₹25 / Friend</span>
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-slate-800 text-xs md:text-sm group-hover:text-[#087E8B] transition-colors flex items-center justify-between">
+                            <span>Refer &amp; Earn ₹25</span>
+                            <span class="text-slate-300 group-hover:text-[#087E8B] group-hover:translate-x-0.5 transition-all">→</span>
+                        </h4>
+                        <p class="text-[10px] md:text-[11px] text-slate-400 mt-0.5 font-medium">Invite friends for cash</p>
+                    </div>
                 </div>
-                <span class="text-[10px] font-extrabold text-cyan-700 bg-cyan-50 border border-cyan-200/70 px-2 py-0.5 rounded-full">₹25 / Friend</span>
-            </div>
-            <div>
-                <h4 class="font-extrabold text-slate-800 text-xs md:text-sm group-hover:text-[#087E8B] transition-colors flex items-center justify-between">
-                    <span>Refer &amp; Earn ₹25</span>
-                    <span class="text-slate-300 group-hover:text-[#087E8B] group-hover:translate-x-0.5 transition-all">→</span>
-                </h4>
-                <p class="text-[10px] md:text-[11px] text-slate-400 mt-0.5 font-medium">Invite friends for cash</p>
+
             </div>
         </div>
 
-    </div>
-</div>
-        
         <!-- SIGN IN PROMPT CARD (Only shown when logged out) -->
-        <div id="google-login-section" class="bg-gradient-to-r from-slate-900 to-[#054E56] rounded-2xl p-4 md:p-5 shadow-md text-white flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div id="google-login-section" class="bg-gradient-to-r from-[#03343A] to-[#054E56] rounded-2xl p-4 md:p-5 shadow-md text-white flex flex-col sm:flex-row items-center justify-between gap-4 border border-white/10">
             <div class="text-center sm:text-left">
-                <h3 class="font-extrabold text-sm md:text-base">Save Your Wallet & Earnings Safely</h3>
+                <h3 class="font-extrabold text-sm md:text-base">Save Your Wallet &amp; Earnings Safely</h3>
                 <p class="text-xs text-cyan-100/80 mt-0.5">Sign in with Google to sync your rewards across devices and unlock withdrawals.</p>
             </div>
             <button onclick="loginWithGoogle()" class="shrink-0 flex items-center justify-center gap-2.5 bg-white hover:bg-slate-100 text-slate-800 font-bold py-2.5 px-5 rounded-xl shadow transition text-xs md:text-sm">
@@ -608,17 +956,17 @@
             <div class="flex items-center justify-between mb-4">
                 <div>
                     <h3 class="font-extrabold text-slate-800 text-sm md:text-base flex items-center gap-2">
-                        <span>🔥</span> Featured High-Paying Tasks
+                        <span class="w-2 h-2 rounded-full bg-amber-400"></span> Featured High-Paying Tasks
                     </h3>
-                    <p class="text-[11px] text-slate-400 font-medium">Top verified offers with highest payouts</p>
+                    <p class="text-[11px] text-slate-400 font-medium mt-0.5">Top verified offers with highest payouts</p>
                 </div>
-                <button onclick="showTab('tasks')" class="text-xs font-bold text-[#087E8B] bg-teal-50 hover:bg-teal-100 px-3 py-1.5 rounded-full transition">
+                <button onclick="showTab('tasks')" class="text-xs font-bold text-[#087E8B] bg-teal-50 hover:bg-teal-100 border border-teal-100 px-3.5 py-1.5 rounded-full transition">
                     View All →
                 </button>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div class="bg-slate-50/70 p-4 rounded-2xl border border-slate-200/80 flex items-center justify-between hover:border-teal-300 hover:bg-white transition-all">
+                <div class="bg-slate-50/70 p-4 rounded-2xl border border-slate-200/80 flex items-center justify-between hover:border-teal-300 hover:bg-white hover:shadow-sm transition-all">
                     <div class="flex items-center gap-3">
                         <div class="h-11 w-11 shrink-0 rounded-xl overflow-hidden bg-white border border-slate-200 flex items-center justify-center">
                             <img src="upstox.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-[#087E8B]\'>U</span>'" class="w-full h-full object-cover" alt="Upstox">
@@ -635,7 +983,7 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-50/70 p-4 rounded-2xl border border-slate-200/80 flex items-center justify-between hover:border-teal-300 hover:bg-white transition-all">
+                <div class="bg-slate-50/70 p-4 rounded-2xl border border-slate-200/80 flex items-center justify-between hover:border-teal-300 hover:bg-white hover:shadow-sm transition-all">
                     <div class="flex items-center gap-3">
                         <div class="h-11 w-11 shrink-0 rounded-xl overflow-hidden bg-white border border-slate-200 flex items-center justify-center">
                             <img src="bajaj.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-[#087E8B]\'>B</span>'" class="w-full h-full object-cover" alt="Bajaj Securities">
@@ -643,7 +991,7 @@
                         <div class="text-left">
                             <span class="text-[9px] font-bold uppercase tracking-wider text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded">Top Payout</span>
                             <h4 class="font-bold text-slate-800 text-xs md:text-sm leading-tight mt-0.5">Bajaj Securities</h4>
-                            <p class="text-[10px] text-slate-400 font-medium">Open & Trade (Min ₹525)</p>
+                            <p class="text-[10px] text-slate-400 font-medium">Open &amp; Trade (Min ₹525)</p>
                         </div>
                     </div>
                     <div class="flex flex-col items-end shrink-0 ml-2">
@@ -652,7 +1000,7 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-50/70 p-4 rounded-2xl border border-slate-200/80 flex items-center justify-between hover:border-teal-300 hover:bg-white transition-all">
+                <div class="bg-slate-50/70 p-4 rounded-2xl border border-slate-200/80 flex items-center justify-between hover:border-teal-300 hover:bg-white hover:shadow-sm transition-all">
                     <div class="flex items-center gap-3">
                         <div class="h-11 w-11 shrink-0 rounded-xl overflow-hidden bg-white border border-slate-200 flex items-center justify-center">
                             <img src="kotak.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-[#087E8B]\'>K</span>'" class="w-full h-full object-cover" alt="Kotak Securities">
@@ -660,7 +1008,7 @@
                         <div class="text-left">
                             <span class="text-[9px] font-bold uppercase tracking-wider text-cyan-700 bg-cyan-100 px-1.5 py-0.5 rounded">KYC Only</span>
                             <h4 class="font-bold text-slate-800 text-xs md:text-sm leading-tight mt-0.5">Kotak Securities</h4>
-                            <p class="text-[10px] text-slate-400 font-medium">Open Account & KYC</p>
+                            <p class="text-[10px] text-slate-400 font-medium">Open Account &amp; KYC</p>
                         </div>
                     </div>
                     <div class="flex flex-col items-end shrink-0 ml-2">
@@ -706,19 +1054,15 @@
 
             <div>
                 <span class="text-[10px] font-extrabold tracking-widest uppercase text-amber-600 bg-amber-50 px-3 py-1 rounded-full">Daily Free Spin</span>
-                <h2 class="text-2xl font-extrabold text-slate-900 mt-2">Lucky Spin & Win</h2>
+                <h2 class="text-2xl font-extrabold text-slate-900 mt-2">Lucky Spin &amp; Win</h2>
                 <p class="text-slate-500 text-xs font-medium mt-1">Wheel ghumayein aur rozana cash rewards jeetein!</p>
             </div>
 
-            <!-- Real CSS Wheel with Pointer -->
             <div class="relative flex items-center justify-center py-3">
-                <!-- Top Pointer -->
                 <div class="absolute top-0 left-1/2 -translate-x-1/2 z-30 w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-t-[22px] border-t-rose-500 drop-shadow-md"></div>
 
-                <!-- Wheel Rim -->
                 <div class="p-2 rounded-full bg-gradient-to-b from-amber-300 to-amber-500 shadow-xl">
                     <div id="spin-wheel" class="relative w-60 h-60 sm:w-64 sm:h-64 rounded-full wheel-gradient border-4 border-white shadow-inner flex items-center justify-center overflow-hidden">
-                        <!-- Slice Labels (Positioned at 30, 90, 150, 210, 270, 330 deg) -->
                         <div class="absolute inset-0 text-white font-extrabold text-xs drop-shadow pointer-events-none">
                             <span class="absolute top-5 left-1/2 -translate-x-1/2 rotate-[30deg] origin-[50%_100px]">₹0.01</span>
                             <span class="absolute top-5 left-1/2 -translate-x-1/2 rotate-[90deg] origin-[50%_100px]">₹0.02</span>
@@ -728,7 +1072,6 @@
                             <span class="absolute top-5 left-1/2 -translate-x-1/2 rotate-[330deg] origin-[50%_100px] text-amber-200">₹0.50</span>
                         </div>
 
-                        <!-- Center Hub -->
                         <div class="relative z-20 w-16 h-16 bg-white rounded-full shadow-lg border-4 border-amber-400 flex flex-col items-center justify-center text-slate-900 font-black text-[10px] tracking-tight">
                             <span>SPIN</span>
                             <span class="text-[8px] text-[#087E8B]">WIN</span>
@@ -756,7 +1099,7 @@
 
             <div>
                 <span class="text-[10px] font-extrabold tracking-widest uppercase text-[#087E8B] bg-teal-50 px-3 py-1 rounded-full">Earnova Scratch</span>
-                <h2 class="text-2xl font-extrabold text-slate-900 mt-2">Scratch & Win</h2>
+                <h2 class="text-2xl font-extrabold text-slate-900 mt-2">Scratch &amp; Win</h2>
                 <p class="text-slate-500 text-xs mt-1">Card ko rub/scratch karein ya tap karke reward jeetein!</p>
             </div>
 
@@ -764,7 +1107,6 @@
                 <p class="font-extrabold text-slate-500 text-[11px] uppercase tracking-wider mb-3">Your Daily Reward Card</p>
 
                 <div id="tapScratchCard" onclick="claimTapScratch()" class="relative w-full aspect-[16/10] rounded-2xl shadow-lg overflow-hidden border-2 border-amber-400 bg-gradient-to-br from-[#043d44] via-[#087E8B] to-emerald-700 flex flex-col items-center justify-center p-4 text-center cursor-pointer select-none">
-                    <!-- Underlying Reward (Revealed on scratch/tap) -->
                     <div class="relative z-0 flex flex-col items-center">
                         <span class="text-3xl mb-1">🎉</span>
                         <p class="text-xs text-cyan-100 font-semibold uppercase tracking-wider">You Won</p>
@@ -772,7 +1114,6 @@
                         <span class="text-[11px] text-white/80 mt-1">Credited to Earnova Wallet</span>
                     </div>
 
-                    <!-- Interactive Canvas Foil Overlay -->
                     <canvas id="scratchCanvas" class="absolute inset-0 w-full h-full z-10 touch-none"></canvas>
                 </div>
             </div>
@@ -874,7 +1215,7 @@
                     <div>
                         <span class="text-[9px] font-bold uppercase tracking-wider text-purple-700 bg-purple-100 px-2 py-0.5 rounded">Quick Task</span>
                         <h3 class="font-bold text-slate-800 text-sm leading-tight mt-0.5">HeroWallet App</h3>
-                        <p class="text-[11px] text-slate-400 font-medium">Install app & complete tasks (Code: SK0HJL)</p>
+                        <p class="text-[11px] text-slate-400 font-medium">Install app &amp; complete tasks (Code: SK0HJL)</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
@@ -891,7 +1232,7 @@
                     <div>
                         <span class="text-[9px] font-bold uppercase tracking-wider text-amber-700 bg-amber-100 px-2 py-0.5 rounded">Highest Reward</span>
                         <h3 class="font-bold text-slate-800 text-sm leading-tight mt-0.5">Bajaj Securities Demat</h3>
-                        <p class="text-[11px] text-slate-400 font-medium">Open Account & 1st Trade (Min ₹525)</p>
+                        <p class="text-[11px] text-slate-400 font-medium">Open Account &amp; 1st Trade (Min ₹525)</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
@@ -908,7 +1249,7 @@
                     <div>
                         <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Popular</span>
                         <h3 class="font-bold text-slate-800 text-sm leading-tight mt-0.5">Upstox App</h3>
-                        <p class="text-[11px] text-slate-400 font-medium">Free Demat Account & Verification</p>
+                        <p class="text-[11px] text-slate-400 font-medium">Free Demat Account &amp; Verification</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
@@ -925,7 +1266,7 @@
                     <div>
                         <span class="text-[9px] font-bold uppercase tracking-wider text-cyan-700 bg-cyan-100 px-2 py-0.5 rounded">Demat</span>
                         <h3 class="font-bold text-slate-800 text-sm leading-tight mt-0.5">Kotak Securities Demat</h3>
-                        <p class="text-[11px] text-slate-400 font-medium">Open Account & Complete KYC</p>
+                        <p class="text-[11px] text-slate-400 font-medium">Open Account &amp; Complete KYC</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
@@ -942,7 +1283,7 @@
                     <div>
                         <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Zero Fee</span>
                         <h3 class="font-bold text-slate-800 text-sm leading-tight mt-0.5">Angel One</h3>
-                        <p class="text-[11px] text-slate-400 font-medium">Free Demat Account & KYC</p>
+                        <p class="text-[11px] text-slate-400 font-medium">Free Demat Account &amp; KYC</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
@@ -959,7 +1300,7 @@
                     <div>
                         <span class="text-[9px] font-bold uppercase tracking-wider text-amber-700 bg-amber-100 px-2 py-0.5 rounded">High Value</span>
                         <h3 class="font-bold text-slate-800 text-sm leading-tight mt-0.5">Paytm Money Demat</h3>
-                        <p class="text-[11px] text-slate-400 font-medium">Open Account & Trade (Min ₹1000)</p>
+                        <p class="text-[11px] text-slate-400 font-medium">Open Account &amp; Trade (Min ₹1000)</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
@@ -976,7 +1317,7 @@
                     <div>
                         <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">UPI Setup</span>
                         <h3 class="font-bold text-slate-800 text-sm leading-tight mt-0.5">Navi App</h3>
-                        <p class="text-[11px] text-slate-400 font-medium">Download & Setup UPI</p>
+                        <p class="text-[11px] text-slate-400 font-medium">Download &amp; Setup UPI</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
@@ -1003,7 +1344,7 @@
                     <div>
                         <span class="text-[9px] font-bold uppercase tracking-wider text-cyan-700 bg-cyan-100 px-2 py-0.5 rounded">Savings A/c</span>
                         <h3 class="font-bold text-slate-800 text-sm leading-tight mt-0.5">Kotak 811 Classic Account</h3>
-                        <p class="text-[11px] text-slate-400 font-medium">Maintain ₹1,000 balance & Complete VKYC</p>
+                        <p class="text-[11px] text-slate-400 font-medium">Maintain ₹1,000 balance &amp; Complete VKYC</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
@@ -1020,7 +1361,7 @@
                     <div>
                         <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Zero Balance</span>
                         <h3 class="font-bold text-slate-800 text-sm leading-tight mt-0.5">Jio Payments Bank</h3>
-                        <p class="text-[11px] text-slate-400 font-medium">Zero Balance A/c, Full KYC & Debit Card</p>
+                        <p class="text-[11px] text-slate-400 font-medium">Zero Balance A/c, Full KYC &amp; Debit Card</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
@@ -1039,7 +1380,7 @@
             </div>
 
             <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#087E8B] bg-teal-50 px-3 py-1 rounded-full">Earnova Referral Program</span>
-            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mt-3 tracking-tight">Invite Friends & Earn ₹25</h2>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mt-3 tracking-tight">Invite Friends &amp; Earn ₹25</h2>
             <p class="text-xs md:text-sm text-slate-500 mt-1 max-w-md mx-auto">Share your unique link with friends and earn ₹25 cash bonus per verified referral.</p>
 
             <div class="mt-6 bg-[#03343A] p-2.5 pl-4 rounded-2xl flex items-center justify-between shadow-inner border border-teal-500/30 gap-2">
@@ -1048,7 +1389,7 @@
             </div>
 
             <div class="mt-6 text-left bg-slate-50 border border-slate-200/80 p-4 rounded-2xl">
-                <h4 class="font-extrabold text-slate-800 text-xs uppercase tracking-wider mb-2 flex items-center gap-1.5">📄 Referral Terms & Conditions</h4>
+                <h4 class="font-extrabold text-slate-800 text-xs uppercase tracking-wider mb-2 flex items-center gap-1.5">📄 Referral Terms &amp; Conditions</h4>
                 <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4 font-medium">
                     <li>Share your referral link with friends and invite them to join Earnova.</li>
                     <li>The ₹25 cash reward will be credited once the referred user logs in and stays active on the platform for 7 consecutive days.</li>
@@ -1060,7 +1401,7 @@
     <!-- WALLET TAB -->
     <section id="wallet" class="tab-content max-w-2xl mx-auto py-2 w-full">
         <div class="mb-5 text-center">
-            <h2 class="text-xl md:text-2xl font-extrabold text-slate-900 tracking-tight">Wallet & Withdrawals</h2>
+            <h2 class="text-xl md:text-2xl font-extrabold text-slate-900 tracking-tight">Wallet &amp; Withdrawals</h2>
             <p class="text-xs text-slate-500 mt-0.5">Manage your earnings and request instant UPI/Bank transfers</p>
         </div>
 
@@ -1147,7 +1488,7 @@
         </div>
         <div class="flex flex-wrap items-center justify-center gap-4 font-semibold">
             <a href="privacy.html" target="_blank" class="hover:text-[#087E8B] transition">Privacy Policy</a>
-            <a href="mailto:rajneshc510@gmail.com" class="hover:text-[#087E8B] transition">Support & Contact</a>
+            <a href="mailto:rajneshc510@gmail.com" class="hover:text-[#087E8B] transition">Support &amp; Contact</a>
             <button onclick="showTab('tasks')" class="hover:text-[#087E8B] transition">Partner Tasks</button>
         </div>
     </div>
@@ -1200,7 +1541,7 @@
     <div class="bg-white p-7 rounded-3xl shadow-2xl max-w-sm w-full relative text-center">
         <button onclick="closeLoginModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold text-sm flex items-center justify-center">✕</button>
         <div class="text-2xl font-extrabold mb-1 text-slate-900 tracking-tight">Welcome to Earnova</div>
-        <p class="text-xs text-slate-500 mb-6 font-medium">Sign in to save your wallet balance & tasks</p>
+        <p class="text-xs text-slate-500 mb-6 font-medium">Sign in to save your wallet balance &amp; tasks</p>
 
         <input type="email" id="login-email" placeholder="Email Address" class="w-full mb-3 px-4 py-3 border border-slate-200 bg-slate-50 rounded-xl focus:outline-none focus:border-[#087E8B] focus:bg-white text-sm">
         <input type="password" id="login-pass" placeholder="Password" class="w-full mb-5 px-4 py-3 border border-slate-200 bg-slate-50 rounded-xl focus:outline-none focus:border-[#087E8B] focus:bg-white text-sm">
@@ -1233,7 +1574,7 @@
     </div>
 </div>
 
-<!-- HIDDEN TASK TERMS DATA (Cleaned up artifacts) -->
+<!-- HIDDEN TASK TERMS DATA -->
 <div class="hidden">
     <ul id="terms-herowallet">
         <li>1. Install HeroWallet app using the referral link.</li>
@@ -1251,7 +1592,7 @@
     <ul id="terms-bajajsec">
         <li>1. Download Bajaj Finserv app via the referral link.</li>
         <li>2. Fill up the account opening form with name, mobile, PAN, and DOB.</li>
-        <li>3. Complete email OTP verification and fill personal & bank details.</li>
+        <li>3. Complete email OTP verification and fill personal &amp; bank details.</li>
         <li>4. Account activation + 1st trade (Min ₹525) within the same month is mandatory.</li>
     </ul>
 
@@ -1269,7 +1610,7 @@
 
     <ul id="terms-upstox">
         <li>1. Open Free Demat Account via link.</li>
-        <li>2. Complete verification & e-Sign.</li>
+        <li>2. Complete verification &amp; e-Sign.</li>
     </ul>
 
     <ul id="terms-navi">
@@ -1312,7 +1653,26 @@
     window.auth = auth;
     window.db = db;
 
-    // Toast Helper (replaces ugly browser alerts)
+    // Profile Dropdown Controls (Globally accessible)
+    window.toggleProfileMenu = function() {
+        const dropdown = document.getElementById('profileDropdown');
+        if (dropdown) dropdown.classList.toggle('active');
+    };
+
+    window.closeProfileMenu = function() {
+        const dropdown = document.getElementById('profileDropdown');
+        if (dropdown) dropdown.classList.remove('active');
+    };
+
+    document.addEventListener('click', function(event) {
+        const wrapper = document.querySelector('.profile-menu-wrapper');
+        const dropdown = document.getElementById('profileDropdown');
+        if (wrapper && dropdown && !wrapper.contains(event.target)) {
+            dropdown.classList.remove('active');
+        }
+    });
+
+    // Toast Helper
     window.showToast = function(msg, isError = false) {
         const container = document.getElementById('toast-container');
         if (!container) return;
@@ -1326,7 +1686,6 @@
         }, 2800);
     };
 
-    // Dynamic Warning Modal Helper
     window.showWarningModal = function(title, message) {
         const titleEl = document.getElementById('warningModalTitle');
         const msgEl = document.getElementById('warningModalMessage');
@@ -1377,20 +1736,6 @@
             location.reload();
         });
     };
-
-    window.toggleProfilePopup = function() {
-        document.getElementById('profile-popup').classList.toggle('hidden');
-    };
-
-    document.addEventListener('click', function(event) {
-        let popup = document.getElementById('profile-popup');
-        let profilePic = document.getElementById('nav-profile-pic');
-        if (popup && !popup.classList.contains('hidden')) {
-            if (event.target !== profilePic && !popup.contains(event.target)) {
-                popup.classList.add('hidden');
-            }
-        }
-    });
 
     window.copyReferralLink = function() {
         const linkInput = document.getElementById('userInviteLink');
@@ -1515,6 +1860,7 @@
         const gBtn = document.getElementById('google-login-section');
         const profileInfo = document.getElementById('user-profile-info');
         const headerLoginBtn = document.getElementById('header-login-btn');
+        const defaultAvatar = "https://www.svgrepo.com/show/498547/profile.svg";
 
         if (user) {
             if (gBtn) gBtn.classList.add('hidden');
@@ -1522,7 +1868,10 @@
             if (profileInfo) profileInfo.classList.remove('hidden');
 
             const profilePic = document.getElementById('nav-profile-pic');
-            if (profilePic) profilePic.src = user.photoURL || "https://www.svgrepo.com/show/498547/profile.svg";
+            if (profilePic) profilePic.src = user.photoURL || defaultAvatar;
+
+            const dropdownPic = document.getElementById('dropdown-profile-pic');
+            if (dropdownPic) dropdownPic.src = user.photoURL || defaultAvatar;
 
             const popupName = document.getElementById('popup-user-name');
             if (popupName) popupName.innerText = user.displayName || 'User';
@@ -1644,7 +1993,7 @@
         }
     };
 
-    // SPIN LOGIC (Lands accurately on slice angle)
+    // SPIN LOGIC
     let currentWheelRotation = 0;
     window.earnovaSpin = async function() {
         const today = new Date().toDateString();
@@ -1657,7 +2006,7 @@
         }
 
         const rewards = [
-            { amount: 0.01, chance: 30, sliceAngle: 330 }, // Top pointer hits 30deg slice when rotated 330deg
+            { amount: 0.01, chance: 30, sliceAngle: 330 },
             { amount: 0.02, chance: 25, sliceAngle: 270 },
             { amount: 0.05, chance: 20, sliceAngle: 210 },
             { amount: 0.10, chance: 15, sliceAngle: 150 },
@@ -1695,7 +2044,7 @@
         }, 3900);
     };
 
-    // CHECK-IN LOGIC & DYNAMIC RENDER
+    // CHECK-IN LOGIC
     const earnovaDailyRewards = [0.01, 0.02, 0.03, 0.05, 0.07, 0.08, 0.10];
 
     window.renderCheckinUI = function() {
@@ -1763,7 +2112,7 @@
         await window.addRewardToWallet(reward);
     };
 
-    // INTERACTIVE SCRATCH CARD (Supports both finger/mouse scratching AND tap-to-reveal)
+    // INTERACTIVE SCRATCH CARD
     let scratchClaiming = false;
     window.initScratchCanvas = function() {
         const canvas = document.getElementById('scratchCanvas');
@@ -1881,11 +2230,75 @@
         if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
     };
 
+    // ================= 3-SLIDE HERO CAROUSEL LOGIC =================
+    let currentSlide = 0;
+    const totalSlides = 3;
+    let slideTimer;
+
+    function updateCarousel() {
+        const track = document.getElementById('carouselTrack');
+        const dots = document.querySelectorAll('#carouselDots .dot');
+        if (!track) return;
+
+        track.style.transform = `translateX(-${currentSlide * 100}%)`;
+        dots.forEach((dot, index) => {
+            dot.classList.remove('active');
+            const span = dot.querySelector('span');
+            if (span) {
+                span.style.animation = 'none';
+                span.offsetHeight;
+                span.style.animation = null;
+            }
+            if (index === currentSlide) dot.classList.add('active');
+        });
+    }
+
+    window.moveSlide = function(direction) {
+        currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+        updateCarousel();
+        resetAutoSlide();
+    };
+
+    window.goToSlide = function(index) {
+        currentSlide = index;
+        updateCarousel();
+        resetAutoSlide();
+    };
+
+    function startAutoSlide() {
+        clearInterval(slideTimer);
+        slideTimer = setInterval(() => {
+            window.moveSlide(1);
+        }, 4500);
+    }
+
+    function resetAutoSlide() {
+        clearInterval(slideTimer);
+        startAutoSlide();
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
         window.showTab('dashboard');
         renderCheckinUI();
+        startAutoSlide();
 
-        // Check if spin already used today
+        const carousel = document.getElementById('heroCarousel');
+        if (carousel) {
+            carousel.addEventListener('mouseenter', () => clearInterval(slideTimer));
+            carousel.addEventListener('mouseleave', () => startAutoSlide());
+
+            let touchStartX = 0;
+            carousel.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            carousel.addEventListener('touchend', (e) => {
+                const touchEndX = e.changedTouches[0].screenX;
+                if (touchStartX - touchEndX > 50) window.moveSlide(1);
+                if (touchEndX - touchStartX > 50) window.moveSlide(-1);
+            }, { passive: true });
+        }
+
         if (localStorage.getItem('earnova_spin_date') === new Date().toDateString()) {
             const btn = document.getElementById('spinBtn');
             if (btn) {
@@ -1895,23 +2308,7 @@
             }
         }
     });
-
-    function toggleProfileMenu() {
-  const dropdown = document.getElementById('profileDropdown');
-  dropdown.classList.toggle('active');
-}
-
-// Bahar click karne par popup band ho jaye
-document.addEventListener('click', function(event) {
-  const wrapper = document.querySelector('.profile-menu-wrapper');
-  const dropdown = document.getElementById('profileDropdown');
-  
-  if (wrapper && !wrapper.contains(event.target)) {
-    dropdown.classList.remove('active');
-  }
-});
 </script>
 
 </body>
 </html>
-```
