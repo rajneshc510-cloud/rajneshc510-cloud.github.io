@@ -318,6 +318,346 @@
         /* Custom subtle scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+
+        .hero-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 45px -12px rgba(7, 59, 60, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.carousel-slide {
+  position: relative;
+  min-width: 100%;
+  min-height: 290px;
+  display: flex;
+  align-items: center;
+  padding: 40px 56px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* 3 Alag-Alag Premium Teal Gradients (Website se match karne ke liye) */
+.slide-1 {
+  background: radial-gradient(circle at 85% 20%, #116466 0%, #073b3c 55%, #042829 100%);
+}
+.slide-2 {
+  background: radial-gradient(circle at 85% 20%, #0f766e 0%, #064e3b 55%, #032e26 100%);
+}
+.slide-3 {
+  background: radial-gradient(circle at 85% 20%, #134e4a 0%, #083344 55%, #04222c 100%);
+}
+
+/* Background Image Blending */
+.slide-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.28; /* Image ko subtle rakhta hai taaki text 100% readable rahe */
+  mix-blend-mode: luminosity;
+  pointer-events: none;
+}
+
+.slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(4, 40, 41, 0.92) 0%, rgba(4, 40, 41, 0.65) 55%, rgba(4, 40, 41, 0.25) 100%);
+  pointer-events: none;
+}
+
+.slide-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.slide-text {
+  max-width: 580px;
+}
+
+/* Pill Badge */
+.slide-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
+  color: #e2e8f0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  margin-bottom: 14px;
+}
+
+.pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2dd4bf;
+  box-shadow: 0 0 8px #2dd4bf;
+}
+.pulse-dot.green { background: #34d399; box-shadow: 0 0 8px #34d399; }
+.pulse-dot.gold { background: #facc15; box-shadow: 0 0 8px #facc15; }
+
+.slide-text h1 {
+  margin: 0 0 12px 0;
+  font-size: 34px;
+  line-height: 1.18;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.highlight-gold {
+  color: #facc15;
+}
+
+.slide-text p {
+  margin: 0 0 24px 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: #cbd5e1;
+  max-width: 490px;
+}
+
+/* Buttons */
+.slide-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #facc15;
+  color: #0f172a;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 22px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 8px 20px -4px rgba(250, 204, 21, 0.35);
+}
+
+.btn-primary:hover {
+  background: #fde047;
+  transform: translateY(-2px);
+}
+
+.btn-glass {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s ease;
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* Right Side Floating Glass UI Card */
+.slide-visual {
+  flex-shrink: 0;
+}
+
+.glass-card {
+  width: 270px;
+  padding: 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  color: #ffffff;
+}
+
+.glass-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.gc-label { color: #cbd5e1; font-weight: 500; }
+.gc-status { color: #34d399; font-weight: 700; }
+
+.gc-amount {
+  font-size: 28px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.gc-sub {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-bottom: 14px;
+}
+
+.gc-bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.gc-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #34d399);
+  border-radius: 99px;
+}
+
+.gc-bar-fill.gold-fill {
+  background: linear-gradient(90deg, #f59e0b, #facc15);
+}
+
+.gc-avatars {
+  display: flex;
+  align-items: center;
+}
+
+.mini-av {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #0d9488;
+  border: 2px solid #064e3b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  margin-right: -8px;
+}
+
+.mini-av-more {
+  margin-left: 16px;
+  font-size: 11px;
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+/* Arrows */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  opacity: 0;
+  backdrop-filter: blur(8px);
+  transition: opacity 0.25s ease, background 0.2s ease;
+}
+
+.hero-carousel:hover .carousel-arrow {
+  opacity: 1;
+}
+
+.carousel-arrow:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.carousel-arrow.prev { left: 14px; }
+.carousel-arrow.next { right: 14px; }
+
+/* Animated Progress Dots */
+.carousel-dots {
+  position: absolute;
+  bottom: 16px;
+  left: 56px;
+  display: flex;
+  gap: 8px;
+  z-index: 5;
+}
+
+.carousel-dots .dot {
+  width: 8px;
+  height: 6px;
+  border-radius: 99px;
+  border: none;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.28);
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.carousel-dots .dot.active {
+  width: 32px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.carousel-dots .dot.active span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: #facc15;
+  border-radius: 99px;
+  animation: dotProgress 4.5s linear forwards;
+}
+
+.hero-carousel:hover .carousel-dots .dot.active span {
+  animation-play-state: paused;
+}
+
+@keyframes dotProgress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .carousel-slide { padding: 28px 22px 48px; }
+  .slide-content { flex-direction: column; align-items: flex-start; }
+  .slide-text h1 { font-size: 26px; }
+  .slide-visual { display: none; }
+  .carousel-dots { left: 22px; }
+  .carousel-arrow { display: none; }
+}
     </style>
 </head>
 <body class="text-slate-800 relative min-h-screen flex flex-col">
@@ -450,35 +790,140 @@
     <!-- DASHBOARD TAB -->
     <section id="dashboard" class="tab-content active space-y-5 md:space-y-6">
 
-     <!-- COMPACT HERO BANNER (Mobile Friendly) -->
-<div class="relative text-white rounded-2xl md:rounded-3xl overflow-hidden py-4 px-4 md:py-9 md:px-10 shadow-lg bg-gradient-to-br from-[#043d44] via-[#065F66] to-[#087E8B] border border-white/10">
-    <div class="absolute inset-0 opacity-35" style="background-image: url('hero-banner.png.jpg'); background-size: cover; background-position: center;"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-[#03343A]/90 via-[#043d44]/65 to-[#043d44]/50"></div>
+  <section class="hero-carousel" id="heroCarousel">
+  <div class="carousel-track" id="carouselTrack">
 
-    <div class="relative z-10 flex flex-col items-center text-center space-y-2 md:space-y-3 max-w-2xl mx-auto">
-        <div class="inline-flex items-center gap-1.5 bg-white/15 border border-white/20 text-white text-[10px] md:text-xs font-bold px-3 py-0.5 md:py-1 rounded-full backdrop-blur-md">
-            <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Welcome, <span id="user-name-display" class="text-amber-300">Guest</span> 👋</span>
+    <!-- SLIDE 1: Verified Partner Tasks -->
+    <div class="carousel-slide slide-1">
+      <!-- Apni 1st Banner Image yahan lagayein (transparent PNG ya high-res photo) -->
+      <img src="banner1.jpg" alt="Verified Tasks" class="slide-bg-img" onerror="this.style.display='none'">
+      <div class="slide-overlay"></div>
+
+      <div class="slide-content">
+        <div class="slide-text">
+          <span class="slide-badge">
+            <span class="pulse-dot"></span> VERIFIED PARTNER TASKS
+          </span>
+          <h1>Earn up to <span class="highlight-gold">₹500</span> per Verified Task</h1>
+          <p>Complete simple app & KYC tasks from top Indian brands with fast 24-hour UPI settlement.</p>
+          <div class="slide-actions">
+            <a href="#tasks" class="btn-primary">
+              Start Earning
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#wallet" class="btn-glass">View Wallet</a>
+          </div>
         </div>
 
-        <h1 class="text-lg sm:text-2xl md:text-4xl font-extrabold leading-tight tracking-tight">
-            Your <span class="text-amber-300">Financial Future</span> Starts Here
-        </h1>
-
-        <p class="text-cyan-100 text-[11px] md:text-sm max-w-md leading-snug">
-            Complete simple tasks &amp; spin daily for instant UPI payouts — zero investment.
-        </p>
-
-        <div class="pt-1 flex flex-row items-center justify-center gap-2.5 w-full">
-            <button onclick="showTab('tasks')" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold px-4 py-2 md:px-6 md:py-2.5 rounded-full shadow-md transition text-[11px] md:text-sm whitespace-nowrap">
-                Start Earning ➔
-            </button>
-            <button onclick="showTab('wallet')" class="bg-white/15 hover:bg-white/25 border border-white/25 text-white font-bold px-4 py-2 md:px-5 md:py-2.5 rounded-full backdrop-blur-sm transition text-[11px] md:text-sm whitespace-nowrap">
-                View Wallet
-            </button>
+        <!-- Right Side Premium Floating UI Card -->
+        <div class="slide-visual">
+          <div class="glass-card">
+            <div class="glass-card-top">
+              <span class="gc-label">Recent Payout</span>
+              <span class="gc-status">● Settled</span>
+            </div>
+            <div class="gc-amount">+ ₹350.00</div>
+            <div class="gc-sub">Kotak Securities Demat • UPI Instant</div>
+            <div class="gc-bar"><div class="gc-bar-fill" style="width: 82%;"></div></div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+
+    <!-- SLIDE 2: Refer & Earn -->
+    <div class="carousel-slide slide-2">
+      <!-- Apni 2nd Banner Image yahan lagayein -->
+      <img src="banner2.jpg" alt="Refer and Earn" class="slide-bg-img" onerror="this.style.display='none'">
+      <div class="slide-overlay"></div>
+
+      <div class="slide-content">
+        <div class="slide-text">
+          <span class="slide-badge badge-emerald">
+            <span class="pulse-dot green"></span> REFER & EARN PROGRAM
+          </span>
+          <h1>Invite Friends & Get <span class="highlight-gold">₹25 Instant</span> Bonus</h1>
+          <p>Share your unique invite link. Earn guaranteed cash directly in your wallet on every friend's first task.</p>
+          <div class="slide-actions">
+            <a href="#refer" class="btn-primary">
+              Invite Now
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#refer" class="btn-glass">How it Works</a>
+          </div>
+        </div>
+
+        <div class="slide-visual">
+          <div class="glass-card">
+            <div class="glass-card-top">
+              <span class="gc-label">Referral Rewards</span>
+              <span class="gc-status">Unlimited</span>
+            </div>
+            <div class="gc-amount">₹25 <span style="font-size:14px; font-weight:500; opacity:0.8;">/ Friend</span></div>
+            <div class="gc-sub">Zero limit • Instant Wallet Credit</div>
+            <div class="gc-avatars">
+              <span class="mini-av">A</span>
+              <span class="mini-av">R</span>
+              <span class="mini-av">S</span>
+              <span class="mini-av-more">+12k joined</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Daily Spin & Streak -->
+    <div class="carousel-slide slide-3">
+      <!-- Apni 3rd Banner Image yahan lagayein -->
+      <img src="banner3.jpg" alt="Daily Spin and Rewards" class="slide-bg-img" onerror="this.style.display='none'">
+      <div class="slide-overlay"></div>
+
+      <div class="slide-content">
+        <div class="slide-text">
+          <span class="slide-badge badge-amber">
+            <span class="pulse-dot gold"></span> DAILY REWARDS • 7-DAY STREAK
+          </span>
+          <h1>Spin Daily & Win <span class="highlight-gold">Guaranteed</span> Cash</h1>
+          <p>Don't break your daily check-in streak! Unlock bonus multipliers, scratch cards, and free lucky spins.</p>
+          <div class="slide-actions">
+            <a href="#spin" class="btn-primary">
+              Play Lucky Spin
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#checkin" class="btn-glass">Daily Check-in</a>
+          </div>
+        </div>
+
+        <div class="slide-visual">
+          <div class="glass-card">
+            <div class="glass-card-top">
+              <span class="gc-label">Active Streak</span>
+              <span class="gc-status">🔥 Day 7</span>
+            </div>
+            <div class="gc-amount">Free Spin</div>
+            <div class="gc-sub">Scratch Card + Spin Ready to Claim</div>
+            <div class="gc-bar"><div class="gc-bar-fill gold-fill" style="width: 100%;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Left / Right Navigation Arrows -->
+  <button class="carousel-arrow prev" onclick="moveSlide(-1)" aria-label="Previous slide">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <button class="carousel-arrow next" onclick="moveSlide(1)" aria-label="Next slide">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+
+  <!-- Animated Progress Dots -->
+  <div class="carousel-dots" id="carouselDots">
+    <button class="dot active" onclick="goToSlide(0)"><span></span></button>
+    <button class="dot" onclick="goToSlide(1)"><span></span></button>
+    <button class="dot" onclick="goToSlide(2)"><span></span></button>
+  </div>
+</section>
 
 <!-- CLEAN TRUST & PLATFORM HIGHLIGHTS BAR -->
 <div class="grid grid-cols-3 gap-2 md:gap-4">
@@ -1886,6 +2331,74 @@
             }
         }
     });
+
+    let currentSlide = 0;
+const totalSlides = 3;
+let slideTimer;
+
+const track = document.getElementById('carouselTrack');
+const dots = document.querySelectorAll('#carouselDots .dot');
+const carousel = document.getElementById('heroCarousel');
+
+function updateCarousel() {
+  track.style.transform = `translateX(-${currentSlide * 100}%)`;
+  
+  dots.forEach((dot, index) => {
+    dot.classList.remove('active');
+    // Animation reset karne ke liye
+    const span = dot.querySelector('span');
+    span.style.animation = 'none';
+    span.offsetHeight; // trigger reflow
+    span.style.animation = null;
+    
+    if (index === currentSlide) {
+      dot.classList.add('active');
+    }
+  });
+}
+
+function moveSlide(direction) {
+  currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+  updateCarousel();
+  resetAutoSlide();
+}
+
+function goToSlide(index) {
+  currentSlide = index;
+  updateCarousel();
+  resetAutoSlide();
+}
+
+function startAutoSlide() {
+  slideTimer = setInterval(() => {
+    moveSlide(1);
+  }, 4500); // Har 4.5 second mein banner badlega
+}
+
+function resetAutoSlide() {
+  clearInterval(slideTimer);
+  startAutoSlide();
+}
+
+// Mouse hover karne par auto-slide ruk jayega
+carousel.addEventListener('mouseenter', () => clearInterval(slideTimer));
+carousel.addEventListener('mouseleave', () => startAutoSlide());
+
+// Mobile Swipe Support
+let touchStartX = 0;
+carousel.addEventListener('touchstart', (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+carousel.addEventListener('touchend', (e) => {
+  const touchEndX = e.changedTouches[0].screenX;
+  if (touchStartX - touchEndX > 50) moveSlide(1);
+  if (touchEndX - touchStartX > 50) moveSlide(-1);
+}, { passive: true });
+
+// Start on load
+startAutoSlide();
+    
 </script>
 
 </body>
