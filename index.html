@@ -2311,6 +2311,743 @@
             carousel.addEventListener('mouseenter', () => clearInterval(slideTimer));
             carousel.addEventListener('mouseleave', () => startAutoSlide());
 
+           <!-- FIREBASE & APP LOGIC SCRIPT -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot, collection, addDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCHTnkaOHGfpE8xDQuPKijuBI8KgnL1rhI",
+        authDomain: "earnova-tasks.firebaseapp.com",
+        projectId: "earnova-tasks",
+        storageBucket: "earnova-tasks.firebasestorage.app",
+        messagingSenderId: "128153402677",
+        appId: "1:128153402677:web:54b50c03bd0dcee223e07c"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+    const db = getFirestore(app);
+
+    window.auth = auth;
+    window.db = db;
+
+    // Profile Dropdown Controls
+    window.toggleProfileMenu = function() {
+        const dropdown = document.getElementById('profileDropdown');
+        if (dropdown) dropdown.classList.toggle('active');
+    };
+
+    window.closeProfileMenu = function() {
+        const dropdown = document.getElementById('profileDropdown');
+        if (dropdown) dropdown.classList.remove('active');
+    };
+
+    document.addEventListener('click', function(event) {
+        const wrapper = document.querySelector('.profile-menu-wrapper');
+        const dropdown = document.getElementById('profileDropdown');
+        if (wrapper && dropdown && !wrapper.contains(event.target)) {
+            dropdown.classList.remove('active');
+        }
+    });
+
+    // Toast Helper
+    window.showToast = function(msg, isError = false) {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+        const toast = document.createElement('div');
+        toast.className = `px-4 py-2.5 rounded-xl shadow-xl text-xs font-bold text-white transition-all duration-300 ${isError ? 'bg-rose-600' : 'bg-slate-900'}`;
+        toast.innerText = msg;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 2800);
+    };
+
+    window.showWarningModal = function(title, message) {
+        const titleEl = document.getElementById('warningModalTitle');
+        const msgEl = document.getElementById('warningModalMessage');
+        const modal = document.getElementById('taskWarningModal');
+        if (titleEl) titleEl.innerText = title;
+        if (msgEl) msgEl.innerText = message;
+        if (modal) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+    };
+
+    window.loginWithGoogle = async function() {
+        try {
+            const result = await signInWithPopup(auth, provider);
+            localStorage.setItem("earnova_user_name", result.user.displayName || "User");
+            localStorage.setItem("earnova_logged_in", "true");
+            closeLoginModal();
+            location.reload();
+        } catch (error) {
+            console.log("Popup login fallback triggered:", error);
+            localStorage.setItem("earnova_user_name", "Rajnesh Chauhan");
+            localStorage.setItem("earnova_logged_in", "true");
+            if (!localStorage.getItem("earnova_saved_balance")) {
+                localStorage.setItem("earnova_saved_balance", "2.36");
+            }
+            closeLoginModal();
+            location.reload();
+        }
+    };
+
+    window.simulateLogin = function() {
+        const emailInput = document.getElementById("login-email").value;
+        if (!emailInput.trim()) {
+            showToast("Kripya apna email address enter karein!", true);
+            return;
+        }
+        const nameToUse = emailInput.split('@')[0];
+        localStorage.setItem("earnova_user_name", nameToUse);
+        localStorage.setItem("earnova_logged_in", "true");
+        closeLoginModal();
+        location.reload();
+    };
+
+    window.logout = function() {
+        signOut(auth).then(() => {
+            localStorage.clear();
+            location.reload();
+        });
+    };
+
+    window.copyReferralLink = function() {
+        const linkInput = document.getElementById('userInviteLink');
+        if (linkInput) {
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(linkInput.value);
+            showToast("Referral link copied successfully! 📋");
+        }
+    };
+
+    // ================= TASK TRACKING & ONE-TIME REWARD LOGIC =================
+    let startedTasks = JSON.parse(localStorage.getItem('earnova_completed_tasks') || '[]');
+    let isProcessingTask = false;
+
+    window.updateTaskButtonsUI = function(list) {
+        if (!Array.isArray(list)) return;
+        document.querySelectorAll('button[onclick*="openPopup("]').forEach(btn => {
+            const onclickAttr = btn.getAttribute('onclick') || '';
+            const alreadyStarted = list.some(url => onclickAttr.includes(url));
+            if (alreadyStarted) {
+                btn.innerText = 'Started ✓';
+                btn.classList.remove('bg-[#2563EB]', 'hover:bg-[#1D4ED8]', 'text-white');
+                btn.classList.add('bg-emerald-50', 'text-emerald-700', 'border', 'border-emerald-200');
+            }
+        });
+    };
+
+    window.startAppTask = async function(rewardAmount, taskUrl, taskName = 'Partner Task') {
+        if (!auth.currentUser && localStorage.getItem("earnova_logged_in") !== "true") {
+            showToast("Task start karne ke liye pehle login karein!", true);
+            openLoginModal();
+            return;
+        }
+
+        if (isProcessingTask) return;
+        isProcessingTask = true;
+
+        try {
+            // 1. Check in local memory first
+            let alreadyCompleted = startedTasks.includes(taskUrl);
+
+            // 2. Also check permanently in Firebase Firestore (so logout/cache clear cannot bypass)
+            if (auth.currentUser && !alreadyCompleted) {
+                const userRef = doc(db, "users", auth.currentUser.uid);
+                const snap = await getDoc(userRef);
+                if (snap.exists()) {
+                    const dbTasks = snap.data().startedTasks || [];
+                    if (dbTasks.includes(taskUrl)) {
+                        alreadyCompleted = true;
+                        startedTasks = Array.from(new Set([...startedTasks, ...dbTasks]));
+                        localStorage.setItem('earnova_completed_tasks', JSON.stringify(startedTasks));
+                        updateTaskButtonsUI(startedTasks);
+                    }
+                }
+            }
+
+            // 3. Block duplicate reward completely
+            if (alreadyCompleted) {
+                showWarningModal(
+                    "Task Already Started!",
+                    "Aap yeh task pehle hi start kar chuke hain. Ek task par sirf 1 baar hi reward milta hai — dobara paise add nahi honge."
+                );
+                return;
+            }
+
+            // 4. First-time start: save locally & update button UI immediately
+            startedTasks.push(taskUrl);
+            localStorage.setItem('earnova_completed_tasks', JSON.stringify(startedTasks));
+            updateTaskButtonsUI(startedTasks);
+
+            if (taskUrl) window.open(taskUrl, '_blank');
+
+            document.getElementById('taskModalAmountDisplay').innerText = "Pending Reward: ₹" + rewardAmount;
+            const successModal = document.getElementById('taskSuccessModal');
+            if (successModal) {
+                successModal.classList.remove('hidden');
+                successModal.classList.add('flex');
+            }
+
+            // 5. Save permanently in Firebase + Log click details for Admin
+            if (auth.currentUser) {
+                const userRef = doc(db, "users", auth.currentUser.uid);
+                const snap = await getDoc(userRef);
+                const currentPending = snap.exists() ? Number(snap.data().pendingWithdrawals || 0) : 0;
+
+                const clickRecord = {
+                    taskName: taskName,
+                    taskUrl: taskUrl,
+                    reward: rewardAmount,
+                    clickedAt: new Date().toISOString(),
+                    status: "Pending Verification"
+                };
+
+                await setDoc(userRef, {
+                    pendingWithdrawals: currentPending + rewardAmount,
+                    startedTasks: arrayUnion(taskUrl),
+                    taskHistory: arrayUnion(clickRecord)
+                }, { merge: true });
+
+                // Optional global log collection so you can see all clicks in one place in Firebase Console
+                try {
+                    await addDoc(collection(db, "task_clicks"), {
+                        uid: auth.currentUser.uid,
+                        userName: auth.currentUser.displayName || "User",
+                        userEmail: auth.currentUser.email || "",
+                        ...clickRecord
+                    });
+                } catch (logErr) {
+                    console.log("Global task_clicks log skipped (check Firestore rules):", logErr.message);
+                }
+            }
+        } catch (error) {
+            console.error("Task start error:", error);
+            showToast("Kuch technical error aaya, kripya dobara try karein.", true);
+        } finally {
+            isProcessingTask = false;
+        }
+    };
+
+    window.closeTaskSuccessModal = function() {
+        const modal = document.getElementById('taskSuccessModal');
+        if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
+    };
+
+    window.closeTaskWarningModal = function() {
+        const modal = document.getElementById('taskWarningModal');
+        if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
+    };
+
+    window.closeRewardClaimModal = function() {
+        const modal = document.getElementById('rewardClaimModal');
+        if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
+    };
+
+    window.requestWithdrawal = async function() {
+        if (!auth.currentUser && localStorage.getItem("earnova_logged_in") !== "true") {
+            showToast("Withdrawal ke liye pehle login karein!", true);
+            openLoginModal();
+            return;
+        }
+        const method = document.getElementById('paymentMethod').value;
+        const detail = method === 'upi' ? document.getElementById('upiId').value : document.getElementById('bankAcc').value;
+        const amount = parseFloat(document.getElementById('selectedWithdrawAmount').value);
+
+        if (!detail.trim()) return showToast("Kripya apni UPI ID ya Bank details bharein.", true);
+        if (isNaN(amount) || amount < 30) return showToast("Kam se kam ₹30 select karein.", true);
+
+        if (auth.currentUser) {
+            const userRef = doc(db, "users", auth.currentUser.uid);
+            const snap = await getDoc(userRef);
+            if (snap.exists()) {
+                const currentBal = snap.data().walletBalance || 0;
+                if (amount > currentBal) return showToast("Aapke wallet mein itna balance nahi hai!", true);
+
+                await updateDoc(userRef, {
+                    walletBalance: currentBal - amount,
+                    pendingWithdrawals: (snap.data().pendingWithdrawals || 0) + amount
+                });
+
+                resetAmountSelection();
+                showWithdrawalSuccessModal();
+            }
+        } else {
+            let currentBal = Number(localStorage.getItem('earnova_saved_balance') || 0);
+            if (amount > currentBal) return showToast("Aapke wallet mein itna balance nahi hai!", true);
+            let updatedBal = (currentBal - amount).toFixed(2);
+            localStorage.setItem('earnova_saved_balance', updatedBal);
+            document.getElementById('wallet-display').innerText = updatedBal;
+            document.getElementById('header-balance').innerText = updatedBal;
+            resetAmountSelection();
+            showWithdrawalSuccessModal();
+        }
+    };
+
+    function resetAmountSelection() {
+        document.getElementById('selectedWithdrawAmount').value = '';
+        document.querySelectorAll('.amount-btn').forEach(b => {
+            b.classList.remove('border-[#2563EB]', 'bg-blue-50', 'text-[#2563EB]');
+            b.classList.add('bg-slate-50', 'border-slate-200', 'text-slate-800');
+        });
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+        const gBtn = document.getElementById('google-login-section');
+        const profileInfo = document.getElementById('user-profile-info');
+        const headerLoginBtn = document.getElementById('header-login-btn');
+        const defaultAvatar = "https://www.svgrepo.com/show/498547/profile.svg";
+
+        if (user) {
+            if (gBtn) gBtn.classList.add('hidden');
+            if (headerLoginBtn) headerLoginBtn.classList.add('hidden');
+            if (profileInfo) profileInfo.classList.remove('hidden');
+
+            const profilePic = document.getElementById('nav-profile-pic');
+            if (profilePic) profilePic.src = user.photoURL || defaultAvatar;
+
+            const dropdownPic = document.getElementById('dropdown-profile-pic');
+            if (dropdownPic) dropdownPic.src = user.photoURL || defaultAvatar;
+
+            const popupName = document.getElementById('popup-user-name');
+            if (popupName) popupName.innerText = user.displayName || 'User';
+
+            const popupEmail = document.getElementById('popup-user-email');
+            if (popupEmail) popupEmail.innerText = user.email || '';
+
+            const userNameDisplay = document.getElementById('user-name-display');
+            if (userNameDisplay) userNameDisplay.innerText = user.displayName || 'User';
+
+            const userRef = doc(db, "users", user.uid);
+            const userSnap = await getDoc(userRef);
+            if (!userSnap.exists()) {
+                await setDoc(userRef, {
+                    name: user.displayName,
+                    email: user.email,
+                    walletBalance: 0,
+                    pendingWithdrawals: 0,
+                    startedTasks: [],
+                    taskHistory: [],
+                    joinedAt: new Date()
+                });
+            }
+
+            onSnapshot(userRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    const updateEl = (id, val) => { if (document.getElementById(id)) document.getElementById(id).innerText = val; };
+                    updateEl('wallet-display', (data.walletBalance || 0).toFixed(2));
+                    updateEl('header-balance', (data.walletBalance || 0).toFixed(2));
+                    updateEl('pending-display', (data.pendingWithdrawals || 0).toFixed(2));
+
+                    // Sync started tasks from Firestore to UI
+                    const dbTasks = data.startedTasks || [];
+                    startedTasks = Array.from(new Set([...startedTasks, ...dbTasks]));
+                    localStorage.setItem('earnova_completed_tasks', JSON.stringify(startedTasks));
+                    updateTaskButtonsUI(startedTasks);
+                }
+            });
+        } else {
+            if (localStorage.getItem("earnova_logged_in") === "true") {
+                if (gBtn) gBtn.classList.add('hidden');
+                if (headerLoginBtn) headerLoginBtn.classList.add('hidden');
+                if (profileInfo) profileInfo.classList.remove('hidden');
+
+                let savedName = localStorage.getItem("earnova_user_name") || "Rajnesh Chauhan";
+                const popupName = document.getElementById('popup-user-name');
+                if (popupName) popupName.innerText = savedName;
+
+                const userNameDisplay = document.getElementById('user-name-display');
+                if (userNameDisplay) userNameDisplay.innerText = savedName;
+
+                let savedBal = localStorage.getItem('earnova_saved_balance') || "2.36";
+                const updateEl = (id, val) => { if (document.getElementById(id)) document.getElementById(id).innerText = val; };
+                updateEl('wallet-display', savedBal);
+                updateEl('header-balance', savedBal);
+                updateTaskButtonsUI(startedTasks);
+            } else {
+                if (gBtn) gBtn.classList.remove('hidden');
+                if (headerLoginBtn) headerLoginBtn.classList.remove('hidden');
+                if (profileInfo) profileInfo.classList.add('hidden');
+                const userNameDisplay = document.getElementById('user-name-display');
+                if (userNameDisplay) userNameDisplay.innerText = 'Guest';
+            }
+        }
+    });
+
+    window.showTab = function(tabId) {
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.classList.remove('active');
+            tab.classList.add('hidden');
+        });
+
+        const activeTab = document.getElementById(tabId);
+        if (activeTab) {
+            activeTab.classList.remove('hidden');
+            activeTab.classList.add('active');
+        }
+
+        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active-tab'));
+        const activeBtn = document.getElementById('btn-' + tabId);
+        if (activeBtn) activeBtn.classList.add('active-tab');
+
+        if (tabId === 'scratch') initScratchCanvas();
+        if (tabId === 'checkin') renderCheckinUI();
+        updateTaskButtonsUI(startedTasks);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    window.openLoginModal = function() { document.getElementById('login-modal').classList.remove('hidden'); };
+    window.closeLoginModal = function() { document.getElementById('login-modal').classList.add('hidden'); };
+
+    window.togglePaymentFields = function() {
+        const method = document.getElementById('paymentMethod').value;
+        const upiField = document.getElementById('upiField');
+        const bankFields = document.getElementById('bankFields');
+        if (method === 'upi') {
+            upiField.classList.remove('hidden');
+            bankFields.classList.add('hidden');
+        } else {
+            upiField.classList.add('hidden');
+            bankFields.classList.remove('hidden');
+        }
+    };
+
+    window.openPopup = function(title, amount, link, termsId) {
+        document.getElementById('popupTitle').innerText = title;
+        document.getElementById('popupAmount').innerText = amount;
+        document.getElementById('popupTerms').innerHTML = document.getElementById(termsId).innerHTML;
+        document.getElementById('popupStartBtn').onclick = function() {
+            closePopup();
+            startAppTask(amount, link, title);
+        };
+        document.getElementById('taskPopup').classList.remove('hidden');
+        document.getElementById('taskPopup').classList.add('flex');
+    };
+
+    window.closePopup = function() {
+        document.getElementById('taskPopup').classList.add('hidden');
+        document.getElementById('taskPopup').classList.remove('flex');
+    };
+
+    window.addRewardToWallet = async function(amount) {
+        if (auth.currentUser) {
+            const userRef = doc(db, "users", auth.currentUser.uid);
+            const snap = await getDoc(userRef);
+            let currentBal = snap.exists() ? Number(snap.data().walletBalance || 0) : 0;
+            await updateDoc(userRef, { walletBalance: currentBal + amount });
+        } else {
+            let currentBal = Number(localStorage.getItem('earnova_saved_balance') || 2.36);
+            let newBal = (currentBal + amount).toFixed(2);
+            localStorage.setItem('earnova_saved_balance', newBal);
+            if (document.getElementById('wallet-display')) document.getElementById('wallet-display').innerText = newBal;
+            if (document.getElementById('header-balance')) document.getElementById('header-balance').innerText = newBal;
+        }
+    };
+
+    // SPIN LOGIC
+    let currentWheelRotation = 0;
+    window.earnovaSpin = async function() {
+        const today = new Date().toDateString();
+        const btn = document.getElementById('spinBtn');
+        const wheel = document.getElementById('spin-wheel');
+
+        if (localStorage.getItem('earnova_spin_date') === today) {
+            showWarningModal("Daily Limit Reached!", "Aap aaj ka Lucky Spin pehle hi use kar chuke hain. Kal phir wapas aayein!");
+            return;
+        }
+
+        const rewards = [
+            { amount: 0.01, chance: 30, sliceAngle: 330 },
+            { amount: 0.02, chance: 25, sliceAngle: 270 },
+            { amount: 0.05, chance: 20, sliceAngle: 210 },
+            { amount: 0.10, chance: 15, sliceAngle: 150 },
+            { amount: 0.25, chance: 8,  sliceAngle: 90 },
+            { amount: 0.50, chance: 2,  sliceAngle: 30 }
+        ];
+
+        let random = Math.random() * 100;
+        let selectedReward = rewards[0];
+        for (const reward of rewards) {
+            random -= reward.chance;
+            if (random < 0) { selectedReward = reward; break; }
+        }
+
+        btn.disabled = true;
+        btn.innerText = 'Spinning... 🎡';
+        btn.classList.add('opacity-60', 'cursor-not-allowed');
+
+        if (wheel) {
+            currentWheelRotation += 1800 + selectedReward.sliceAngle - (currentWheelRotation % 360);
+            wheel.style.transform = `rotate(${currentWheelRotation}deg)`;
+        }
+
+        setTimeout(async () => {
+            localStorage.setItem('earnova_spin_date', today);
+            btn.innerText = 'Come Back Tomorrow ✓';
+
+            document.getElementById('rewardModalAmountDisplay').innerText = "Spin Reward: ₹" + selectedReward.amount.toFixed(2);
+            const rewardModal = document.getElementById('rewardClaimModal');
+            if (rewardModal) {
+                rewardModal.classList.remove('hidden');
+                rewardModal.classList.add('flex');
+            }
+            await addRewardToWallet(selectedReward.amount);
+        }, 3900);
+    };
+
+    // CHECK-IN LOGIC
+    const earnovaDailyRewards = [0.01, 0.02, 0.03, 0.05, 0.07, 0.08, 0.10];
+
+    window.renderCheckinUI = function() {
+        const today = new Date().toDateString();
+        const lastDate = localStorage.getItem('earnova_checkin_date');
+        let streak = Number(localStorage.getItem('earnova_checkin_streak') || 0);
+
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        if (lastDate && lastDate !== today && lastDate !== yesterday.toDateString()) {
+            streak = 0;
+        }
+
+        const streakDisplay = document.getElementById('checkin-streak');
+        if (streakDisplay) streakDisplay.textContent = `Day ${streak} of 7`;
+
+        document.querySelectorAll('.checkin-day-card').forEach(card => {
+            const day = Number(card.dataset.day);
+            const circle = card.querySelector('.day-circle');
+            if (day <= streak) {
+                circle.classList.add('checked-in');
+                circle.textContent = '✓';
+            } else {
+                circle.classList.remove('checked-in');
+                circle.textContent = day === 7 ? '🎁' : day;
+            }
+        });
+
+        const btn = document.getElementById('checkinBtn');
+        if (btn && lastDate === today) {
+            btn.disabled = true;
+            btn.innerHTML = '<span>Claimed Today ✓</span>';
+            btn.className = 'w-full max-w-sm mx-auto bg-slate-300 text-slate-600 font-bold py-3.5 px-8 rounded-2xl cursor-not-allowed text-sm';
+        }
+    };
+
+    window.earnovaCheckin = async function() {
+        const today = new Date().toDateString();
+        const lastDate = localStorage.getItem('earnova_checkin_date');
+        let streak = Number(localStorage.getItem('earnova_checkin_streak') || 0);
+
+        if (lastDate === today) {
+            showWarningModal("Already Checked In!", "Aap aaj ka Daily Check-in reward claim kar chuke hain. Kal phir streak continue karein!");
+            return;
+        }
+
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        if (lastDate !== yesterday.toDateString()) streak = 0;
+
+        streak = (streak % 7) + 1;
+        const reward = earnovaDailyRewards[streak - 1];
+
+        localStorage.setItem('earnova_checkin_date', today);
+        localStorage.setItem('earnova_checkin_streak', streak);
+
+        renderCheckinUI();
+
+        document.getElementById('rewardModalAmountDisplay').innerText = `Check-in Reward (Day ${streak}): ₹${reward.toFixed(2)}`;
+        const rewardModal = document.getElementById('rewardClaimModal');
+        if (rewardModal) {
+            rewardModal.classList.remove('hidden');
+            rewardModal.classList.add('flex');
+        }
+        await window.addRewardToWallet(reward);
+    };
+
+    // INTERACTIVE SCRATCH CARD
+    let scratchClaiming = false;
+    window.initScratchCanvas = function() {
+        const canvas = document.getElementById('scratchCanvas');
+        const statusMsg = document.getElementById('scratch-status-msg');
+        if (!canvas) return;
+
+        const today = new Date().toDateString();
+        if (localStorage.getItem('earnova_last_scratch') === today) {
+            canvas.style.display = 'none';
+            if (statusMsg) statusMsg.innerText = "✓ Aaj ka scratch card claim ho chuka hai! Kal phir try karein.";
+            return;
+        }
+
+        canvas.style.display = 'block';
+        const rect = canvas.parentElement.getBoundingClientRect();
+        canvas.width = rect.width || 320;
+        canvas.height = rect.height || 200;
+
+        const ctx = canvas.getContext('2d');
+        const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        grad.addColorStop(0, '#94a3b8');
+        grad.addColorStop(0.5, '#cbd5e1');
+        grad.addColorStop(1, '#64748b');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 16px "Plus Jakarta Sans", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('✨ SCRATCH OR TAP HERE ✨', canvas.width / 2, canvas.height / 2);
+
+        let isDrawing = false;
+        let scratchedPoints = 0;
+
+        const scratchAt = (x, y) => {
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.beginPath();
+            ctx.arc(x, y, 22, 0, Math.PI * 2);
+            ctx.fill();
+            scratchedPoints++;
+            if (scratchedPoints > 18 && !scratchClaiming) {
+                canvas.style.transition = 'opacity 0.4s';
+                canvas.style.opacity = '0';
+                setTimeout(() => { canvas.style.display = 'none'; }, 400);
+                claimTapScratch();
+            }
+        };
+
+        const getCoords = (e) => {
+            const b = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: clientX - b.left, y: clientY - b.top };
+        };
+
+        canvas.onmousedown = (e) => { isDrawing = true; const p = getCoords(e); scratchAt(p.x, p.y); };
+        canvas.onmousemove = (e) => { if (!isDrawing) return; const p = getCoords(e); scratchAt(p.x, p.y); };
+        window.onmouseup = () => { isDrawing = false; };
+
+        canvas.ontouchstart = (e) => { isDrawing = true; const p = getCoords(e); scratchAt(p.x, p.y); };
+        canvas.ontouchmove = (e) => { if (!isDrawing) return; e.preventDefault(); const p = getCoords(e); scratchAt(p.x, p.y); };
+        canvas.ontouchend = () => { isDrawing = false; };
+    };
+
+    window.claimTapScratch = async function() {
+        if (scratchClaiming) return;
+        const today = new Date().toDateString();
+        const lastScratch = localStorage.getItem('earnova_last_scratch');
+
+        if (lastScratch === today) {
+            showWarningModal("Already Claimed Today!", "Aap aaj ka Scratch Card reward pehle hi claim kar chuke hain. Kal naya card milega!");
+            return;
+        }
+
+        scratchClaiming = true;
+        const canvas = document.getElementById('scratchCanvas');
+        if (canvas) canvas.style.display = 'none';
+
+        let reward = 0.40;
+        localStorage.setItem('earnova_last_scratch', today);
+
+        const statusMsg = document.getElementById('scratch-status-msg');
+        if (statusMsg) statusMsg.innerText = "🎉 ₹0.40 aapke wallet mein add ho gaya!";
+
+        document.getElementById('rewardModalAmountDisplay').innerText = "Scratch Reward: ₹" + reward.toFixed(2);
+        const rewardModal = document.getElementById('rewardClaimModal');
+        if (rewardModal) {
+            rewardModal.classList.remove('hidden');
+            rewardModal.classList.add('flex');
+        }
+        await addRewardToWallet(reward);
+        scratchClaiming = false;
+    };
+
+    window.selectAmount = function(amount, btn) {
+        const hiddenInput = document.getElementById('selectedWithdrawAmount');
+        if (hiddenInput) hiddenInput.value = amount;
+
+        document.querySelectorAll('.amount-btn').forEach(b => {
+            b.classList.remove('border-[#2563EB]', 'bg-blue-50', 'text-[#2563EB]');
+            b.classList.add('bg-slate-50', 'border-slate-200', 'text-slate-800');
+        });
+
+        btn.classList.remove('bg-slate-50', 'border-slate-200', 'text-slate-800');
+        btn.classList.add('border-[#2563EB]', 'bg-blue-50', 'text-[#2563EB]');
+    };
+
+    window.showWithdrawalSuccessModal = function() {
+        const modal = document.getElementById('withdrawalSuccessModal');
+        if (modal) { modal.classList.remove('hidden'); modal.classList.add('flex'); }
+    };
+
+    window.closeWithdrawalSuccessModal = function() {
+        const modal = document.getElementById('withdrawalSuccessModal');
+        if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
+    };
+
+    // ================= 3-SLIDE HERO CAROUSEL LOGIC =================
+    let currentSlide = 0;
+    const totalSlides = 3;
+    let slideTimer;
+
+    function updateCarousel() {
+        const track = document.getElementById('carouselTrack');
+        const dots = document.querySelectorAll('#carouselDots .dot');
+        if (!track) return;
+
+        track.style.transform = `translateX(-${currentSlide * 100}%)`;
+        dots.forEach((dot, index) => {
+            dot.classList.remove('active');
+            const span = dot.querySelector('span');
+            if (span) {
+                span.style.animation = 'none';
+                span.offsetHeight;
+                span.style.animation = null;
+            }
+            if (index === currentSlide) dot.classList.add('active');
+        });
+    }
+
+    window.moveSlide = function(direction) {
+        currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+        updateCarousel();
+        resetAutoSlide();
+    };
+
+    window.goToSlide = function(index) {
+        currentSlide = index;
+        updateCarousel();
+        resetAutoSlide();
+    };
+
+    function startAutoSlide() {
+        clearInterval(slideTimer);
+        slideTimer = setInterval(() => {
+            window.moveSlide(1);
+        }, 4500);
+    }
+
+    function resetAutoSlide() {
+        clearInterval(slideTimer);
+        startAutoSlide();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        window.showTab('dashboard');
+        renderCheckinUI();
+        startAutoSlide();
+        updateTaskButtonsUI(startedTasks);
+
+        const carousel = document.getElementById('heroCarousel');
+        if (carousel) {
+            carousel.addEventListener('mouseenter', () => clearInterval(slideTimer));
+            carousel.addEventListener('mouseleave', () => startAutoSlide());
+
             let touchStartX = 0;
             carousel.addEventListener('touchstart', (e) => {
                 touchStartX = e.changedTouches[0].screenX;
