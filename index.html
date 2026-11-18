@@ -159,41 +159,80 @@
                     Login
                 </button>
 
-                <!-- Profile Avatar & Dropdown (Shown when logged in) -->
-                <div id="user-profile-info" class="hidden relative flex items-center">
-                    <img id="nav-profile-pic" src="https://www.svgrepo.com/show/498547/profile.svg" alt="Profile" onclick="window.toggleProfilePopup()" class="w-9 h-9 rounded-full border-2 border-emerald-400 cursor-pointer shadow-md hover:scale-105 transition-transform object-cover bg-white">
+               <!-- Profile Trigger Button (Navbar mein) -->
+<div class="profile-menu-wrapper">
+  <button class="profile-trigger" id="profileBtn" onclick="toggleProfileMenu()">
+    <img src="your-avatar.jpg" alt="Rajnesh" class="nav-avatar">
+  </button>
 
-                    <div id="profile-popup" class="hidden absolute right-0 top-12 w-72 bg-white rounded-3xl shadow-2xl border border-slate-200/80 overflow-hidden z-50 text-left">
-                        <div class="bg-gradient-to-br from-[#087E8B] to-[#043d44] p-4 text-white relative overflow-hidden">
-                            <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
-                            <span class="block text-[9px] font-bold uppercase tracking-wider text-cyan-200 mb-0.5">Verified Account</span>
-                            <h4 class="font-extrabold text-base text-white truncate" id="popup-user-name">User</h4>
-                            <p class="text-xs text-cyan-100/90 truncate" id="popup-user-email">user@earnova.in</p>
-
-                            <div class="mt-3 inline-flex items-center gap-1.5 bg-black/25 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10 text-[10px] text-amber-300 font-bold">
-                                <span>🛡️</span> Active Member
-                            </div>
-                        </div>
-
-                        <div class="p-2 space-y-0.5 text-xs font-semibold text-slate-700">
-                            <a href="javascript:void(0)" onclick="showTab('dashboard'); toggleProfilePopup();" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition"><span class="text-base">🏠</span> Dashboard</a>
-                            <a href="javascript:void(0)" onclick="showTab('wallet'); toggleProfilePopup();" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition"><span class="text-base">💳</span> Wallet & Payouts</a>
-                            <a href="javascript:void(0)" onclick="showTab('tasks'); toggleProfilePopup();" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition"><span class="text-base">⚡</span> High-Paying Tasks</a>
-                            <a href="mailto:rajneshc510@gmail.com" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition"><span class="text-base">🎧</span> Help & Support</a>
-                            <a href="privacy.html" target="_blank" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 transition"><span class="text-base">🔒</span> Privacy Policy</a>
-                        </div>
-
-                        <div class="p-2 bg-slate-50 border-t border-slate-100">
-                            <button onclick="logout()" class="w-full flex items-center justify-between px-3 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 font-bold rounded-xl transition text-xs">
-                                <span class="flex items-center gap-2">🚪 Logout Account</span>
-                                <span>⏻</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <!-- Modern Dropdown Popup -->
+  <div class="profile-dropdown" id="profileDropdown">
+    
+    <!-- Header Section -->
+    <div class="dropdown-header">
+      <img src="your-avatar.jpg" alt="Rajnesh" class="dropdown-avatar">
+      <div class="user-meta">
+        <div class="user-name-row">
+          <span class="user-name">Rajnesh Chauhan</span>
+          <!-- Verified Blue/Teal Tick -->
+          <svg class="verified-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.9 14.7L6 12.6l1.5-1.5 2.6 2.6 6.4-6.4 1.5 1.5-7.9 7.9z"/>
+          </svg>
         </div>
+        <span class="user-email">rajneshc510@gmail.com</span>
+        <span class="member-badge">● Active Member</span>
+      </div>
     </div>
+
+    <div class="dropdown-divider"></div>
+
+    <!-- Main Navigation Links -->
+    <div class="dropdown-group">
+      <a href="#dashboard" class="dropdown-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="#wallet" class="dropdown-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
+        <span>Wallet & Payouts</span>
+      </a>
+
+      <a href="#tasks" class="dropdown-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span>High-Paying Tasks</span>
+        <span class="hot-tag">HOT</span>
+      </a>
+    </div>
+
+    <div class="dropdown-divider"></div>
+
+    <!-- Support & Legal Links -->
+    <div class="dropdown-group">
+      <a href="#support" class="dropdown-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <span>Help & Support</span>
+      </a>
+
+      <a href="#privacy" class="dropdown-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>Privacy Policy</span>
+      </a>
+    </div>
+
+    <div class="dropdown-divider"></div>
+
+    <!-- Logout Action -->
+    <div class="dropdown-group">
+      <button onclick="logoutUser()" class="dropdown-item logout-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+        <span>Logout Account</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+ </div>
 </nav>
 <!-- MAIN HEADER END -->
 
