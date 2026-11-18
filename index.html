@@ -42,6 +42,204 @@
     }
 </script>
     <style>
+        .profile-menu-wrapper {
+  position: relative;
+  display: inline-block;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Navbar Avatar Button */
+.profile-trigger {
+  background: none;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.profile-trigger:hover {
+  border-color: #facc15;
+}
+
+.nav-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Main Popup Container */
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 272px;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 16px 38px -8px rgba(15, 23, 42, 0.16), 
+              0 4px 12px -2px rgba(15, 23, 42, 0.06);
+  padding: 6px;
+  z-index: 1000;
+
+  /* Smooth Open/Close Animation */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px) scale(0.97);
+  transform-origin: top right;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.profile-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+/* Header Style */
+.dropdown-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 10px;
+  background: #f8fafc;
+  border-radius: 10px;
+}
+
+.dropdown-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #0d4a4b;
+  flex-shrink: 0;
+}
+
+.user-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.user-name-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.verified-icon {
+  width: 15px;
+  height: 15px;
+  color: #0d9488;
+  flex-shrink: 0;
+}
+
+.user-email {
+  font-size: 12px;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+}
+
+.member-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #0d9488;
+  margin-top: 4px;
+}
+
+/* Thin Divider */
+.dropdown-divider {
+  height: 1px;
+  background: #f1f5f9;
+  margin: 6px 4px;
+}
+
+/* Menu Items */
+.dropdown-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #334155;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  box-sizing: border-box;
+}
+
+.dropdown-item svg {
+  width: 17px;
+  height: 17px;
+  color: #64748b;
+  transition: color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.dropdown-item:hover {
+  background: #f1f5f9;
+  color: #0d4a4b;
+}
+
+.dropdown-item:hover svg {
+  color: #0d4a4b;
+}
+
+/* Subtle Tag */
+.hot-tag {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 700;
+  background: #fef3c7;
+  color: #b45309;
+  padding: 2px 6px;
+  border-radius: 99px;
+}
+
+/* Logout Button */
+.logout-btn {
+  color: #dc2626;
+}
+
+.logout-btn svg {
+  color: #dc2626;
+}
+
+.logout-btn:hover {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.logout-btn:hover svg {
+  color: #b91c1c;
+}
+
+        
         body {
             font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
             background-color: #f3f6f9;
@@ -1696,6 +1894,21 @@
             }
         }
     });
+
+    function toggleProfileMenu() {
+  const dropdown = document.getElementById('profileDropdown');
+  dropdown.classList.toggle('active');
+}
+
+// Bahar click karne par popup band ho jaye
+document.addEventListener('click', function(event) {
+  const wrapper = document.querySelector('.profile-menu-wrapper');
+  const dropdown = document.getElementById('profileDropdown');
+  
+  if (wrapper && !wrapper.contains(event.target)) {
+    dropdown.classList.remove('active');
+  }
+});
 </script>
 
 </body>
