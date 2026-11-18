@@ -43,208 +43,203 @@
 </script>
     <style>
         .profile-menu-wrapper {
-          position: relative;
-          display: inline-block;
-          font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
+  position: relative;
+  display: inline-block;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
 
-        /* Navbar Avatar Button */
-        .profile-trigger {
-          background: rgba(255, 255, 255, 0.1);
-          border: 2px solid rgba(255, 255, 255, 0.3);
-          border-radius: 50%;
-          padding: 4px;
-          cursor: pointer;
-          transition: border-color 0.2s ease, background 0.2s ease;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
+/* Navbar Avatar Button */
+.profile-trigger {
+  background: none;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
 
-        .profile-trigger:hover {
-          border-color: #facc15;
-          background: rgba(255, 255, 255, 0.2);
-        }
+.profile-trigger:hover {
+  border-color: #facc15;
+}
 
-        .nav-avatar {
-          width: 28px;
-          height: 28px;
-          border-radius: 50%;
-          color: #ffffff;
-          display: block;
-        }
+.nav-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
 
-        /* Main Popup Container */
-        .profile-dropdown {
-          position: absolute;
-          top: calc(100% + 12px);
-          right: 0;
-          width: 272px;
-          background: #ffffff;
-          border-radius: 14px;
-          border: 1px solid rgba(15, 23, 42, 0.08);
-          box-shadow: 0 16px 38px -8px rgba(15, 23, 42, 0.16), 
-                      0 4px 12px -2px rgba(15, 23, 42, 0.06);
-          padding: 6px;
-          z-index: 1000;
+/* Main Popup Container */
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 272px;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 16px 38px -8px rgba(15, 23, 42, 0.16), 
+              0 4px 12px -2px rgba(15, 23, 42, 0.06);
+  padding: 6px;
+  z-index: 1000;
 
-          /* Smooth Open/Close Animation */
-          opacity: 0;
-          visibility: hidden;
-          transform: translateY(-8px) scale(0.97);
-          transform-origin: top right;
-          transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+  /* Smooth Open/Close Animation */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px) scale(0.97);
+  transform-origin: top right;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-        .profile-dropdown.active {
-          opacity: 1;
-          visibility: visible;
-          transform: translateY(0) scale(1);
-        }
+.profile-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
 
-        /* Header Style */
-        .dropdown-header {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 12px 10px;
-          background: #f8fafc;
-          border-radius: 10px;
-        }
+/* Header Style */
+.dropdown-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 10px;
+  background: #f8fafc;
+  border-radius: 10px;
+}
 
-        .dropdown-avatar {
-          width: 42px;
-          height: 42px;
-          border-radius: 50%;
-          color: #0d4a4b;
-          background: #e2e8f0;
-          padding: 6px;
-          flex-shrink: 0;
-        }
+.dropdown-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #0d4a4b;
+  flex-shrink: 0;
+}
 
-        .user-meta {
-          display: flex;
-          flex-direction: column;
-          min-width: 0;
-        }
+.user-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
 
-        .user-name-row {
-          display: flex;
-          align-items: center;
-          gap: 5px;
-        }
+.user-name-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
 
-        .user-name {
-          font-size: 14px;
-          font-weight: 700;
-          color: #0f172a;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
+.user-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-        .verified-icon {
-          width: 15px;
-          height: 15px;
-          color: #0d9488;
-          flex-shrink: 0;
-        }
+.verified-icon {
+  width: 15px;
+  height: 15px;
+  color: #0d9488;
+  flex-shrink: 0;
+}
 
-        .user-email {
-          font-size: 12px;
-          color: #64748b;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          margin-top: 1px;
-        }
+.user-email {
+  font-size: 12px;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+}
 
-        .member-badge {
-          font-size: 11px;
-          font-weight: 600;
-          color: #0d9488;
-          margin-top: 4px;
-        }
+.member-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: #0d9488;
+  margin-top: 4px;
+}
 
-        /* Thin Divider */
-        .dropdown-divider {
-          height: 1px;
-          background: #f1f5f9;
-          margin: 6px 4px;
-        }
+/* Thin Divider */
+.dropdown-divider {
+  height: 1px;
+  background: #f1f5f9;
+  margin: 6px 4px;
+}
 
-        /* Menu Items */
-        .dropdown-group {
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-        }
+/* Menu Items */
+.dropdown-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
 
-        .dropdown-item {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          padding: 9px 10px;
-          border-radius: 8px;
-          font-size: 13.5px;
-          font-weight: 500;
-          color: #334155;
-          text-decoration: none;
-          background: transparent;
-          border: none;
-          width: 100%;
-          cursor: pointer;
-          transition: background 0.15s ease, color 0.15s ease;
-          box-sizing: border-box;
-          text-align: left;
-        }
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #334155;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  box-sizing: border-box;
+}
 
-        .dropdown-item svg {
-          width: 17px;
-          height: 17px;
-          color: #64748b;
-          transition: color 0.15s ease;
-          flex-shrink: 0;
-        }
+.dropdown-item svg {
+  width: 17px;
+  height: 17px;
+  color: #64748b;
+  transition: color 0.15s ease;
+  flex-shrink: 0;
+}
 
-        .dropdown-item:hover {
-          background: #f1f5f9;
-          color: #0d4a4b;
-        }
+.dropdown-item:hover {
+  background: #f1f5f9;
+  color: #0d4a4b;
+}
 
-        .dropdown-item:hover svg {
-          color: #0d4a4b;
-        }
+.dropdown-item:hover svg {
+  color: #0d4a4b;
+}
 
-        /* Subtle Tag */
-        .hot-tag {
-          margin-left: auto;
-          font-size: 10px;
-          font-weight: 700;
-          background: #fef3c7;
-          color: #b45309;
-          padding: 2px 6px;
-          border-radius: 99px;
-        }
+/* Subtle Tag */
+.hot-tag {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 700;
+  background: #fef3c7;
+  color: #b45309;
+  padding: 2px 6px;
+  border-radius: 99px;
+}
 
-        /* Logout Button */
-        .logout-btn {
-          color: #dc2626;
-        }
+/* Logout Button */
+.logout-btn {
+  color: #dc2626;
+}
 
-        .logout-btn svg {
-          color: #dc2626;
-        }
+.logout-btn svg {
+  color: #dc2626;
+}
 
-        .logout-btn:hover {
-          background: #fef2f2;
-          color: #b91c1c;
-        }
+.logout-btn:hover {
+  background: #fef2f2;
+  color: #b91c1c;
+}
 
-        .logout-btn:hover svg {
-          color: #b91c1c;
-        }
+.logout-btn:hover svg {
+  color: #b91c1c;
+}
 
+        
         body {
             font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
             background-color: #f3f6f9;
@@ -318,346 +313,6 @@
         /* Custom subtle scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
-
-        .hero-carousel {
-  position: relative;
-  width: 100%;
-  max-width: 1200px;
-  margin: 20px auto;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 20px 45px -12px rgba(7, 59, 60, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-.carousel-track {
-  display: flex;
-  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
-}
-
-.carousel-slide {
-  position: relative;
-  min-width: 100%;
-  min-height: 290px;
-  display: flex;
-  align-items: center;
-  padding: 40px 56px;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-/* 3 Alag-Alag Premium Teal Gradients (Website se match karne ke liye) */
-.slide-1 {
-  background: radial-gradient(circle at 85% 20%, #116466 0%, #073b3c 55%, #042829 100%);
-}
-.slide-2 {
-  background: radial-gradient(circle at 85% 20%, #0f766e 0%, #064e3b 55%, #032e26 100%);
-}
-.slide-3 {
-  background: radial-gradient(circle at 85% 20%, #134e4a 0%, #083344 55%, #04222c 100%);
-}
-
-/* Background Image Blending */
-.slide-bg-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.28; /* Image ko subtle rakhta hai taaki text 100% readable rahe */
-  mix-blend-mode: luminosity;
-  pointer-events: none;
-}
-
-.slide-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(4, 40, 41, 0.92) 0%, rgba(4, 40, 41, 0.65) 55%, rgba(4, 40, 41, 0.25) 100%);
-  pointer-events: none;
-}
-
-.slide-content {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
-}
-
-.slide-text {
-  max-width: 580px;
-}
-
-/* Pill Badge */
-.slide-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: 99px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(8px);
-  color: #e2e8f0;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.7px;
-  margin-bottom: 14px;
-}
-
-.pulse-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #2dd4bf;
-  box-shadow: 0 0 8px #2dd4bf;
-}
-.pulse-dot.green { background: #34d399; box-shadow: 0 0 8px #34d399; }
-.pulse-dot.gold { background: #facc15; box-shadow: 0 0 8px #facc15; }
-
-.slide-text h1 {
-  margin: 0 0 12px 0;
-  font-size: 34px;
-  line-height: 1.18;
-  font-weight: 800;
-  color: #ffffff;
-  letter-spacing: -0.5px;
-}
-
-.highlight-gold {
-  color: #facc15;
-}
-
-.slide-text p {
-  margin: 0 0 24px 0;
-  font-size: 15px;
-  line-height: 1.55;
-  color: #cbd5e1;
-  max-width: 490px;
-}
-
-/* Buttons */
-.slide-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #facc15;
-  color: #0f172a;
-  font-size: 14px;
-  font-weight: 700;
-  padding: 12px 22px;
-  border-radius: 10px;
-  text-decoration: none;
-  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 8px 20px -4px rgba(250, 204, 21, 0.35);
-}
-
-.btn-primary:hover {
-  background: #fde047;
-  transform: translateY(-2px);
-}
-
-.btn-glass {
-  display: inline-flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 12px 20px;
-  border-radius: 10px;
-  text-decoration: none;
-  backdrop-filter: blur(8px);
-  transition: background 0.2s ease;
-}
-
-.btn-glass:hover {
-  background: rgba(255, 255, 255, 0.18);
-}
-
-/* Right Side Floating Glass UI Card */
-.slide-visual {
-  flex-shrink: 0;
-}
-
-.glass-card {
-  width: 270px;
-  padding: 20px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-  color: #ffffff;
-}
-
-.glass-card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 12px;
-  margin-bottom: 10px;
-}
-
-.gc-label { color: #cbd5e1; font-weight: 500; }
-.gc-status { color: #34d399; font-weight: 700; }
-
-.gc-amount {
-  font-size: 28px;
-  font-weight: 800;
-  color: #ffffff;
-  margin-bottom: 4px;
-}
-
-.gc-sub {
-  font-size: 12px;
-  color: #94a3b8;
-  margin-bottom: 14px;
-}
-
-.gc-bar {
-  height: 6px;
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 99px;
-  overflow: hidden;
-}
-
-.gc-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #10b981, #34d399);
-  border-radius: 99px;
-}
-
-.gc-bar-fill.gold-fill {
-  background: linear-gradient(90deg, #f59e0b, #facc15);
-}
-
-.gc-avatars {
-  display: flex;
-  align-items: center;
-}
-
-.mini-av {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: #0d9488;
-  border: 2px solid #064e3b;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
-  margin-right: -8px;
-}
-
-.mini-av-more {
-  margin-left: 16px;
-  font-size: 11px;
-  color: #cbd5e1;
-  font-weight: 600;
-}
-
-/* Arrows */
-.carousel-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 5;
-  opacity: 0;
-  backdrop-filter: blur(8px);
-  transition: opacity 0.25s ease, background 0.2s ease;
-}
-
-.hero-carousel:hover .carousel-arrow {
-  opacity: 1;
-}
-
-.carousel-arrow:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.carousel-arrow.prev { left: 14px; }
-.carousel-arrow.next { right: 14px; }
-
-/* Animated Progress Dots */
-.carousel-dots {
-  position: absolute;
-  bottom: 16px;
-  left: 56px;
-  display: flex;
-  gap: 8px;
-  z-index: 5;
-}
-
-.carousel-dots .dot {
-  width: 8px;
-  height: 6px;
-  border-radius: 99px;
-  border: none;
-  padding: 0;
-  background: rgba(255, 255, 255, 0.28);
-  cursor: pointer;
-  overflow: hidden;
-  position: relative;
-  transition: width 0.3s ease, background 0.3s ease;
-}
-
-.carousel-dots .dot.active {
-  width: 32px;
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.carousel-dots .dot.active span {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  background: #facc15;
-  border-radius: 99px;
-  animation: dotProgress 4.5s linear forwards;
-}
-
-.hero-carousel:hover .carousel-dots .dot.active span {
-  animation-play-state: paused;
-}
-
-@keyframes dotProgress {
-  from { width: 0%; }
-  to { width: 100%; }
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .carousel-slide { padding: 28px 22px 48px; }
-  .slide-content { flex-direction: column; align-items: flex-start; }
-  .slide-text h1 { font-size: 26px; }
-  .slide-visual { display: none; }
-  .carousel-dots { left: 22px; }
-  .carousel-arrow { display: none; }
-}
     </style>
 </head>
 <body class="text-slate-800 relative min-h-screen flex flex-col">
@@ -702,85 +357,80 @@
                     Login
                 </button>
 
-                <!-- Profile Trigger Button & Modern Dropdown -->
-                <div class="profile-menu-wrapper">
-                  <button class="profile-trigger" id="profileBtn" onclick="toggleProfileMenu()">
-                    <svg class="nav-avatar" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                    </svg>
-                  </button>
+               <!-- Profile Trigger Button (Navbar mein) -->
+<div class="profile-menu-wrapper">
+  <button class="profile-trigger" id="profileBtn" onclick="toggleProfileMenu()">
+    <img src="your-avatar.jpg" alt="Rajnesh" class="nav-avatar">
+  </button>
 
-                  <!-- Modern Dropdown Popup -->
-                  <div class="profile-dropdown" id="profileDropdown">
-                    <!-- Header Section -->
-                    <div class="dropdown-header">
-                      <svg class="dropdown-avatar" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                      </svg>
-                      <div class="user-meta">
-                        <div class="user-name-row">
-                          <span class="user-name">Rajnesh Chauhan</span>
-                          <svg class="verified-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.9 14.7L6 12.6l1.5-1.5 2.6 2.6 6.4-6.4 1.5 1.5-7.9 7.9z"/>
-                          </svg>
-                        </div>
-                        <span class="user-email">rajneshc510@gmail.com</span>
-                        <span class="member-badge">● Active Member</span>
-                      </div>
-                    </div>
-
-                    <div class="dropdown-divider"></div>
-
-                    <!-- Main Navigation Links -->
-                    <div class="dropdown-group">
-                      <a href="#dashboard" onclick="showTab('dashboard'); toggleProfileMenu();" class="dropdown-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
-                        <span>Dashboard</span>
-                      </a>
-
-                      <a href="#wallet" onclick="showTab('wallet'); toggleProfileMenu();" class="dropdown-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
-                        <span>Wallet & Payouts</span>
-                      </a>
-
-                      <a href="#tasks" onclick="showTab('tasks'); toggleProfileMenu();" class="dropdown-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                        <span>High-Paying Tasks</span>
-                        <span class="hot-tag">HOT</span>
-                      </a>
-                    </div>
-
-                    <div class="dropdown-divider"></div>
-
-                    <!-- Support & Legal Links -->
-                    <div class="dropdown-group">
-                      <a href="mailto:rajneshc510@gmail.com" class="dropdown-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
-                        <span>Help & Support</span>
-                      </a>
-
-                      <a href="privacy.html" target="_blank" class="dropdown-item">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        <span>Privacy Policy</span>
-                      </a>
-                    </div>
-
-                    <div class="dropdown-divider"></div>
-
-                    <!-- Logout Action -->
-                    <div class="dropdown-group">
-                      <button onclick="logout(); toggleProfileMenu();" class="dropdown-item logout-btn">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
-                        <span>Logout Account</span>
-                      </button>
-                    </div>
-
-                  </div>
-                </div>
-
-            </div>
+  <!-- Modern Dropdown Popup -->
+  <div class="profile-dropdown" id="profileDropdown">
+    
+    <!-- Header Section -->
+    <div class="dropdown-header">
+      <img src="your-avatar.jpg" alt="Rajnesh" class="dropdown-avatar">
+      <div class="user-meta">
+        <div class="user-name-row">
+          <span class="user-name">Rajnesh Chauhan</span>
+          <!-- Verified Blue/Teal Tick -->
+          <svg class="verified-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.9 14.7L6 12.6l1.5-1.5 2.6 2.6 6.4-6.4 1.5 1.5-7.9 7.9z"/>
+          </svg>
         </div>
+        <span class="user-email">rajneshc510@gmail.com</span>
+        <span class="member-badge">● Active Member</span>
+      </div>
     </div>
+
+    <div class="dropdown-divider"></div>
+
+    <!-- Main Navigation Links -->
+    <div class="dropdown-group">
+      <a href="#dashboard" class="dropdown-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="#wallet" class="dropdown-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
+        <span>Wallet & Payouts</span>
+      </a>
+
+      <a href="#tasks" class="dropdown-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span>High-Paying Tasks</span>
+        <span class="hot-tag">HOT</span>
+      </a>
+    </div>
+
+    <div class="dropdown-divider"></div>
+
+    <!-- Support & Legal Links -->
+    <div class="dropdown-group">
+      <a href="#support" class="dropdown-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+        <span>Help & Support</span>
+      </a>
+
+      <a href="#privacy" class="dropdown-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>Privacy Policy</span>
+      </a>
+    </div>
+
+    <div class="dropdown-divider"></div>
+
+    <!-- Logout Action -->
+    <div class="dropdown-group">
+      <button onclick="logoutUser()" class="dropdown-item logout-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+        <span>Logout Account</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+</div>                
 </nav>
 <!-- MAIN HEADER END -->
 
@@ -790,140 +440,35 @@
     <!-- DASHBOARD TAB -->
     <section id="dashboard" class="tab-content active space-y-5 md:space-y-6">
 
-  <section class="hero-carousel" id="heroCarousel">
-  <div class="carousel-track" id="carouselTrack">
+     <!-- COMPACT HERO BANNER (Mobile Friendly) -->
+<div class="relative text-white rounded-2xl md:rounded-3xl overflow-hidden py-4 px-4 md:py-9 md:px-10 shadow-lg bg-gradient-to-br from-[#043d44] via-[#065F66] to-[#087E8B] border border-white/10">
+    <div class="absolute inset-0 opacity-35" style="background-image: url('hero-banner.png.jpg'); background-size: cover; background-position: center;"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#03343A]/90 via-[#043d44]/65 to-[#043d44]/50"></div>
 
-    <!-- SLIDE 1: Verified Partner Tasks -->
-    <div class="carousel-slide slide-1">
-      <!-- Apni 1st Banner Image yahan lagayein (transparent PNG ya high-res photo) -->
-      <img src="banner1.jpg" alt="Verified Tasks" class="slide-bg-img" onerror="this.style.display='none'">
-      <div class="slide-overlay"></div>
-
-      <div class="slide-content">
-        <div class="slide-text">
-          <span class="slide-badge">
-            <span class="pulse-dot"></span> VERIFIED PARTNER TASKS
-          </span>
-          <h1>Earn up to <span class="highlight-gold">₹500</span> per Verified Task</h1>
-          <p>Complete simple app & KYC tasks from top Indian brands with fast 24-hour UPI settlement.</p>
-          <div class="slide-actions">
-            <a href="#tasks" class="btn-primary">
-              Start Earning
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-            <a href="#wallet" class="btn-glass">View Wallet</a>
-          </div>
+    <div class="relative z-10 flex flex-col items-center text-center space-y-2 md:space-y-3 max-w-2xl mx-auto">
+        <div class="inline-flex items-center gap-1.5 bg-white/15 border border-white/20 text-white text-[10px] md:text-xs font-bold px-3 py-0.5 md:py-1 rounded-full backdrop-blur-md">
+            <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Welcome, <span id="user-name-display" class="text-amber-300">Guest</span> 👋</span>
         </div>
 
-        <!-- Right Side Premium Floating UI Card -->
-        <div class="slide-visual">
-          <div class="glass-card">
-            <div class="glass-card-top">
-              <span class="gc-label">Recent Payout</span>
-              <span class="gc-status">● Settled</span>
-            </div>
-            <div class="gc-amount">+ ₹350.00</div>
-            <div class="gc-sub">Kotak Securities Demat • UPI Instant</div>
-            <div class="gc-bar"><div class="gc-bar-fill" style="width: 82%;"></div></div>
-          </div>
+        <h1 class="text-lg sm:text-2xl md:text-4xl font-extrabold leading-tight tracking-tight">
+            Your <span class="text-amber-300">Financial Future</span> Starts Here
+        </h1>
+
+        <p class="text-cyan-100 text-[11px] md:text-sm max-w-md leading-snug">
+            Complete simple tasks &amp; spin daily for instant UPI payouts — zero investment.
+        </p>
+
+        <div class="pt-1 flex flex-row items-center justify-center gap-2.5 w-full">
+            <button onclick="showTab('tasks')" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold px-4 py-2 md:px-6 md:py-2.5 rounded-full shadow-md transition text-[11px] md:text-sm whitespace-nowrap">
+                Start Earning ➔
+            </button>
+            <button onclick="showTab('wallet')" class="bg-white/15 hover:bg-white/25 border border-white/25 text-white font-bold px-4 py-2 md:px-5 md:py-2.5 rounded-full backdrop-blur-sm transition text-[11px] md:text-sm whitespace-nowrap">
+                View Wallet
+            </button>
         </div>
-      </div>
     </div>
-
-    <!-- SLIDE 2: Refer & Earn -->
-    <div class="carousel-slide slide-2">
-      <!-- Apni 2nd Banner Image yahan lagayein -->
-      <img src="banner2.jpg" alt="Refer and Earn" class="slide-bg-img" onerror="this.style.display='none'">
-      <div class="slide-overlay"></div>
-
-      <div class="slide-content">
-        <div class="slide-text">
-          <span class="slide-badge badge-emerald">
-            <span class="pulse-dot green"></span> REFER & EARN PROGRAM
-          </span>
-          <h1>Invite Friends & Get <span class="highlight-gold">₹25 Instant</span> Bonus</h1>
-          <p>Share your unique invite link. Earn guaranteed cash directly in your wallet on every friend's first task.</p>
-          <div class="slide-actions">
-            <a href="#refer" class="btn-primary">
-              Invite Now
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-            <a href="#refer" class="btn-glass">How it Works</a>
-          </div>
-        </div>
-
-        <div class="slide-visual">
-          <div class="glass-card">
-            <div class="glass-card-top">
-              <span class="gc-label">Referral Rewards</span>
-              <span class="gc-status">Unlimited</span>
-            </div>
-            <div class="gc-amount">₹25 <span style="font-size:14px; font-weight:500; opacity:0.8;">/ Friend</span></div>
-            <div class="gc-sub">Zero limit • Instant Wallet Credit</div>
-            <div class="gc-avatars">
-              <span class="mini-av">A</span>
-              <span class="mini-av">R</span>
-              <span class="mini-av">S</span>
-              <span class="mini-av-more">+12k joined</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SLIDE 3: Daily Spin & Streak -->
-    <div class="carousel-slide slide-3">
-      <!-- Apni 3rd Banner Image yahan lagayein -->
-      <img src="banner3.jpg" alt="Daily Spin and Rewards" class="slide-bg-img" onerror="this.style.display='none'">
-      <div class="slide-overlay"></div>
-
-      <div class="slide-content">
-        <div class="slide-text">
-          <span class="slide-badge badge-amber">
-            <span class="pulse-dot gold"></span> DAILY REWARDS • 7-DAY STREAK
-          </span>
-          <h1>Spin Daily & Win <span class="highlight-gold">Guaranteed</span> Cash</h1>
-          <p>Don't break your daily check-in streak! Unlock bonus multipliers, scratch cards, and free lucky spins.</p>
-          <div class="slide-actions">
-            <a href="#spin" class="btn-primary">
-              Play Lucky Spin
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-            <a href="#checkin" class="btn-glass">Daily Check-in</a>
-          </div>
-        </div>
-
-        <div class="slide-visual">
-          <div class="glass-card">
-            <div class="glass-card-top">
-              <span class="gc-label">Active Streak</span>
-              <span class="gc-status">🔥 Day 7</span>
-            </div>
-            <div class="gc-amount">Free Spin</div>
-            <div class="gc-sub">Scratch Card + Spin Ready to Claim</div>
-            <div class="gc-bar"><div class="gc-bar-fill gold-fill" style="width: 100%;"></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Left / Right Navigation Arrows -->
-  <button class="carousel-arrow prev" onclick="moveSlide(-1)" aria-label="Previous slide">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
-  </button>
-  <button class="carousel-arrow next" onclick="moveSlide(1)" aria-label="Next slide">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
-  </button>
-
-  <!-- Animated Progress Dots -->
-  <div class="carousel-dots" id="carouselDots">
-    <button class="dot active" onclick="goToSlide(0)"><span></span></button>
-    <button class="dot" onclick="goToSlide(1)"><span></span></button>
-    <button class="dot" onclick="goToSlide(2)"><span></span></button>
-  </div>
-</section>
+</div>
 
 <!-- CLEAN TRUST & PLATFORM HIGHLIGHTS BAR -->
 <div class="grid grid-cols-3 gap-2 md:gap-4">
@@ -1688,7 +1233,7 @@
     </div>
 </div>
 
-<!-- HIDDEN TASK TERMS DATA -->
+<!-- HIDDEN TASK TERMS DATA (Cleaned up artifacts) -->
 <div class="hidden">
     <ul id="terms-herowallet">
         <li>1. Install HeroWallet app using the referral link.</li>
@@ -1767,6 +1312,7 @@
     window.auth = auth;
     window.db = db;
 
+    // Toast Helper (replaces ugly browser alerts)
     window.showToast = function(msg, isError = false) {
         const container = document.getElementById('toast-container');
         if (!container) return;
@@ -1780,6 +1326,7 @@
         }, 2800);
     };
 
+    // Dynamic Warning Modal Helper
     window.showWarningModal = function(title, message) {
         const titleEl = document.getElementById('warningModalTitle');
         const msgEl = document.getElementById('warningModalMessage');
@@ -1828,24 +1375,20 @@
         signOut(auth).then(() => {
             localStorage.clear();
             location.reload();
-        }).catch(() => {
-            localStorage.clear();
-            location.reload();
         });
     };
 
-    window.toggleProfileMenu = function() {
-        const dropdown = document.getElementById('profileDropdown');
-        if (dropdown) {
-            dropdown.classList.toggle('active');
-        }
+    window.toggleProfilePopup = function() {
+        document.getElementById('profile-popup').classList.toggle('hidden');
     };
 
     document.addEventListener('click', function(event) {
-        const wrapper = document.querySelector('.profile-menu-wrapper');
-        const dropdown = document.getElementById('profileDropdown');
-        if (wrapper && dropdown && !wrapper.contains(event.target)) {
-            dropdown.classList.remove('active');
+        let popup = document.getElementById('profile-popup');
+        let profilePic = document.getElementById('nav-profile-pic');
+        if (popup && !popup.classList.contains('hidden')) {
+            if (event.target !== profilePic && !popup.contains(event.target)) {
+                popup.classList.add('hidden');
+            }
         }
     });
 
@@ -1969,10 +1512,23 @@
     }
 
     onAuthStateChanged(auth, async (user) => {
+        const gBtn = document.getElementById('google-login-section');
+        const profileInfo = document.getElementById('user-profile-info');
         const headerLoginBtn = document.getElementById('header-login-btn');
 
         if (user) {
+            if (gBtn) gBtn.classList.add('hidden');
             if (headerLoginBtn) headerLoginBtn.classList.add('hidden');
+            if (profileInfo) profileInfo.classList.remove('hidden');
+
+            const profilePic = document.getElementById('nav-profile-pic');
+            if (profilePic) profilePic.src = user.photoURL || "https://www.svgrepo.com/show/498547/profile.svg";
+
+            const popupName = document.getElementById('popup-user-name');
+            if (popupName) popupName.innerText = user.displayName || 'User';
+
+            const popupEmail = document.getElementById('popup-user-email');
+            if (popupEmail) popupEmail.innerText = user.email || '';
 
             const userNameDisplay = document.getElementById('user-name-display');
             if (userNameDisplay) userNameDisplay.innerText = user.displayName || 'User';
@@ -1994,9 +1550,14 @@
             });
         } else {
             if (localStorage.getItem("earnova_logged_in") === "true") {
+                if (gBtn) gBtn.classList.add('hidden');
                 if (headerLoginBtn) headerLoginBtn.classList.add('hidden');
+                if (profileInfo) profileInfo.classList.remove('hidden');
 
                 let savedName = localStorage.getItem("earnova_user_name") || "Rajnesh Chauhan";
+                const popupName = document.getElementById('popup-user-name');
+                if (popupName) popupName.innerText = savedName;
+
                 const userNameDisplay = document.getElementById('user-name-display');
                 if (userNameDisplay) userNameDisplay.innerText = savedName;
 
@@ -2005,7 +1566,9 @@
                 updateEl('wallet-display', savedBal);
                 updateEl('header-balance', savedBal);
             } else {
+                if (gBtn) gBtn.classList.remove('hidden');
                 if (headerLoginBtn) headerLoginBtn.classList.remove('hidden');
+                if (profileInfo) profileInfo.classList.add('hidden');
                 const userNameDisplay = document.getElementById('user-name-display');
                 if (userNameDisplay) userNameDisplay.innerText = 'Guest';
             }
@@ -2081,7 +1644,7 @@
         }
     };
 
-    // SPIN LOGIC
+    // SPIN LOGIC (Lands accurately on slice angle)
     let currentWheelRotation = 0;
     window.earnovaSpin = async function() {
         const today = new Date().toDateString();
@@ -2094,7 +1657,7 @@
         }
 
         const rewards = [
-            { amount: 0.01, chance: 30, sliceAngle: 330 },
+            { amount: 0.01, chance: 30, sliceAngle: 330 }, // Top pointer hits 30deg slice when rotated 330deg
             { amount: 0.02, chance: 25, sliceAngle: 270 },
             { amount: 0.05, chance: 20, sliceAngle: 210 },
             { amount: 0.10, chance: 15, sliceAngle: 150 },
@@ -2132,7 +1695,7 @@
         }, 3900);
     };
 
-    // CHECK-IN LOGIC
+    // CHECK-IN LOGIC & DYNAMIC RENDER
     const earnovaDailyRewards = [0.01, 0.02, 0.03, 0.05, 0.07, 0.08, 0.10];
 
     window.renderCheckinUI = function() {
@@ -2200,7 +1763,7 @@
         await window.addRewardToWallet(reward);
     };
 
-    // SCRATCH CARD
+    // INTERACTIVE SCRATCH CARD (Supports both finger/mouse scratching AND tap-to-reveal)
     let scratchClaiming = false;
     window.initScratchCanvas = function() {
         const canvas = document.getElementById('scratchCanvas');
@@ -2322,6 +1885,7 @@
         window.showTab('dashboard');
         renderCheckinUI();
 
+        // Check if spin already used today
         if (localStorage.getItem('earnova_spin_date') === new Date().toDateString()) {
             const btn = document.getElementById('spinBtn');
             if (btn) {
@@ -2332,74 +1896,22 @@
         }
     });
 
-    let currentSlide = 0;
-const totalSlides = 3;
-let slideTimer;
+    function toggleProfileMenu() {
+  const dropdown = document.getElementById('profileDropdown');
+  dropdown.classList.toggle('active');
+}
 
-const track = document.getElementById('carouselTrack');
-const dots = document.querySelectorAll('#carouselDots .dot');
-const carousel = document.getElementById('heroCarousel');
-
-function updateCarousel() {
-  track.style.transform = `translateX(-${currentSlide * 100}%)`;
+// Bahar click karne par popup band ho jaye
+document.addEventListener('click', function(event) {
+  const wrapper = document.querySelector('.profile-menu-wrapper');
+  const dropdown = document.getElementById('profileDropdown');
   
-  dots.forEach((dot, index) => {
-    dot.classList.remove('active');
-    // Animation reset karne ke liye
-    const span = dot.querySelector('span');
-    span.style.animation = 'none';
-    span.offsetHeight; // trigger reflow
-    span.style.animation = null;
-    
-    if (index === currentSlide) {
-      dot.classList.add('active');
-    }
-  });
-}
-
-function moveSlide(direction) {
-  currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
-  updateCarousel();
-  resetAutoSlide();
-}
-
-function goToSlide(index) {
-  currentSlide = index;
-  updateCarousel();
-  resetAutoSlide();
-}
-
-function startAutoSlide() {
-  slideTimer = setInterval(() => {
-    moveSlide(1);
-  }, 4500); // Har 4.5 second mein banner badlega
-}
-
-function resetAutoSlide() {
-  clearInterval(slideTimer);
-  startAutoSlide();
-}
-
-// Mouse hover karne par auto-slide ruk jayega
-carousel.addEventListener('mouseenter', () => clearInterval(slideTimer));
-carousel.addEventListener('mouseleave', () => startAutoSlide());
-
-// Mobile Swipe Support
-let touchStartX = 0;
-carousel.addEventListener('touchstart', (e) => {
-  touchStartX = e.changedTouches[0].screenX;
-}, { passive: true });
-
-carousel.addEventListener('touchend', (e) => {
-  const touchEndX = e.changedTouches[0].screenX;
-  if (touchStartX - touchEndX > 50) moveSlide(1);
-  if (touchEndX - touchStartX > 50) moveSlide(-1);
-}, { passive: true });
-
-// Start on load
-startAutoSlide();
-    
+  if (wrapper && !wrapper.contains(event.target)) {
+    dropdown.classList.remove('active');
+  }
+});
 </script>
 
 </body>
 </html>
+```
