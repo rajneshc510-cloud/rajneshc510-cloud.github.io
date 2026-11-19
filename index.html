@@ -1950,46 +1950,100 @@
         if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
     };
 
+    let isProcessingWithdrawal = false;
+
     window.requestWithdrawal = async function() {
         if (!auth.currentUser && localStorage.getItem("earnova_logged_in") !== "true") {
             showToast("Withdrawal ke liye pehle login karein!", true);
             openLoginModal();
             return;
         }
+
+        if (isProcessingWithdrawal) return;
+
         const method = document.getElementById('paymentMethod').value;
-        const detail = method === 'upi' ? document.getElementById('upiId').value : document.getElementById('bankAcc').value;
+        const upiId = document.getElementById('upiId').value.trim();
+        const bankAcc = document.getElementById('bankAcc').value.trim();
+        const bankIfsc = document.getElementById('bankIfsc').value.trim().toUpperCase();
         const amount = parseFloat(document.getElementById('selectedWithdrawAmount').value);
 
-        if (!detail.trim()) return showToast("Kripya apni UPI ID ya Bank details bharein.", true);
-        if (isNaN(amount) || amount < 30) return showToast("Kam se kam ₹30 select karein.", true);
+        if (method === 'upi' && !upiId) {
+            return showToast("Kripya apni UPI ID bharein.", true);
+        }
+        if (method === 'bank' && (!bankAcc || !bankIfsc)) {
+            return showToast("Kripya Bank Account Number aur IFSC Code dono bharein.", true);
+        }
+        if (isNaN(amount) || amount < 30) {
+            return showToast("Kam se kam ₹30 select karein.", true);
+        }
 
-        if (auth.currentUser) {
-            const userRef = doc(db, "users", auth.currentUser.uid);
-            const snap = await getDoc(userRef);
-            if (snap.exists()) {
-                const currentBal = snap.data().walletBalance || 0;
-                if (amount > currentBal) return showToast("Aapke wallet mein itna balance nahi hai!", true);
+        isProcessingWithdrawal = true;
 
-                await updateDoc(userRef, {
-                    walletBalance: currentBal - amount,
-                    pendingWithdrawals: (snap.data().pendingWithdrawals || 0) + amount
-                });
+        try {
+            if (auth.currentUser) {
+                const userRef = doc(db, "users", auth.currentUser.uid);
+                const snap = await getDoc(userRef);
 
+                if (snap.exists()) {
+                    const currentBal = Number(snap.data().walletBalance || 0);
+                    if (amount > currentBal) {
+                        return showToast("Aapke wallet mein itna balance nahi hai!", true);
+                    }
+
+                    const withdrawalData = {
+                        uid: auth.currentUser.uid,
+                        userName: auth.currentUser.displayName || snap.data().name || "User",
+                        userEmail: auth.currentUser.email || snap.data().email || "",
+                        amount: amount,
+                        method: method,
+                        upiId: method === 'upi' ? upiId : "",
+                        bankAcc: method === 'bank' ? bankAcc : "",
+                        bankIfsc: method === 'bank' ? bankIfsc : "",
+                        status: "Pending",
+                        requestedAt: new Date().toISOString()
+                    };
+
+                    // 1. Sirf walletBalance deduct karein (pendingWithdrawals ko nahi chhedenge)
+                    // Aur user document ke andar bhi withdrawalHistory mein backup save karein
+                    await updateDoc(userRef, {
+                        walletBalance: Number((currentBal - amount).toFixed(2)),
+                        withdrawalHistory: arrayUnion(withdrawalData)
+                    });
+
+                    // 2. Firebase mein alag 'withdrawal_requests' collection mein save karein (Admin ke dekhne ke liye)
+                    try {
+                        await addDoc(collection(db, "withdrawal_requests"), withdrawalData);
+                    } catch (reqErr) {
+                        console.log("withdrawal_requests collection write skipped (check Firestore rules):", reqErr.message);
+                    }
+
+                    // Inputs clear karein
+                    document.getElementById('upiId').value = '';
+                    document.getElementById('bankAcc').value = '';
+                    document.getElementById('bankIfsc').value = '';
+                    resetAmountSelection();
+                    showWithdrawalSuccessModal();
+                }
+            } else {
+                let currentBal = Number(localStorage.getItem('earnova_saved_balance') || 0);
+                if (amount > currentBal) {
+                    return showToast("Aapke wallet mein itna balance nahi hai!", true);
+                }
+                let updatedBal = (currentBal - amount).toFixed(2);
+                localStorage.setItem('earnova_saved_balance', updatedBal);
+                document.getElementById('wallet-display').innerText = updatedBal;
+                document.getElementById('header-balance').innerText = updatedBal;
                 resetAmountSelection();
                 showWithdrawalSuccessModal();
             }
-        } else {
-            let currentBal = Number(localStorage.getItem('earnova_saved_balance') || 0);
-            if (amount > currentBal) return showToast("Aapke wallet mein itna balance nahi hai!", true);
-            let updatedBal = (currentBal - amount).toFixed(2);
-            localStorage.setItem('earnova_saved_balance', updatedBal);
-            document.getElementById('wallet-display').innerText = updatedBal;
-            document.getElementById('header-balance').innerText = updatedBal;
-            resetAmountSelection();
-            showWithdrawalSuccessModal();
+        } catch (error) {
+            console.error("Withdrawal error:", error);
+            showToast("Withdrawal request mein error aaya, dobara try karein.", true);
+        } finally {
+            isProcessingWithdrawal = false;
         }
     };
-
+    
     function resetAmountSelection() {
         document.getElementById('selectedWithdrawAmount').value = '';
         document.querySelectorAll('.amount-btn').forEach(b => {
