@@ -1843,7 +1843,7 @@
         });
     };
 
-    window.startAppTask = async function(rewardAmount, taskUrl, taskName = 'Partner Task') {
+   window.startAppTask = async function(rewardAmount, taskUrl, taskName = 'Partner Task') {
         if (!auth.currentUser && localStorage.getItem("earnova_logged_in") !== "true") {
             showToast("Task start karne ke liye pehle login karein!", true);
             openLoginModal();
@@ -1872,16 +1872,17 @@
                 }
             }
 
-            // 3. Block duplicate reward completely
+            // 3. Already started: Open link again, but DO NOT add reward again
             if (alreadyCompleted) {
+                if (taskUrl) window.open(taskUrl, '_blank');
                 showWarningModal(
-                    "Task Already Started!",
-                    "Aap yeh task pehle hi start kar chuke hain. Ek task par sirf 1 baar hi reward milta hai — dobara paise add nahi honge."
+                    "Link Opened (Reward Already Claimed)",
+                    "Aapka task link open kar diya gaya hai. Ek task par reward sirf pehli baar hi milta hai — dobara reward add nahi hoga."
                 );
                 return;
             }
 
-            // 4. First-time start: save locally & update button UI immediately
+            // 4. First-time start: save locally, update button UI, open link & show modal
             startedTasks.push(taskUrl);
             localStorage.setItem('earnova_completed_tasks', JSON.stringify(startedTasks));
             updateTaskButtonsUI(startedTasks);
@@ -1895,7 +1896,7 @@
                 successModal.classList.add('flex');
             }
 
-            // 5. Save permanently in Firebase + Log click details for Admin
+            // 5. Save permanently in Firebase + credit pending reward once
             if (auth.currentUser) {
                 const userRef = doc(db, "users", auth.currentUser.uid);
                 const snap = await getDoc(userRef);
@@ -1910,12 +1911,11 @@
                 };
 
                 await setDoc(userRef, {
-                    pendingWithdrawals: currentPending + rewardAmount,
+                    pendingWithdrawals: Number((currentPending + Number(rewardAmount)).toFixed(2)),
                     startedTasks: arrayUnion(taskUrl),
                     taskHistory: arrayUnion(clickRecord)
                 }, { merge: true });
 
-                // Optional global log collection so you can see all clicks in one place in Firebase Console
                 try {
                     await addDoc(collection(db, "task_clicks"), {
                         uid: auth.currentUser.uid,
@@ -1925,6 +1925,13 @@
                     });
                 } catch (logErr) {
                     console.log("Global task_clicks log skipped (check Firestore rules):", logErr.message);
+                }
+            } else {
+                let currentPending = Number(localStorage.getItem('earnova_saved_pending') || 0);
+                let updatedPending = (currentPending + Number(rewardAmount)).toFixed(2);
+                localStorage.setItem('earnova_saved_pending', updatedPending);
+                if (document.getElementById('pending-display')) {
+                    document.getElementById('pending-display').innerText = updatedPending;
                 }
             }
         } catch (error) {
