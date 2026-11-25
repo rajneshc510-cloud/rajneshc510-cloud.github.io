@@ -28,6 +28,8 @@
                     },
                     colors: {
                         royalblue: '#2563EB',
+                        navybg: '#060d1f',
+                        navysurface: '#0b1736',
                         brand: {
                             50: '#eff6ff',
                             100: '#dbeafe',
@@ -45,8 +47,9 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
+            background: radial-gradient(circle at 50% 0%, #0f1f4a 0%, #08122b 42%, #060d1f 100%);
+            background-color: #060d1f;
+            color: #e2e8f0;
             -webkit-font-smoothing: antialiased;
         }
         button, .nav-btn, [onclick] {
@@ -65,16 +68,51 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* ================= DARK NAVY GLASS SURFACES ================= */
+        .navy-card {
+            background: rgba(15, 29, 68, 0.88);
+            border: 1px solid rgba(59, 130, 246, 0.22);
+            box-shadow: 0 12px 32px -12px rgba(2, 6, 23, 0.75);
+        }
+        .navy-row-card {
+            background: rgba(15, 29, 68, 0.88);
+            border: 1px solid rgba(59, 130, 246, 0.22);
+            transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+        }
+        .navy-row-card:hover {
+            background: rgba(20, 38, 86, 0.94);
+            border-color: rgba(96, 165, 250, 0.45);
+        }
+        .navy-subcard {
+            background: rgba(8, 17, 42, 0.72);
+            border: 1px solid rgba(59, 130, 246, 0.18);
+        }
+
         /* ================= DESKTOP & MOBILE NAV ================= */
         .nav-btn {
             position: relative;
             background: transparent;
-            border: none;
+            border: 1px solid transparent;
             cursor: pointer;
         }
         .nav-btn.active-tab {
-            color: #1d4ed8 !important;
-            background-color: #eff6ff;
+            color: #93c5fd !important;
+            background-color: rgba(37, 99, 235, 0.22);
+            border-color: rgba(59, 130, 246, 0.35);
+        }
+
+        .mobile-bottom-nav {
+            background: rgba(8, 17, 41, 0.96);
+            backdrop-filter: blur(14px);
+            border-top: 1px solid rgba(59, 130, 246, 0.22);
+        }
+        .mobile-nav-item.active-mobile-tab {
+            color: #38bdf8;
+        }
+        .mobile-nav-item.active-mobile-tab .mobile-nav-icon-box {
+            background: rgba(37, 99, 235, 0.25);
+            border-color: rgba(56, 189, 248, 0.45);
+            color: #38bdf8;
         }
 
         /* ================= PROFILE DROPDOWN ================= */
@@ -88,17 +126,17 @@
         .profile-trigger {
             display: flex;
             align-items: center;
-            gap: 6px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
+            gap: 5px;
+            background: rgba(15, 29, 68, 0.95);
+            border: 1px solid rgba(59, 130, 246, 0.32);
             border-radius: 9999px;
             padding: 3px;
             cursor: pointer;
             transition: border-color 0.2s ease, background 0.2s ease;
         }
         .profile-trigger:hover {
-            border-color: #2563eb;
-            background: #eff6ff;
+            border-color: #60a5fa;
+            background: rgba(30, 58, 138, 0.55);
         }
         .nav-avatar {
             width: 30px;
@@ -111,12 +149,12 @@
             position: absolute;
             top: calc(100% + 10px);
             right: 0;
-            width: 272px;
+            width: 274px;
             max-width: calc(100vw - 24px);
-            background: #ffffff;
-            border-radius: 14px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 20px 40px -12px rgba(15, 23, 42, 0.16);
+            background: #0b1736;
+            border-radius: 16px;
+            border: 1px solid rgba(59, 130, 246, 0.28);
+            box-shadow: 0 24px 48px -12px rgba(2, 6, 23, 0.85);
             padding: 6px;
             z-index: 1000;
             opacity: 0;
@@ -135,16 +173,16 @@
             align-items: center;
             gap: 10px;
             padding: 10px;
-            background: #f8fafc;
-            border: 1px solid #f1f5f9;
-            border-radius: 10px;
+            background: rgba(15, 29, 68, 0.9);
+            border: 1px solid rgba(59, 130, 246, 0.18);
+            border-radius: 11px;
         }
         .dropdown-avatar {
             width: 38px;
             height: 38px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid #2563EB;
+            border: 2px solid #3b82f6;
             flex-shrink: 0;
         }
         .user-meta {
@@ -160,7 +198,7 @@
         .user-name {
             font-size: 13px;
             font-weight: 700;
-            color: #0f172a;
+            color: #ffffff;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -168,12 +206,12 @@
         .verified-icon {
             width: 14px;
             height: 14px;
-            color: #2563EB;
+            color: #60a5fa;
             flex-shrink: 0;
         }
         .user-email {
             font-size: 11px;
-            color: #64748b;
+            color: #94a3b8;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -182,12 +220,12 @@
         .member-badge {
             font-size: 10px;
             font-weight: 700;
-            color: #059669;
+            color: #34d399;
             margin-top: 2px;
         }
         .dropdown-divider {
             height: 1px;
-            background: #f1f5f9;
+            background: rgba(59, 130, 246, 0.16);
             margin: 6px 4px;
         }
         .dropdown-group {
@@ -200,10 +238,10 @@
             align-items: center;
             gap: 10px;
             padding: 8px 10px;
-            border-radius: 8px;
+            border-radius: 9px;
             font-size: 13px;
             font-weight: 600;
-            color: #334155;
+            color: #cbd5e1;
             text-decoration: none;
             background: transparent;
             border: none;
@@ -216,27 +254,27 @@
         .dropdown-item svg {
             width: 16px;
             height: 16px;
-            color: #64748b;
+            color: #94a3b8;
             flex-shrink: 0;
         }
         .dropdown-item:hover {
-            background: #eff6ff;
-            color: #1d4ed8;
+            background: rgba(37, 99, 235, 0.22);
+            color: #ffffff;
         }
         .dropdown-item:hover svg {
-            color: #2563EB;
+            color: #60a5fa;
         }
-        .logout-btn { color: #dc2626; }
-        .logout-btn svg { color: #dc2626; }
-        .logout-btn:hover { background: #fef2f2; color: #b91c1c; }
-        .logout-btn:hover svg { color: #b91c1c; }
+        .logout-btn { color: #f87171; }
+        .logout-btn svg { color: #f87171; }
+        .logout-btn:hover { background: rgba(239, 68, 68, 0.16); color: #fca5a5; }
+        .logout-btn:hover svg { color: #fca5a5; }
 
         /* ================= CHECK-IN & WHEEL ================= */
         .checked-in {
             background: linear-gradient(135deg, #10b981, #059669) !important;
             color: white !important;
-            border-color: #059669 !important;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+            border-color: #34d399 !important;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
         }
         .wheel-gradient {
             background: conic-gradient(
@@ -253,48 +291,49 @@
         }
 
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+        ::-webkit-scrollbar-track { background: #060d1f; }
+        ::-webkit-scrollbar-thumb { background: #1e3a8a; border-radius: 99px; }
     </style>
 </head>
-<body class="text-slate-800 relative min-h-screen flex flex-col">
+<body class="text-slate-200 relative min-h-screen flex flex-col pb-20 md:pb-0">
 
 <!-- TOAST NOTIFICATION CONTAINER -->
-<div id="toast-container" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[200] flex flex-col gap-2 pointer-events-none w-max max-w-[90vw]"></div>
+<div id="toast-container" class="fixed bottom-24 md:bottom-5 left-1/2 -translate-x-1/2 z-[200] flex flex-col gap-2 pointer-events-none w-max max-w-[90vw]"></div>
 
-<!-- CLEAN WEBSITE HEADER -->
-<header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+<!-- DARK NAVY HEADER -->
+<header class="bg-[#08122b]/95 backdrop-blur-md border-b border-blue-500/20 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="flex items-center justify-between h-16 gap-3">
 
             <!-- Brand Logo -->
             <div onclick="showTab('dashboard')" class="flex items-center gap-2.5 cursor-pointer shrink-0">
-                <div class="h-9 w-9 rounded-lg bg-slate-50 border border-slate-200 p-1 flex items-center justify-center overflow-hidden">
-                    <img src="logo.png.png" onerror="this.outerHTML='<span class=\'text-[#2563EB] font-extrabold text-lg\'>E</span>'" class="w-full h-full object-contain rounded" alt="Earnova Logo">
+                <div class="h-10 w-10 rounded-xl bg-[#0f1d44] border border-blue-400/30 p-1 flex items-center justify-center overflow-hidden shadow-inner">
+                    <img src="logo.png.png" onerror="this.outerHTML='<span class=\'text-blue-400 font-extrabold text-lg\'>E</span>'" class="w-full h-full object-contain rounded-lg" alt="Earnova Logo">
                 </div>
                 <div>
-                    <span class="text-slate-900 font-extrabold text-lg tracking-tight leading-none block">Earnova</span>
-                    <span class="text-[10px] text-slate-500 font-semibold tracking-wide block mt-0.5">Partner Rewards &amp; Cashback</span>
+                    <span class="text-white font-extrabold text-lg tracking-tight leading-none block">Earnova</span>
+                    <span class="text-[10px] text-slate-400 font-semibold tracking-wide block mt-0.5">Partner Rewards &amp; Cashback</span>
                 </div>
             </div>
 
             <!-- Desktop Navigation Links -->
             <nav class="hidden md:flex items-center gap-1" aria-label="Primary Navigation">
-                <button id="btn-dashboard" class="nav-btn text-sm font-semibold py-2 px-3.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors" onclick="showTab('dashboard')">Home</button>
-                <button id="btn-tasks" class="nav-btn text-sm font-semibold py-2 px-3.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors" onclick="showTab('tasks')">Partner Offers</button>
-                <button id="btn-extra" class="nav-btn text-sm font-semibold py-2 px-3.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors" onclick="showTab('extra')">Banking</button>
-                <button id="btn-refer" class="nav-btn text-sm font-semibold py-2 px-3.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors" onclick="showTab('refer')">Refer &amp; Earn</button>
-                <button id="btn-wallet" class="nav-btn text-sm font-semibold py-2 px-3.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors" onclick="showTab('wallet')">Wallet</button>
+                <button id="btn-dashboard" class="nav-btn text-sm font-semibold py-2 px-3.5 rounded-xl text-slate-300 hover:text-white hover:bg-blue-500/15 transition-colors" onclick="showTab('dashboard')">Home</button>
+                <button id="btn-tasks" class="nav-btn text-sm font-semibold py-2 px-3.5 rounded-xl text-slate-300 hover:text-white hover:bg-blue-500/15 transition-colors" onclick="showTab('tasks')">Partner Offers</button>
+                <button id="btn-extra" class="nav-btn text-sm font-semibold py-2 px-3.5 rounded-xl text-slate-300 hover:text-white hover:bg-blue-500/15 transition-colors" onclick="showTab('extra')">Banking</button>
+                <button id="btn-refer" class="nav-btn text-sm font-semibold py-2 px-3.5 rounded-xl text-slate-300 hover:text-white hover:bg-blue-500/15 transition-colors" onclick="showTab('refer')">Refer &amp; Earn</button>
+                <button id="btn-wallet" class="nav-btn text-sm font-semibold py-2 px-3.5 rounded-xl text-slate-300 hover:text-white hover:bg-blue-500/15 transition-colors" onclick="showTab('wallet')">Wallet</button>
             </nav>
 
-            <!-- Right Controls: Clean Text Wallet Link + Sign In / Profile + Mobile Menu Toggle -->
-            <div class="flex items-center gap-2 sm:gap-3">
-                <button onclick="showTab('wallet')" class="text-xs sm:text-sm font-semibold text-slate-700 hover:text-[#2563EB] bg-slate-50 hover:bg-blue-50/70 border border-slate-200 px-2.5 sm:px-3 py-1.5 rounded-lg transition flex items-center gap-1" title="View Wallet &amp; Payouts">
-                    <span class="hidden sm:inline text-slate-500 font-medium">Wallet:</span>
-                    <span class="font-bold text-slate-900">₹<span id="header-balance">0.00</span></span>
+            <!-- Right Controls: Screenshot-Style Balance Pill + Sign In / Profile + Mobile Menu Toggle -->
+            <div class="flex items-center gap-2 sm:gap-2.5">
+                <button onclick="showTab('wallet')" class="flex items-center gap-1.5 bg-[#0f1d44] hover:bg-[#16295c] border border-blue-400/30 px-2.5 sm:px-3.5 py-1.5 rounded-full transition shadow-inner" title="View Wallet &amp; Payouts">
+                    <span class="w-5 h-5 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center text-[11px] font-black shadow-sm">₹</span>
+                    <span class="font-extrabold text-amber-300 text-xs sm:text-sm tracking-tight"><span id="header-balance">0.00</span></span>
                 </button>
 
                 <!-- Header Sign In Button (Shown when logged out) -->
-                <button id="header-login-btn" onclick="openLoginModal()" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold text-xs sm:text-sm px-3.5 py-1.5 sm:py-2 rounded-lg shadow-sm transition">
+                <button id="header-login-btn" onclick="openLoginModal()" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold text-xs sm:text-sm px-3.5 py-1.5 sm:py-2 rounded-full border border-blue-400/30 shadow transition">
                     Sign In
                 </button>
 
@@ -302,10 +341,10 @@
                 <div id="user-profile-info" class="profile-menu-wrapper hidden">
                     <button class="profile-trigger" id="profileBtn" onclick="toggleProfileMenu()" aria-label="Account Menu">
                         <img id="nav-profile-pic" src="https://www.svgrepo.com/show/498547/profile.svg" onerror="this.src='https://www.svgrepo.com/show/498547/profile.svg'" alt="Profile" class="nav-avatar">
-                        <svg class="w-3.5 h-3.5 text-slate-500 mr-1 hidden sm:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg>
+                        <svg class="w-3.5 h-3.5 text-slate-400 mr-1 hidden sm:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
 
-                    <!-- Clean Account Dropdown -->
+                    <!-- Clean Dark Navy Account Dropdown -->
                     <div class="profile-dropdown" id="profileDropdown">
                         <div class="dropdown-header">
                             <img id="dropdown-profile-pic" src="https://www.svgrepo.com/show/498547/profile.svg" onerror="this.src='https://www.svgrepo.com/show/498547/profile.svg'" alt="User" class="dropdown-avatar">
@@ -370,8 +409,8 @@
                     </div>
                 </div>
 
-                <!-- Mobile Navigation Toggle (Replaces App-Like Bottom/Sub Tab Strip) -->
-                <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-100 transition" aria-label="Toggle Menu">
+                <!-- Mobile Menu Toggle -->
+                <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-xl bg-[#0f1d44] border border-blue-400/25 text-slate-200 hover:bg-[#16295c] transition" aria-label="Toggle Menu">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
@@ -380,91 +419,113 @@
         </div>
 
         <!-- Mobile Dropdown Navigation Menu -->
-        <div id="mobileNavMenu" class="hidden md:hidden pb-4 pt-2 border-t border-slate-100 space-y-1">
-            <button onclick="showTab('dashboard'); closeMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-[#2563EB] transition">Home</button>
-            <button onclick="showTab('tasks'); closeMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-[#2563EB] transition">Partner Offers (Demat &amp; Apps)</button>
-            <button onclick="showTab('extra'); closeMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-[#2563EB] transition">Banking Offers</button>
-            <button onclick="showTab('refer'); closeMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-[#2563EB] transition">Refer &amp; Earn</button>
-            <button onclick="showTab('wallet'); closeMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-[#2563EB] transition">Wallet &amp; Withdrawals</button>
+        <div id="mobileNavMenu" class="hidden md:hidden pb-4 pt-2 border-t border-blue-500/20 space-y-1">
+            <button onclick="showTab('dashboard'); closeMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:bg-blue-500/20 hover:text-white transition">Home</button>
+            <button onclick="showTab('tasks'); closeMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:bg-blue-500/20 hover:text-white transition">Partner Offers (Demat &amp; Apps)</button>
+            <button onclick="showTab('extra'); closeMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:bg-blue-500/20 hover:text-white transition">Banking Offers</button>
+            <button onclick="showTab('refer'); closeMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:bg-blue-500/20 hover:text-white transition">Refer &amp; Earn</button>
+            <button onclick="showTab('wallet'); closeMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-200 hover:bg-blue-500/20 hover:text-white transition">Wallet &amp; Withdrawals</button>
         </div>
     </div>
 </header>
 
 <!-- MAIN CONTENT -->
-<main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 md:py-8 flex-1 w-full">
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-5 md:py-8 flex-1 w-full">
 
     <!-- ==================== HOME / DASHBOARD TAB ==================== -->
-    <section id="dashboard" class="tab-content active space-y-8">
+    <section id="dashboard" class="tab-content active space-y-6 md:space-y-8">
 
-        <!-- CLEAN TRUSTWORTHY HERO SECTION -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <!-- DARK NAVY HERO SECTION -->
+        <div class="navy-card rounded-2xl overflow-hidden">
             <div class="grid grid-cols-1 lg:grid-cols-12 items-center">
                 <div class="lg:col-span-7 p-6 sm:p-8 md:p-10 space-y-4">
-                    <div class="inline-flex items-center gap-2 text-xs font-semibold text-[#1D4ED8] bg-blue-50 border border-blue-100 px-3 py-1 rounded-full">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                        <span>Welcome, <span id="user-name-display" class="font-bold">Guest</span> • Verified Indian Partner Portal</span>
+                    <div class="inline-flex items-center gap-2 text-xs font-semibold text-blue-300 bg-blue-500/15 border border-blue-400/25 px-3 py-1 rounded-full">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                        <span>Welcome, <span id="user-name-display" class="font-bold text-white">Guest</span> • Verified Indian Partner Portal</span>
                     </div>
 
-                    <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                    <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
                         Earn Verified Cashback on Demat, Banking &amp; Finance Offers
                     </h1>
 
-                    <p class="text-sm sm:text-base text-slate-600 leading-relaxed max-w-2xl">
+                    <p class="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl">
                         Browse official partner offers from leading Indian financial brands. Read eligibility rules upfront, complete your account setup through verified links, and withdraw earnings directly via UPI or bank transfer.
                     </p>
 
                     <div class="flex flex-wrap items-center gap-3 pt-1">
-                        <button onclick="showTab('tasks')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold text-sm px-5 py-2.5 rounded-xl shadow-sm transition">
+                        <button onclick="showTab('tasks')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-blue-600/25 border border-blue-400/30 transition">
                             Explore Partner Offers
                         </button>
-                        <button onclick="showTab('extra')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-sm px-5 py-2.5 rounded-xl transition">
+                        <button onclick="showTab('extra')" class="bg-slate-800/80 hover:bg-slate-700/80 text-slate-100 border border-blue-400/20 font-bold text-sm px-5 py-2.5 rounded-xl transition">
                             Banking Offers
                         </button>
                     </div>
 
-                    <div class="grid grid-cols-3 gap-3 pt-4 border-t border-slate-100 text-left">
+                    <div class="grid grid-cols-3 gap-3 pt-4 border-t border-blue-500/20 text-left">
                         <div>
-                            <p class="text-xs font-bold text-slate-900">₹0 Joining Fee</p>
-                            <p class="text-[11px] text-slate-500 mt-0.5">Free registration</p>
+                            <p class="text-xs font-bold text-white">₹0 Joining Fee</p>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Free registration</p>
                         </div>
                         <div>
-                            <p class="text-xs font-bold text-slate-900">Min ₹30 Payout</p>
-                            <p class="text-[11px] text-slate-500 mt-0.5">UPI &amp; IMPS transfer</p>
+                            <p class="text-xs font-bold text-white">Min ₹30 Payout</p>
+                            <p class="text-[11px] text-slate-400 mt-0.5">UPI &amp; IMPS transfer</p>
                         </div>
                         <div>
-                            <p class="text-xs font-bold text-slate-900">Clear Rules</p>
-                            <p class="text-[11px] text-slate-500 mt-0.5">Upfront offer terms</p>
+                            <p class="text-xs font-bold text-white">Clear Rules</p>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Upfront offer terms</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Editorial Summary Box -->
-                <div class="lg:col-span-5 bg-slate-50 border-t lg:border-t-0 lg:border-l border-slate-200 p-6 sm:p-8 space-y-4">
-                    <h2 class="text-sm font-extrabold text-slate-900 uppercase tracking-wider">Popular Categories</h2>
+                <!-- Right Editorial Category List (Screenshot Horizontal Row Style) -->
+                <div class="lg:col-span-5 bg-[#08112a]/85 border-t lg:border-t-0 lg:border-l border-blue-500/20 p-5 sm:p-7 space-y-3">
+                    <h2 class="text-xs font-extrabold text-slate-300 uppercase tracking-wider mb-1">Popular Categories</h2>
 
-                    <div class="space-y-3">
-                        <div onclick="showTab('tasks')" class="bg-white p-3.5 rounded-xl border border-slate-200 hover:border-blue-300 cursor-pointer transition flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-bold text-slate-900">Demat &amp; Trading Accounts</p>
-                                <p class="text-xs text-slate-500">Upstox, Kotak Securities, Bajaj, Angel One</p>
+                    <div onclick="showTab('tasks')" class="navy-row-card p-3.5 rounded-2xl cursor-pointer flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-11 h-11 rounded-xl bg-blue-500/15 border border-blue-400/25 text-blue-400 flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
                             </div>
-                            <span class="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg shrink-0">Up to ₹550</span>
+                            <div class="min-w-0">
+                                <p class="text-sm font-bold text-white truncate">Demat &amp; Trading</p>
+                                <p class="text-xs text-slate-400 truncate">Upstox, Kotak, Bajaj, Angel</p>
+                            </div>
                         </div>
-
-                        <div onclick="showTab('extra')" class="bg-white p-3.5 rounded-xl border border-slate-200 hover:border-blue-300 cursor-pointer transition flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-bold text-slate-900">Digital Savings Accounts</p>
-                                <p class="text-xs text-slate-500">Kotak 811 Classic, Jio Payments Bank</p>
-                            </div>
-                            <span class="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg shrink-0">Up to ₹350</span>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <span class="text-xs font-bold text-emerald-300 bg-emerald-500/15 border border-emerald-400/25 px-2.5 py-1 rounded-lg">Up to ₹550</span>
+                            <span class="text-slate-400 text-sm">›</span>
                         </div>
+                    </div>
 
-                        <div onclick="showTab('tasks')" class="bg-white p-3.5 rounded-xl border border-slate-200 hover:border-blue-300 cursor-pointer transition flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-bold text-slate-900">UPI &amp; Finance Apps</p>
-                                <p class="text-xs text-slate-500">Navi App, HeroWallet App</p>
+                    <div onclick="showTab('extra')" class="navy-row-card p-3.5 rounded-2xl cursor-pointer flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-11 h-11 rounded-xl bg-emerald-500/15 border border-emerald-400/25 text-emerald-400 flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
                             </div>
-                            <span class="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg shrink-0">₹15 – ₹50</span>
+                            <div class="min-w-0">
+                                <p class="text-sm font-bold text-white truncate">Digital Savings A/c</p>
+                                <p class="text-xs text-slate-400 truncate">Kotak 811, Jio Payments Bank</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <span class="text-xs font-bold text-emerald-300 bg-emerald-500/15 border border-emerald-400/25 px-2.5 py-1 rounded-lg">Up to ₹350</span>
+                            <span class="text-slate-400 text-sm">›</span>
+                        </div>
+                    </div>
+
+                    <div onclick="showTab('tasks')" class="navy-row-card p-3.5 rounded-2xl cursor-pointer flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-11 h-11 rounded-xl bg-violet-500/15 border border-violet-400/25 text-violet-400 flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-sm font-bold text-white truncate">UPI &amp; Finance Apps</p>
+                                <p class="text-xs text-slate-400 truncate">Navi App, HeroWallet App</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <span class="text-xs font-bold text-emerald-300 bg-emerald-500/15 border border-emerald-400/25 px-2.5 py-1 rounded-lg">₹15 – ₹50</span>
+                            <span class="text-slate-400 text-sm">›</span>
                         </div>
                     </div>
                 </div>
@@ -472,9 +533,9 @@
         </div>
 
         <!-- SIGN IN BANNER (Only shown when logged out) -->
-        <div id="google-login-section" class="bg-slate-900 rounded-2xl p-5 sm:p-6 text-white flex flex-col sm:flex-row items-center justify-between gap-4 border border-slate-800">
+        <div id="google-login-section" class="navy-card rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="text-center sm:text-left">
-                <h2 class="font-bold text-base">Sign in to Track Your Offers &amp; Wallet Balance</h2>
+                <h2 class="font-bold text-base text-white">Sign in to Track Your Offers &amp; Wallet Balance</h2>
                 <p class="text-xs sm:text-sm text-slate-300 mt-0.5">Save your reward history securely across devices and unlock UPI/Bank withdrawals.</p>
             </div>
             <button onclick="loginWithGoogle()" class="shrink-0 flex items-center justify-center gap-2.5 bg-white hover:bg-slate-100 text-slate-900 font-bold py-2.5 px-5 rounded-xl shadow transition text-xs sm:text-sm">
@@ -488,249 +549,266 @@
             </button>
         </div>
 
-        <!-- VERIFIED PARTNER OFFERS (PRIORITIZED ON HOME PAGE) -->
-        <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5">
+        <!-- VERIFIED PARTNER OFFERS (SCREENSHOT HORIZONTAL CARD LAYOUT) -->
+        <div class="space-y-3.5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-0.5">
                 <div>
-                    <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Verified Partner Offers</h2>
-                    <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Select an offer below to view eligibility steps before starting.</p>
+                    <h2 class="text-lg sm:text-xl font-extrabold text-white">Verified Partner Offers</h2>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-0.5">Select an offer below to view eligibility steps before starting.</p>
                 </div>
-                <button onclick="showTab('tasks')" class="text-xs font-bold text-[#2563EB] bg-blue-50 hover:bg-blue-100 border border-blue-100 px-3.5 py-2 rounded-lg transition self-start sm:self-auto">
-                    View All Offers →
+                <button onclick="showTab('tasks')" class="text-xs font-bold text-blue-300 bg-blue-500/15 hover:bg-blue-500/25 border border-blue-400/25 px-3.5 py-2 rounded-xl transition self-start sm:self-auto">
+                    View All Offers ›
                 </button>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
                 <!-- Offer 1: Upstox -->
-                <div class="border border-slate-200 rounded-xl p-4 hover:border-blue-300 transition flex flex-col justify-between bg-slate-50/40">
-                    <div class="flex items-start gap-3">
-                        <div class="h-11 w-11 shrink-0 rounded-lg overflow-hidden bg-white border border-slate-200 flex items-center justify-center">
-                            <img src="upstox.png.jpg" onerror="this.outerHTML='<span class=\'text-base font-bold text-[#2563EB]\'>U</span>'" class="w-full h-full object-cover" alt="Upstox">
+                <div class="navy-row-card rounded-2xl p-4 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3.5 min-w-0">
+                        <div class="h-12 w-12 shrink-0 rounded-xl overflow-hidden bg-[#08122b] border border-blue-400/25 flex items-center justify-center">
+                            <img src="upstox.png.jpg" onerror="this.outerHTML='<span class=\'text-base font-bold text-blue-400\'>U</span>'" class="w-full h-full object-cover" alt="Upstox">
                         </div>
                         <div class="min-w-0">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Demat • Free A/c</span>
-                            <h3 class="font-bold text-slate-900 text-sm mt-1">Upstox App</h3>
-                            <p class="text-xs text-slate-500 mt-0.5">Open free Demat account &amp; complete e-Sign verification.</p>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-300 bg-emerald-500/15 border border-emerald-400/25 px-2 py-0.5 rounded">Demat • Free A/c</span>
+                            <h3 class="font-bold text-white text-sm sm:text-base mt-1 truncate">Upstox App</h3>
+                            <p class="text-xs text-slate-400 truncate">Free Demat A/c &amp; e-Sign verification</p>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-200/70">
-                        <div>
-                            <span class="text-[10px] text-slate-400 font-semibold uppercase block">Reward</span>
-                            <span class="font-extrabold text-emerald-600 text-base">₹180</span>
-                        </div>
-                        <button onclick="openPopup('Upstox App', 180, 'https://sales.gromo.in/up/ldyTpEeMg2', 'terms-upstox')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-2 rounded-lg transition">View &amp; Start</button>
+                    <div class="flex flex-col items-end gap-1.5 shrink-0">
+                        <span class="font-extrabold text-emerald-400 text-base">₹180</span>
+                        <button onclick="openPopup('Upstox App', 180, 'https://sales.gromo.in/up/ldyTpEeMg2', 'terms-upstox')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-3.5 py-1.5 rounded-xl border border-blue-400/30 transition">Start ›</button>
                     </div>
                 </div>
 
                 <!-- Offer 2: Bajaj Securities -->
-                <div class="border border-slate-200 rounded-xl p-4 hover:border-blue-300 transition flex flex-col justify-between bg-slate-50/40">
-                    <div class="flex items-start gap-3">
-                        <div class="h-11 w-11 shrink-0 rounded-lg overflow-hidden bg-white border border-slate-200 flex items-center justify-center">
-                            <img src="bajaj.png.jpg" onerror="this.outerHTML='<span class=\'text-base font-bold text-[#2563EB]\'>B</span>'" class="w-full h-full object-cover" alt="Bajaj Securities">
+                <div class="navy-row-card rounded-2xl p-4 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3.5 min-w-0">
+                        <div class="h-12 w-12 shrink-0 rounded-xl overflow-hidden bg-[#08122b] border border-blue-400/25 flex items-center justify-center">
+                            <img src="bajaj.png.jpg" onerror="this.outerHTML='<span class=\'text-base font-bold text-blue-400\'>B</span>'" class="w-full h-full object-cover" alt="Bajaj Securities">
                         </div>
                         <div class="min-w-0">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-100 px-2 py-0.5 rounded">Demat • Trade Req.</span>
-                            <h3 class="font-bold text-slate-900 text-sm mt-1">Bajaj Securities Demat</h3>
-                            <p class="text-xs text-slate-500 mt-0.5">Account activation &amp; 1st trade (Min ₹525) in same month.</p>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-amber-300 bg-amber-500/15 border border-amber-400/25 px-2 py-0.5 rounded">Demat • Trade Req.</span>
+                            <h3 class="font-bold text-white text-sm sm:text-base mt-1 truncate">Bajaj Securities Demat</h3>
+                            <p class="text-xs text-slate-400 truncate">Account activation &amp; 1st trade (Min ₹525)</p>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-200/70">
-                        <div>
-                            <span class="text-[10px] text-slate-400 font-semibold uppercase block">Reward</span>
-                            <span class="font-extrabold text-emerald-600 text-base">₹550</span>
-                        </div>
-                        <button onclick="openPopup('Bajaj Securities Demat', 550, 'https://sales.gromo.in/bs/ldyTpEeMg2', 'terms-bajajsec')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-2 rounded-lg transition">View &amp; Start</button>
+                    <div class="flex flex-col items-end gap-1.5 shrink-0">
+                        <span class="font-extrabold text-emerald-400 text-base">₹550</span>
+                        <button onclick="openPopup('Bajaj Securities Demat', 550, 'https://sales.gromo.in/bs/ldyTpEeMg2', 'terms-bajajsec')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-3.5 py-1.5 rounded-xl border border-blue-400/30 transition">Start ›</button>
                     </div>
                 </div>
 
                 <!-- Offer 3: Kotak Securities -->
-                <div class="border border-slate-200 rounded-xl p-4 hover:border-blue-300 transition flex flex-col justify-between bg-slate-50/40">
-                    <div class="flex items-start gap-3">
-                        <div class="h-11 w-11 shrink-0 rounded-lg overflow-hidden bg-white border border-slate-200 flex items-center justify-center">
-                            <img src="kotak.png.jpg" onerror="this.outerHTML='<span class=\'text-base font-bold text-[#2563EB]\'>K</span>'" class="w-full h-full object-cover" alt="Kotak Securities">
+                <div class="navy-row-card rounded-2xl p-4 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3.5 min-w-0">
+                        <div class="h-12 w-12 shrink-0 rounded-xl overflow-hidden bg-[#08122b] border border-blue-400/25 flex items-center justify-center">
+                            <img src="kotak.png.jpg" onerror="this.outerHTML='<span class=\'text-base font-bold text-blue-400\'>K</span>'" class="w-full h-full object-cover" alt="Kotak Securities">
                         </div>
                         <div class="min-w-0">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Demat • KYC</span>
-                            <h3 class="font-bold text-slate-900 text-sm mt-1">Kotak Securities Demat</h3>
-                            <p class="text-xs text-slate-500 mt-0.5">Open Demat account with Aadhaar mobile verification &amp; KYC.</p>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-300 bg-blue-500/15 border border-blue-400/25 px-2 py-0.5 rounded">Demat • KYC</span>
+                            <h3 class="font-bold text-white text-sm sm:text-base mt-1 truncate">Kotak Securities Demat</h3>
+                            <p class="text-xs text-slate-400 truncate">Open Demat A/c &amp; complete KYC</p>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-200/70">
-                        <div>
-                            <span class="text-[10px] text-slate-400 font-semibold uppercase block">Reward</span>
-                            <span class="font-extrabold text-emerald-600 text-base">₹350</span>
-                        </div>
-                        <button onclick="openPopup('Kotak Securities Demat', 350, 'https://sales.gromo.in/ks/ldyTpEeMg2', 'terms-kotaksec')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-2 rounded-lg transition">View &amp; Start</button>
+                    <div class="flex flex-col items-end gap-1.5 shrink-0">
+                        <span class="font-extrabold text-emerald-400 text-base">₹350</span>
+                        <button onclick="openPopup('Kotak Securities Demat', 350, 'https://sales.gromo.in/ks/ldyTpEeMg2', 'terms-kotaksec')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-3.5 py-1.5 rounded-xl border border-blue-400/30 transition">Start ›</button>
                     </div>
                 </div>
 
                 <!-- Offer 4: Kotak 811 Classic Account -->
-                <div class="border border-slate-200 rounded-xl p-4 hover:border-blue-300 transition flex flex-col justify-between bg-slate-50/40">
-                    <div class="flex items-start gap-3">
-                        <div class="h-11 w-11 shrink-0 rounded-lg overflow-hidden bg-white border border-slate-200 flex items-center justify-center">
-                            <img src="kotak.png.jpg" onerror="this.outerHTML='<span class=\'text-base font-bold text-[#2563EB]\'>K</span>'" class="w-full h-full object-cover" alt="Kotak 811">
+                <div class="navy-row-card rounded-2xl p-4 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3.5 min-w-0">
+                        <div class="h-12 w-12 shrink-0 rounded-xl overflow-hidden bg-[#08122b] border border-blue-400/25 flex items-center justify-center">
+                            <img src="kotak.png.jpg" onerror="this.outerHTML='<span class=\'text-base font-bold text-blue-400\'>K</span>'" class="w-full h-full object-cover" alt="Kotak 811">
                         </div>
                         <div class="min-w-0">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Banking • Savings</span>
-                            <h3 class="font-bold text-slate-900 text-sm mt-1">Kotak 811 Classic Account</h3>
-                            <p class="text-xs text-slate-500 mt-0.5">New users: complete VKYC within 48h &amp; initial ₹1,000 funding.</p>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-300 bg-blue-500/15 border border-blue-400/25 px-2 py-0.5 rounded">Banking • Savings</span>
+                            <h3 class="font-bold text-white text-sm sm:text-base mt-1 truncate">Kotak 811 Classic Account</h3>
+                            <p class="text-xs text-slate-400 truncate">VKYC within 48h &amp; ₹1,000 initial funding</p>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-200/70">
-                        <div>
-                            <span class="text-[10px] text-slate-400 font-semibold uppercase block">Reward</span>
-                            <span class="font-extrabold text-emerald-600 text-base">₹350</span>
-                        </div>
-                        <button onclick="openPopup('Kotak 811 Classic Account', 350, 'https://sales.gromo.in/kt/ldyTpEeMg2', 'terms-kotak811')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-2 rounded-lg transition">View &amp; Start</button>
+                    <div class="flex flex-col items-end gap-1.5 shrink-0">
+                        <span class="font-extrabold text-emerald-400 text-base">₹350</span>
+                        <button onclick="openPopup('Kotak 811 Classic Account', 350, 'https://sales.gromo.in/kt/ldyTpEeMg2', 'terms-kotak811')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-3.5 py-1.5 rounded-xl border border-blue-400/30 transition">Start ›</button>
                     </div>
                 </div>
 
                 <!-- Offer 5: Jio Payments Bank -->
-                <div class="border border-slate-200 rounded-xl p-4 hover:border-blue-300 transition flex flex-col justify-between bg-slate-50/40">
-                    <div class="flex items-start gap-3">
-                        <div class="h-11 w-11 shrink-0 rounded-lg overflow-hidden bg-white border border-slate-200 flex items-center justify-center">
-                            <img src="jio.png.jpg" onerror="this.outerHTML='<span class=\'text-base font-bold text-[#2563EB]\'>J</span>'" class="w-full h-full object-cover" alt="Jio Payments Bank">
+                <div class="navy-row-card rounded-2xl p-4 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3.5 min-w-0">
+                        <div class="h-12 w-12 shrink-0 rounded-xl overflow-hidden bg-[#08122b] border border-blue-400/25 flex items-center justify-center">
+                            <img src="jio.png.jpg" onerror="this.outerHTML='<span class=\'text-base font-bold text-blue-400\'>J</span>'" class="w-full h-full object-cover" alt="Jio Payments Bank">
                         </div>
                         <div class="min-w-0">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Banking • Zero Bal</span>
-                            <h3 class="font-bold text-slate-900 text-sm mt-1">Jio Payments Bank</h3>
-                            <p class="text-xs text-slate-500 mt-0.5">Zero-balance savings account, full KYC &amp; debit card issue.</p>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-300 bg-emerald-500/15 border border-emerald-400/25 px-2 py-0.5 rounded">Banking • Zero Bal</span>
+                            <h3 class="font-bold text-white text-sm sm:text-base mt-1 truncate">Jio Payments Bank</h3>
+                            <p class="text-xs text-slate-400 truncate">Zero-balance A/c, full KYC &amp; debit card</p>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-200/70">
-                        <div>
-                            <span class="text-[10px] text-slate-400 font-semibold uppercase block">Reward</span>
-                            <span class="font-extrabold text-emerald-600 text-base">₹200</span>
-                        </div>
-                        <button onclick="openPopup('Jio Payments Bank', 200, 'https://sales.gromo.in/pj/ldyTpEeMg2', 'terms-jiopayments')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-2 rounded-lg transition">View &amp; Start</button>
+                    <div class="flex flex-col items-end gap-1.5 shrink-0">
+                        <span class="font-extrabold text-emerald-400 text-base">₹200</span>
+                        <button onclick="openPopup('Jio Payments Bank', 200, 'https://sales.gromo.in/pj/ldyTpEeMg2', 'terms-jiopayments')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-3.5 py-1.5 rounded-xl border border-blue-400/30 transition">Start ›</button>
                     </div>
                 </div>
 
                 <!-- Offer 6: Angel One -->
-                <div class="border border-slate-200 rounded-xl p-4 hover:border-blue-300 transition flex flex-col justify-between bg-slate-50/40">
-                    <div class="flex items-start gap-3">
-                        <div class="h-11 w-11 shrink-0 rounded-lg overflow-hidden bg-white border border-slate-200 flex items-center justify-center">
-                            <img src="angel.png.jpg" onerror="this.outerHTML='<span class=\'text-base font-bold text-[#2563EB]\'>A</span>'" class="w-full h-full object-cover" alt="Angel One">
+                <div class="navy-row-card rounded-2xl p-4 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3.5 min-w-0">
+                        <div class="h-12 w-12 shrink-0 rounded-xl overflow-hidden bg-[#08122b] border border-blue-400/25 flex items-center justify-center">
+                            <img src="angel.png.jpg" onerror="this.outerHTML='<span class=\'text-base font-bold text-blue-400\'>A</span>'" class="w-full h-full object-cover" alt="Angel One">
                         </div>
                         <div class="min-w-0">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Demat • Zero Fee</span>
-                            <h3 class="font-bold text-slate-900 text-sm mt-1">Angel One</h3>
-                            <p class="text-xs text-slate-500 mt-0.5">Open free Demat account &amp; complete digital KYC process.</p>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-300 bg-emerald-500/15 border border-emerald-400/25 px-2 py-0.5 rounded">Demat • Zero Fee</span>
+                            <h3 class="font-bold text-white text-sm sm:text-base mt-1 truncate">Angel One</h3>
+                            <p class="text-xs text-slate-400 truncate">Free Demat account &amp; digital KYC</p>
                         </div>
                     </div>
-                    <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-200/70">
-                        <div>
-                            <span class="text-[10px] text-slate-400 font-semibold uppercase block">Reward</span>
-                            <span class="font-extrabold text-emerald-600 text-base">₹50</span>
+                    <div class="flex flex-col items-end gap-1.5 shrink-0">
+                        <span class="font-extrabold text-emerald-400 text-base">₹50</span>
+                        <button onclick="openPopup('Angel One', 50, 'https://sales.gromo.in/ao/ldyTpEeMg2', 'terms-angel')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-3.5 py-1.5 rounded-xl border border-blue-400/30 transition">Start ›</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BONUS EARNINGS / MEMBER ACTIVITIES (SCREENSHOT HORIZONTAL ROW STYLE) -->
+        <div class="space-y-3.5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-0.5">
+                <div>
+                    <h2 class="text-lg sm:text-xl font-extrabold text-white">Bonus Earnings</h2>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-0.5">Complete daily activities to earn extra wallet rewards</p>
+                </div>
+                <button onclick="showTab('refer')" class="text-xs font-bold text-blue-300 hover:underline self-start sm:self-auto">Refer &amp; Earn ₹25 ›</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                <!-- Spin and Win -->
+                <div onclick="showTab('spin')" class="navy-row-card rounded-2xl p-4 cursor-pointer flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3.5 min-w-0">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-400/25 text-emerald-400 flex items-center justify-center shrink-0">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="9"/>
+                                <circle cx="12" cy="12" r="2.5"/>
+                                <path stroke-linecap="round" d="M12 3v6.5M12 14.5V21M3 12h6.5M14.5 12H21"/>
+                            </svg>
                         </div>
-                        <button onclick="openPopup('Angel One', 50, 'https://sales.gromo.in/ao/ldyTpEeMg2', 'terms-angel')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-2 rounded-lg transition">View &amp; Start</button>
+                        <div class="min-w-0">
+                            <h3 class="text-sm sm:text-base font-bold text-white leading-tight">Spin and Win</h3>
+                            <p class="text-xs text-slate-400 mt-0.5 truncate">Spin the Lucky Wheel</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0 text-xs font-bold text-slate-300">
+                        <span id="home-spin-status">Open</span>
+                        <span class="text-slate-400 text-sm">›</span>
+                    </div>
+                </div>
+
+                <!-- Scratch Card -->
+                <div onclick="showTab('scratch')" class="navy-row-card rounded-2xl p-4 cursor-pointer flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3.5 min-w-0">
+                        <div class="w-12 h-12 rounded-xl bg-fuchsia-500/15 border border-fuchsia-400/25 text-fuchsia-400 flex items-center justify-center shrink-0">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/>
+                            </svg>
+                        </div>
+                        <div class="min-w-0">
+                            <h3 class="text-sm sm:text-base font-bold text-white leading-tight">Scratch Card</h3>
+                            <p class="text-xs text-slate-400 mt-0.5 truncate">Daily instant bonus card</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0 text-xs font-bold text-slate-300">
+                        <span id="home-scratch-status">Open</span>
+                        <span class="text-slate-400 text-sm">›</span>
+                    </div>
+                </div>
+
+                <!-- Daily Check-in -->
+                <div onclick="showTab('checkin')" class="navy-row-card rounded-2xl p-4 cursor-pointer flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3.5 min-w-0">
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/15 border border-blue-400/25 text-blue-400 flex items-center justify-center shrink-0">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <div class="min-w-0">
+                            <h3 class="text-sm sm:text-base font-bold text-white leading-tight">Daily Check-in</h3>
+                            <p class="text-xs text-slate-400 mt-0.5 truncate">7-day reward streak</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0 text-xs font-bold text-slate-300">
+                        <span id="home-checkin-status">Open</span>
+                        <span class="text-slate-400 text-sm">›</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- HOW IT WORKS + TRANSPARENT VERIFICATION NOTE -->
-        <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm space-y-5">
+        <div class="navy-card rounded-2xl p-5 sm:p-6 space-y-5">
             <div>
-                <h2 class="text-lg font-extrabold text-slate-900">How Earnova Works</h2>
-                <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Simple, transparent process from selecting an offer to receiving your payout.</p>
+                <h2 class="text-lg font-extrabold text-white">How Earnova Works</h2>
+                <p class="text-xs sm:text-sm text-slate-400 mt-0.5">Simple, transparent process from selecting an offer to receiving your payout.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-200/80">
-                    <span class="inline-block text-xs font-extrabold text-[#2563EB] bg-blue-50 border border-blue-100 px-2.5 py-0.5 rounded-md mb-2">Step 1</span>
-                    <h3 class="text-sm font-bold text-slate-900 mb-1">Review Offer Requirements</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">
+                <div class="navy-subcard rounded-xl p-4">
+                    <span class="inline-block text-xs font-extrabold text-blue-300 bg-blue-500/15 border border-blue-400/25 px-2.5 py-0.5 rounded-md mb-2">Step 1</span>
+                    <h3 class="text-sm font-bold text-white mb-1">Review Offer Requirements</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
                         Click any partner offer to read its eligibility conditions (such as new-user status, Aadhaar-linked KYC, or minimum trade/funding rules).
                     </p>
                 </div>
 
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-200/80">
-                    <span class="inline-block text-xs font-extrabold text-[#2563EB] bg-blue-50 border border-blue-100 px-2.5 py-0.5 rounded-md mb-2">Step 2</span>
-                    <h3 class="text-sm font-bold text-slate-900 mb-1">Complete via Official Partner Link</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">
+                <div class="navy-subcard rounded-xl p-4">
+                    <span class="inline-block text-xs font-extrabold text-blue-300 bg-blue-500/15 border border-blue-400/25 px-2.5 py-0.5 rounded-md mb-2">Step 2</span>
+                    <h3 class="text-sm font-bold text-white mb-1">Complete via Official Partner Link</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
                         Proceed using the verified link in one session without switching browsers or ad-blockers so partner tracking records your completion accurately.
                     </p>
                 </div>
 
-                <div class="bg-slate-50 rounded-xl p-4 border border-slate-200/80">
-                    <span class="inline-block text-xs font-extrabold text-[#2563EB] bg-blue-50 border border-blue-100 px-2.5 py-0.5 rounded-md mb-2">Step 3</span>
-                    <h3 class="text-sm font-bold text-slate-900 mb-1">Verification &amp; Direct Payout</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">
+                <div class="navy-subcard rounded-xl p-4">
+                    <span class="inline-block text-xs font-extrabold text-blue-300 bg-blue-500/15 border border-blue-400/25 px-2.5 py-0.5 rounded-md mb-2">Step 3</span>
+                    <h3 class="text-sm font-bold text-white mb-1">Verification &amp; Direct Payout</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
                         Once confirmed by the partner, your reward moves to Available Balance. Withdraw starting from ₹30 via UPI or IMPS/NEFT bank transfer.
                     </p>
                 </div>
             </div>
 
             <!-- Transparent Verification Note -->
-            <div class="bg-amber-50/70 border border-amber-200/80 rounded-xl p-4 text-xs text-slate-700 leading-relaxed">
-                <p class="font-bold text-slate-900 mb-1">Verification &amp; Partner Tracking Disclosure</p>
+            <div class="bg-amber-500/10 border border-amber-400/25 rounded-xl p-4 text-xs text-slate-300 leading-relaxed">
+                <p class="font-bold text-amber-300 mb-1">Verification &amp; Partner Tracking Disclosure</p>
                 <p>
-                    Starting an offer places the reward amount under <strong>Pending / Under Review</strong>. Final credit to your withdrawable wallet depends on successful completion of all partner conditions and confirmation from the partner network (typically 24–72 hours, or up to 7–15 days for select banking/trading offers). Each partner offer reward is valid once per unique user.
+                    Starting an offer places the reward amount under <strong class="text-white">Pending / Under Review</strong>. Final credit to your withdrawable wallet depends on successful completion of all partner conditions and confirmation from the partner network (typically 24–72 hours, or up to 7–15 days for select banking/trading offers). Each partner offer reward is valid once per unique user.
                 </p>
             </div>
         </div>
 
-        <!-- SECONDARY MEMBER ENGAGEMENT ACTIVITIES (Understated, Clean) -->
-        <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-                <div>
-                    <h2 class="text-base font-extrabold text-slate-900">Member Bonus Activities</h2>
-                    <p class="text-xs text-slate-500">Additional daily engagement perks for registered Earnova members.</p>
-                </div>
-                <button onclick="showTab('refer')" class="text-xs font-bold text-[#2563EB] hover:underline self-start sm:self-auto">Refer &amp; Earn ₹25 →</button>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div onclick="showTab('checkin')" class="p-4 rounded-xl border border-slate-200 hover:border-blue-300 bg-slate-50/50 cursor-pointer transition flex items-center justify-between">
-                    <div>
-                        <h3 class="text-sm font-bold text-slate-900">Daily Check-in</h3>
-                        <p class="text-xs text-slate-500 mt-0.5">7-day activity streak bonus</p>
-                    </div>
-                    <span class="text-xs font-bold text-[#2563EB]">Open →</span>
-                </div>
-
-                <div onclick="showTab('scratch')" class="p-4 rounded-xl border border-slate-200 hover:border-blue-300 bg-slate-50/50 cursor-pointer transition flex items-center justify-between">
-                    <div>
-                        <h3 class="text-sm font-bold text-slate-900">Daily Scratch Card</h3>
-                        <p class="text-xs text-slate-500 mt-0.5">Once every 24 hours</p>
-                    </div>
-                    <span class="text-xs font-bold text-[#2563EB]">Open →</span>
-                </div>
-
-                <div onclick="showTab('spin')" class="p-4 rounded-xl border border-slate-200 hover:border-blue-300 bg-slate-50/50 cursor-pointer transition flex items-center justify-between">
-                    <div>
-                        <h3 class="text-sm font-bold text-slate-900">Daily Bonus Spin</h3>
-                        <p class="text-xs text-slate-500 mt-0.5">One daily member spin</p>
-                    </div>
-                    <span class="text-xs font-bold text-[#2563EB]">Open →</span>
-                </div>
-            </div>
-        </div>
-
         <!-- FREQUENTLY ASKED QUESTIONS -->
-        <div class="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-sm space-y-4">
-            <h2 class="text-lg font-extrabold text-slate-900">Frequently Asked Questions (FAQs)</h2>
+        <div class="navy-card rounded-2xl p-5 sm:p-6 space-y-4">
+            <h2 class="text-lg font-extrabold text-white">Frequently Asked Questions (FAQs)</h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-600 leading-relaxed">
-                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/70">
-                    <p class="font-bold text-slate-900 text-sm mb-1">Is there any joining or membership fee?</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-slate-300 leading-relaxed">
+                <div class="navy-subcard p-4 rounded-xl">
+                    <p class="font-bold text-white text-sm mb-1">Is there any joining or membership fee?</p>
                     <p>No. Creating an account on Earnova and browsing partner offers is completely free. Certain banking or trading offers may require standard account funding or a first trade as specified in that partner's terms.</p>
                 </div>
 
-                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/70">
-                    <p class="font-bold text-slate-900 text-sm mb-1">What is the minimum withdrawal amount?</p>
+                <div class="navy-subcard p-4 rounded-xl">
+                    <p class="font-bold text-white text-sm mb-1">What is the minimum withdrawal amount?</p>
                     <p>You can request a withdrawal once your Available Balance reaches ₹30 or more. Supported methods include UPI ID transfers and Bank Transfers (Account Number + IFSC).</p>
                 </div>
 
-                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/70">
-                    <p class="font-bold text-slate-900 text-sm mb-1">Why does a task show as "Started ✓"?</p>
+                <div class="navy-subcard p-4 rounded-xl">
+                    <p class="font-bold text-white text-sm mb-1">Why does a task show as "Started ✓"?</p>
                     <p>To prevent duplicate entries, each offer reward can only be claimed once per user. You can reopen the partner link anytime, though rewards are credited only on your first qualifying completion.</p>
                 </div>
 
-                <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/70">
-                    <p class="font-bold text-slate-900 text-sm mb-1">How do I contact support for tracking or payout help?</p>
-                    <p>You can email our support desk at <a href="mailto:rajneshc510@gmail.com" class="text-[#2563EB] font-semibold hover:underline">rajneshc510@gmail.com</a> with your registered email and offer name, or read our <a href="privacy.html" target="_blank" class="text-[#2563EB] font-semibold hover:underline">Privacy Policy</a>.</p>
+                <div class="navy-subcard p-4 rounded-xl">
+                    <p class="font-bold text-white text-sm mb-1">How do I contact support for tracking or payout help?</p>
+                    <p>You can email our support desk at <a href="mailto:rajneshc510@gmail.com" class="text-blue-400 font-semibold hover:underline">rajneshc510@gmail.com</a> with your registered email and offer name, or read our <a href="privacy.html" target="_blank" class="text-blue-400 font-semibold hover:underline">Privacy Policy</a>.</p>
                 </div>
             </div>
         </div>
@@ -739,135 +817,135 @@
     <!-- ==================== PARTNER OFFERS / TASKS TAB ==================== -->
     <section id="tasks" class="tab-content max-w-4xl mx-auto py-2">
         <div class="mb-5">
-            <button onclick="showTab('dashboard')" class="text-[#2563EB] font-semibold text-xs hover:underline mb-2 inline-block">← Back to Home</button>
-            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">All Verified Partner Offers</h2>
-            <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Complete partner offers carefully according to their instructions to receive wallet credit after verification.</p>
+            <button onclick="showTab('dashboard')" class="text-blue-400 font-semibold text-xs hover:underline mb-2 inline-block">← Back to Home</button>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-white">All Verified Partner Offers</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mt-0.5">Complete partner offers carefully according to their instructions to receive wallet credit after verification.</p>
         </div>
 
         <div class="w-full space-y-3">
             <!-- HEROWALLET TASK -->
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between hover:border-blue-300 transition-all">
-                <div class="flex items-center gap-3.5">
-                    <div class="h-12 w-12 shrink-0 rounded-lg overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center">
-                        <img src="herowallet.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-[#2563EB]\'>H</span>'" class="w-full h-full object-cover" alt="HeroWallet">
+            <div class="navy-row-card p-4 rounded-2xl flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3.5 min-w-0">
+                    <div class="h-12 w-12 shrink-0 rounded-xl overflow-hidden bg-[#08122b] border border-blue-400/25 flex items-center justify-center">
+                        <img src="herowallet.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-blue-400\'>H</span>'" class="w-full h-full object-cover" alt="HeroWallet">
                     </div>
-                    <div>
-                        <span class="text-[9px] font-bold uppercase tracking-wider text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded">Quick Task</span>
-                        <h3 class="font-bold text-slate-900 text-sm leading-tight mt-0.5">HeroWallet App</h3>
-                        <p class="text-[11px] text-slate-500 font-medium">Install app &amp; complete tasks (Code: SK0HJL)</p>
+                    <div class="min-w-0">
+                        <span class="text-[9px] font-bold uppercase tracking-wider text-indigo-300 bg-indigo-500/15 border border-indigo-400/25 px-2 py-0.5 rounded">Quick Task</span>
+                        <h3 class="font-bold text-white text-sm sm:text-base leading-tight mt-1 truncate">HeroWallet App</h3>
+                        <p class="text-[11px] sm:text-xs text-slate-400 font-medium truncate">Install app &amp; complete tasks (Code: SK0HJL)</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
-                    <span class="font-extrabold text-emerald-600 text-base mb-1">₹15</span>
-                    <button onclick="openPopup('HeroWallet App', 15, 'https://app.herowallet.in/ref/?code=SK0HJL', 'terms-herowallet')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-lg shadow-sm transition">Start</button>
+                    <span class="font-extrabold text-emerald-400 text-base mb-1">₹15</span>
+                    <button onclick="openPopup('HeroWallet App', 15, 'https://app.herowallet.in/ref/?code=SK0HJL', 'terms-herowallet')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-xl border border-blue-400/30 transition">Start ›</button>
                 </div>
             </div>
 
             <!-- BAJAJ SECURITIES -->
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between hover:border-blue-300 transition-all">
-                <div class="flex items-center gap-3.5">
-                    <div class="h-12 w-12 shrink-0 rounded-lg overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center">
-                        <img src="bajaj.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-[#2563EB]\'>B</span>'" class="w-full h-full object-cover" alt="Bajaj Securities">
+            <div class="navy-row-card p-4 rounded-2xl flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3.5 min-w-0">
+                    <div class="h-12 w-12 shrink-0 rounded-xl overflow-hidden bg-[#08122b] border border-blue-400/25 flex items-center justify-center">
+                        <img src="bajaj.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-blue-400\'>B</span>'" class="w-full h-full object-cover" alt="Bajaj Securities">
                     </div>
-                    <div>
-                        <span class="text-[9px] font-bold uppercase tracking-wider text-amber-700 bg-amber-100 px-2 py-0.5 rounded">Highest Reward</span>
-                        <h3 class="font-bold text-slate-900 text-sm leading-tight mt-0.5">Bajaj Securities Demat</h3>
-                        <p class="text-[11px] text-slate-500 font-medium">Open Account &amp; 1st Trade (Min ₹525)</p>
+                    <div class="min-w-0">
+                        <span class="text-[9px] font-bold uppercase tracking-wider text-amber-300 bg-amber-500/15 border border-amber-400/25 px-2 py-0.5 rounded">Highest Reward</span>
+                        <h3 class="font-bold text-white text-sm sm:text-base leading-tight mt-1 truncate">Bajaj Securities Demat</h3>
+                        <p class="text-[11px] sm:text-xs text-slate-400 font-medium truncate">Open Account &amp; 1st Trade (Min ₹525)</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
-                    <span class="font-extrabold text-emerald-600 text-base mb-1">₹550</span>
-                    <button onclick="openPopup('Bajaj Securities Demat', 550, 'https://sales.gromo.in/bs/ldyTpEeMg2', 'terms-bajajsec')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-lg shadow-sm transition">Start</button>
+                    <span class="font-extrabold text-emerald-400 text-base mb-1">₹550</span>
+                    <button onclick="openPopup('Bajaj Securities Demat', 550, 'https://sales.gromo.in/bs/ldyTpEeMg2', 'terms-bajajsec')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-xl border border-blue-400/30 transition">Start ›</button>
                 </div>
             </div>
 
             <!-- UPSTOX -->
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between hover:border-blue-300 transition-all">
-                <div class="flex items-center gap-3.5">
-                    <div class="h-12 w-12 shrink-0 rounded-lg overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center">
-                        <img src="upstox.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-[#2563EB]\'>U</span>'" class="w-full h-full object-cover" alt="Upstox">
+            <div class="navy-row-card p-4 rounded-2xl flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3.5 min-w-0">
+                    <div class="h-12 w-12 shrink-0 rounded-xl overflow-hidden bg-[#08122b] border border-blue-400/25 flex items-center justify-center">
+                        <img src="upstox.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-blue-400\'>U</span>'" class="w-full h-full object-cover" alt="Upstox">
                     </div>
-                    <div>
-                        <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Popular</span>
-                        <h3 class="font-bold text-slate-900 text-sm leading-tight mt-0.5">Upstox App</h3>
-                        <p class="text-[11px] text-slate-500 font-medium">Free Demat Account &amp; Verification</p>
+                    <div class="min-w-0">
+                        <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-300 bg-emerald-500/15 border border-emerald-400/25 px-2 py-0.5 rounded">Popular</span>
+                        <h3 class="font-bold text-white text-sm sm:text-base leading-tight mt-1 truncate">Upstox App</h3>
+                        <p class="text-[11px] sm:text-xs text-slate-400 font-medium truncate">Free Demat Account &amp; Verification</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
-                    <span class="font-extrabold text-emerald-600 text-base mb-1">₹180</span>
-                    <button onclick="openPopup('Upstox App', 180, 'https://sales.gromo.in/up/ldyTpEeMg2', 'terms-upstox')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-lg shadow-sm transition">Start</button>
+                    <span class="font-extrabold text-emerald-400 text-base mb-1">₹180</span>
+                    <button onclick="openPopup('Upstox App', 180, 'https://sales.gromo.in/up/ldyTpEeMg2', 'terms-upstox')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-xl border border-blue-400/30 transition">Start ›</button>
                 </div>
             </div>
 
             <!-- KOTAK SECURITIES -->
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between hover:border-blue-300 transition-all">
-                <div class="flex items-center gap-3.5">
-                    <div class="h-12 w-12 shrink-0 rounded-lg overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center">
-                        <img src="kotak.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-[#2563EB]\'>K</span>'" class="w-full h-full object-cover" alt="Kotak Securities">
+            <div class="navy-row-card p-4 rounded-2xl flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3.5 min-w-0">
+                    <div class="h-12 w-12 shrink-0 rounded-xl overflow-hidden bg-[#08122b] border border-blue-400/25 flex items-center justify-center">
+                        <img src="kotak.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-blue-400\'>K</span>'" class="w-full h-full object-cover" alt="Kotak Securities">
                     </div>
-                    <div>
-                        <span class="text-[9px] font-bold uppercase tracking-wider text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Demat</span>
-                        <h3 class="font-bold text-slate-900 text-sm leading-tight mt-0.5">Kotak Securities Demat</h3>
-                        <p class="text-[11px] text-slate-500 font-medium">Open Account &amp; Complete KYC</p>
+                    <div class="min-w-0">
+                        <span class="text-[9px] font-bold uppercase tracking-wider text-blue-300 bg-blue-500/15 border border-blue-400/25 px-2 py-0.5 rounded">Demat</span>
+                        <h3 class="font-bold text-white text-sm sm:text-base leading-tight mt-1 truncate">Kotak Securities Demat</h3>
+                        <p class="text-[11px] sm:text-xs text-slate-400 font-medium truncate">Open Account &amp; Complete KYC</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
-                    <span class="font-extrabold text-emerald-600 text-base mb-1">₹350</span>
-                    <button onclick="openPopup('Kotak Securities Demat', 350, 'https://sales.gromo.in/ks/ldyTpEeMg2', 'terms-kotaksec')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-lg shadow-sm transition">Start</button>
+                    <span class="font-extrabold text-emerald-400 text-base mb-1">₹350</span>
+                    <button onclick="openPopup('Kotak Securities Demat', 350, 'https://sales.gromo.in/ks/ldyTpEeMg2', 'terms-kotaksec')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-xl border border-blue-400/30 transition">Start ›</button>
                 </div>
             </div>
 
             <!-- ANGEL ONE -->
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between hover:border-blue-300 transition-all">
-                <div class="flex items-center gap-3.5">
-                    <div class="h-12 w-12 shrink-0 rounded-lg overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center">
-                        <img src="angel.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-[#2563EB]\'>A</span>'" class="w-full h-full object-cover" alt="Angel One">
+            <div class="navy-row-card p-4 rounded-2xl flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3.5 min-w-0">
+                    <div class="h-12 w-12 shrink-0 rounded-xl overflow-hidden bg-[#08122b] border border-blue-400/25 flex items-center justify-center">
+                        <img src="angel.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-blue-400\'>A</span>'" class="w-full h-full object-cover" alt="Angel One">
                     </div>
-                    <div>
-                        <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Zero Fee</span>
-                        <h3 class="font-bold text-slate-900 text-sm leading-tight mt-0.5">Angel One</h3>
-                        <p class="text-[11px] text-slate-500 font-medium">Free Demat Account &amp; KYC</p>
+                    <div class="min-w-0">
+                        <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-300 bg-emerald-500/15 border border-emerald-400/25 px-2 py-0.5 rounded">Zero Fee</span>
+                        <h3 class="font-bold text-white text-sm sm:text-base leading-tight mt-1 truncate">Angel One</h3>
+                        <p class="text-[11px] sm:text-xs text-slate-400 font-medium truncate">Free Demat Account &amp; KYC</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
-                    <span class="font-extrabold text-emerald-600 text-base mb-1">₹50</span>
-                    <button onclick="openPopup('Angel One', 50, 'https://sales.gromo.in/ao/ldyTpEeMg2', 'terms-angel')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-lg shadow-sm transition">Start</button>
+                    <span class="font-extrabold text-emerald-400 text-base mb-1">₹50</span>
+                    <button onclick="openPopup('Angel One', 50, 'https://sales.gromo.in/ao/ldyTpEeMg2', 'terms-angel')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-xl border border-blue-400/30 transition">Start ›</button>
                 </div>
             </div>
 
             <!-- PAYTM MONEY -->
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between hover:border-blue-300 transition-all">
-                <div class="flex items-center gap-3.5">
-                    <div class="h-12 w-12 shrink-0 rounded-lg overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center">
-                        <img src="paytm.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-[#2563EB]\'>P</span>'" class="w-full h-full object-cover" alt="Paytm Money">
+            <div class="navy-row-card p-4 rounded-2xl flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3.5 min-w-0">
+                    <div class="h-12 w-12 shrink-0 rounded-xl overflow-hidden bg-[#08122b] border border-blue-400/25 flex items-center justify-center">
+                        <img src="paytm.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-blue-400\'>P</span>'" class="w-full h-full object-cover" alt="Paytm Money">
                     </div>
-                    <div>
-                        <span class="text-[9px] font-bold uppercase tracking-wider text-amber-700 bg-amber-100 px-2 py-0.5 rounded">High Value</span>
-                        <h3 class="font-bold text-slate-900 text-sm leading-tight mt-0.5">Paytm Money Demat</h3>
-                        <p class="text-[11px] text-slate-500 font-medium">Open Account &amp; Trade (Min ₹1000)</p>
+                    <div class="min-w-0">
+                        <span class="text-[9px] font-bold uppercase tracking-wider text-amber-300 bg-amber-500/15 border border-amber-400/25 px-2 py-0.5 rounded">High Value</span>
+                        <h3 class="font-bold text-white text-sm sm:text-base leading-tight mt-1 truncate">Paytm Money Demat</h3>
+                        <p class="text-[11px] sm:text-xs text-slate-400 font-medium truncate">Open Account &amp; Trade (Min ₹1000)</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
-                    <span class="font-extrabold text-emerald-600 text-base mb-1">₹400</span>
-                    <button onclick="openPopup('Paytm Money Demat', 400, 'https://sales.gromo.in/pm/ldyTpEeMg2', 'terms-paytmmoney')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-lg shadow-sm transition">Start</button>
+                    <span class="font-extrabold text-emerald-400 text-base mb-1">₹400</span>
+                    <button onclick="openPopup('Paytm Money Demat', 400, 'https://sales.gromo.in/pm/ldyTpEeMg2', 'terms-paytmmoney')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-xl border border-blue-400/30 transition">Start ›</button>
                 </div>
             </div>
 
             <!-- NAVI APP -->
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between hover:border-blue-300 transition-all">
-                <div class="flex items-center gap-3.5">
-                    <div class="h-12 w-12 shrink-0 rounded-lg overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center">
-                        <img src="navi.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-[#2563EB]\'>N</span>'" class="w-full h-full object-cover" alt="Navi">
+            <div class="navy-row-card p-4 rounded-2xl flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3.5 min-w-0">
+                    <div class="h-12 w-12 shrink-0 rounded-xl overflow-hidden bg-[#08122b] border border-blue-400/25 flex items-center justify-center">
+                        <img src="navi.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-blue-400\'>N</span>'" class="w-full h-full object-cover" alt="Navi">
                     </div>
-                    <div>
-                        <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">UPI Setup</span>
-                        <h3 class="font-bold text-slate-900 text-sm leading-tight mt-0.5">Navi App</h3>
-                        <p class="text-[11px] text-slate-500 font-medium">Download &amp; Setup UPI</p>
+                    <div class="min-w-0">
+                        <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-300 bg-emerald-500/15 border border-emerald-400/25 px-2 py-0.5 rounded">UPI Setup</span>
+                        <h3 class="font-bold text-white text-sm sm:text-base leading-tight mt-1 truncate">Navi App</h3>
+                        <p class="text-[11px] sm:text-xs text-slate-400 font-medium truncate">Download &amp; Setup UPI</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
-                    <span class="font-extrabold text-emerald-600 text-base mb-1">₹50</span>
-                    <button onclick="openPopup('Navi App', 50, 'https://sales.gromo.in/nv/ldyTpEeMg2', 'terms-navi')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-lg shadow-sm transition">Start</button>
+                    <span class="font-extrabold text-emerald-400 text-base mb-1">₹50</span>
+                    <button onclick="openPopup('Navi App', 50, 'https://sales.gromo.in/nv/ldyTpEeMg2', 'terms-navi')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-xl border border-blue-400/30 transition">Start ›</button>
                 </div>
             </div>
         </div>
@@ -876,43 +954,43 @@
     <!-- ==================== BANKING OFFERS TAB ==================== -->
     <section id="extra" class="tab-content max-w-4xl mx-auto py-2">
         <div class="mb-5">
-            <button onclick="showTab('dashboard')" class="text-[#2563EB] font-semibold text-xs hover:underline mb-2 inline-block">← Back to Home</button>
-            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">Digital Banking Offers</h2>
-            <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Open a verified digital savings account and earn partner rewards upon KYC completion.</p>
+            <button onclick="showTab('dashboard')" class="text-blue-400 font-semibold text-xs hover:underline mb-2 inline-block">← Back to Home</button>
+            <h2 class="text-xl sm:text-2xl font-extrabold text-white">Digital Banking Offers</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mt-0.5">Open a verified digital savings account and earn partner rewards upon KYC completion.</p>
         </div>
 
         <div class="w-full space-y-3">
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between hover:border-blue-300 transition-all">
-                <div class="flex items-center gap-3.5">
-                    <div class="h-12 w-12 shrink-0 rounded-lg overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center">
-                        <img src="kotak.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-[#2563EB]\'>K</span>'" class="w-full h-full object-cover" alt="Kotak">
+            <div class="navy-row-card p-4 rounded-2xl flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3.5 min-w-0">
+                    <div class="h-12 w-12 shrink-0 rounded-xl overflow-hidden bg-[#08122b] border border-blue-400/25 flex items-center justify-center">
+                        <img src="kotak.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-blue-400\'>K</span>'" class="w-full h-full object-cover" alt="Kotak">
                     </div>
-                    <div>
-                        <span class="text-[9px] font-bold uppercase tracking-wider text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Savings A/c</span>
-                        <h3 class="font-bold text-slate-900 text-sm leading-tight mt-0.5">Kotak 811 Classic Account</h3>
-                        <p class="text-[11px] text-slate-500 font-medium">Maintain ₹1,000 balance &amp; Complete VKYC</p>
+                    <div class="min-w-0">
+                        <span class="text-[9px] font-bold uppercase tracking-wider text-blue-300 bg-blue-500/15 border border-blue-400/25 px-2 py-0.5 rounded">Savings A/c</span>
+                        <h3 class="font-bold text-white text-sm sm:text-base leading-tight mt-1 truncate">Kotak 811 Classic Account</h3>
+                        <p class="text-[11px] sm:text-xs text-slate-400 font-medium truncate">Maintain ₹1,000 balance &amp; Complete VKYC</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
-                    <span class="font-extrabold text-emerald-600 text-base mb-1">₹350</span>
-                    <button onclick="openPopup('Kotak 811 Classic Account', 350, 'https://sales.gromo.in/kt/ldyTpEeMg2', 'terms-kotak811')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-lg shadow-sm transition">Start</button>
+                    <span class="font-extrabold text-emerald-400 text-base mb-1">₹350</span>
+                    <button onclick="openPopup('Kotak 811 Classic Account', 350, 'https://sales.gromo.in/kt/ldyTpEeMg2', 'terms-kotak811')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-xl border border-blue-400/30 transition">Start ›</button>
                 </div>
             </div>
 
-            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center justify-between hover:border-blue-300 transition-all">
-                <div class="flex items-center gap-3.5">
-                    <div class="h-12 w-12 shrink-0 rounded-lg overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center">
-                        <img src="jio.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-[#2563EB]\'>J</span>'" class="w-full h-full object-cover" alt="Jio Payments Bank">
+            <div class="navy-row-card p-4 rounded-2xl flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3.5 min-w-0">
+                    <div class="h-12 w-12 shrink-0 rounded-xl overflow-hidden bg-[#08122b] border border-blue-400/25 flex items-center justify-center">
+                        <img src="jio.png.jpg" onerror="this.outerHTML='<span class=\'text-lg font-bold text-blue-400\'>J</span>'" class="w-full h-full object-cover" alt="Jio Payments Bank">
                     </div>
-                    <div>
-                        <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">Zero Balance</span>
-                        <h3 class="font-bold text-slate-900 text-sm leading-tight mt-0.5">Jio Payments Bank</h3>
-                        <p class="text-[11px] text-slate-500 font-medium">Zero Balance A/c, Full KYC &amp; Debit Card</p>
+                    <div class="min-w-0">
+                        <span class="text-[9px] font-bold uppercase tracking-wider text-emerald-300 bg-emerald-500/15 border border-emerald-400/25 px-2 py-0.5 rounded">Zero Balance</span>
+                        <h3 class="font-bold text-white text-sm sm:text-base leading-tight mt-1 truncate">Jio Payments Bank</h3>
+                        <p class="text-[11px] sm:text-xs text-slate-400 font-medium truncate">Zero Balance A/c, Full KYC &amp; Debit Card</p>
                     </div>
                 </div>
                 <div class="flex flex-col items-end shrink-0 ml-2">
-                    <span class="font-extrabold text-emerald-600 text-base mb-1">₹200</span>
-                    <button onclick="openPopup('Jio Payments Bank', 200, 'https://sales.gromo.in/pj/ldyTpEeMg2', 'terms-jiopayments')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-lg shadow-sm transition">Start</button>
+                    <span class="font-extrabold text-emerald-400 text-base mb-1">₹200</span>
+                    <button onclick="openPopup('Jio Payments Bank', 200, 'https://sales.gromo.in/pj/ldyTpEeMg2', 'terms-jiopayments')" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-xl border border-blue-400/30 transition">Start ›</button>
                 </div>
             </div>
         </div>
@@ -920,23 +998,23 @@
 
     <!-- ==================== REFER & EARN TAB ==================== -->
     <section id="refer" class="tab-content max-w-2xl mx-auto py-2 w-full">
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 text-center">
+        <div class="navy-card rounded-2xl p-6 md:p-8 text-center">
             <div class="text-left mb-4">
-                <button onclick="showTab('dashboard')" class="text-[#2563EB] font-semibold text-xs hover:underline">← Back to Home</button>
+                <button onclick="showTab('dashboard')" class="text-blue-400 font-semibold text-xs hover:underline">← Back to Home</button>
             </div>
 
-            <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#2563EB] bg-blue-50 border border-blue-100 px-3 py-1 rounded-full">Earnova Referral Program</span>
-            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 mt-3 tracking-tight">Invite Friends &amp; Earn ₹25</h2>
-            <p class="text-xs md:text-sm text-slate-500 mt-1 max-w-md mx-auto">Share your unique link with friends and earn ₹25 cash bonus per verified referral.</p>
+            <span class="text-[10px] font-extrabold uppercase tracking-widest text-blue-300 bg-blue-500/15 border border-blue-400/25 px-3 py-1 rounded-full">Earnova Referral Program</span>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-white mt-3 tracking-tight">Invite Friends &amp; Earn ₹25</h2>
+            <p class="text-xs md:text-sm text-slate-300 mt-1 max-w-md mx-auto">Share your unique link with friends and earn ₹25 cash bonus per verified referral.</p>
 
-            <div class="mt-6 bg-slate-900 p-2.5 pl-4 rounded-xl flex items-center justify-between border border-slate-800 gap-2">
-                <input type="text" id="userInviteLink" readonly value="https://earnova-eus.pages.dev/" class="bg-transparent text-white text-xs md:text-sm w-full outline-none font-mono truncate">
+            <div class="mt-6 bg-[#08122b] p-2.5 pl-4 rounded-xl flex items-center justify-between border border-blue-400/25 gap-2">
+                <input type="text" id="userInviteLink" readonly value="https://earnova-eus.pages.dev/" class="bg-transparent text-slate-100 text-xs md:text-sm w-full outline-none font-mono truncate">
                 <button onclick="copyReferralLink()" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold text-xs px-4 py-2 rounded-lg shadow transition shrink-0">Copy Link</button>
             </div>
 
-            <div class="mt-6 text-left bg-slate-50 border border-slate-200 p-4 rounded-xl">
-                <h4 class="font-extrabold text-slate-800 text-xs uppercase tracking-wider mb-2">Referral Terms &amp; Conditions</h4>
-                <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4 font-medium">
+            <div class="mt-6 text-left navy-subcard p-4 rounded-xl">
+                <h4 class="font-extrabold text-white text-xs uppercase tracking-wider mb-2">Referral Terms &amp; Conditions</h4>
+                <ul class="text-xs text-slate-300 space-y-1.5 list-disc pl-4 font-medium">
                     <li>Share your referral link with friends and invite them to join Earnova.</li>
                     <li>The ₹25 cash reward will be credited once the referred user signs in and remains active on the platform for 7 consecutive days.</li>
                 </ul>
@@ -947,99 +1025,99 @@
     <!-- ==================== WALLET TAB ==================== -->
     <section id="wallet" class="tab-content max-w-2xl mx-auto py-2 w-full">
         <div class="mb-5">
-            <button onclick="showTab('dashboard')" class="text-[#2563EB] font-semibold text-xs hover:underline mb-2 inline-block">← Back to Home</button>
-            <h2 class="text-xl md:text-2xl font-extrabold text-slate-900 tracking-tight">Wallet &amp; Withdrawals</h2>
-            <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Manage your verified earnings and request UPI or Bank transfers.</p>
+            <button onclick="showTab('dashboard')" class="text-blue-400 font-semibold text-xs hover:underline mb-2 inline-block">← Back to Home</button>
+            <h2 class="text-xl md:text-2xl font-extrabold text-white tracking-tight">Wallet &amp; Withdrawals</h2>
+            <p class="text-xs sm:text-sm text-slate-400 mt-0.5">Manage your verified earnings and request UPI or Bank transfers.</p>
         </div>
 
-        <div class="rounded-2xl p-5 md:p-6 text-white shadow-sm mb-6 bg-slate-900 border border-slate-800">
+        <div class="rounded-2xl p-5 md:p-6 text-white mb-6 bg-gradient-to-br from-[#0f1d44] via-[#132559] to-[#172c6b] border border-blue-400/30 shadow-xl">
             <div class="flex items-center justify-between mb-4">
-                <span class="text-[10px] font-extrabold uppercase tracking-widest text-blue-200 bg-white/10 px-3 py-1 rounded-full border border-white/10">EARNOVA WALLET</span>
+                <span class="text-[10px] font-extrabold uppercase tracking-widest text-blue-200 bg-blue-500/20 px-3 py-1 rounded-full border border-blue-400/25">EARNOVA WALLET</span>
                 <span class="text-[11px] font-semibold text-emerald-400">● Active</span>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 items-stretch">
-                <div class="bg-white/5 rounded-xl p-4 border border-white/10 flex flex-col justify-between">
+                <div class="bg-[#08122b]/75 rounded-xl p-4 border border-blue-400/20 flex flex-col justify-between">
                     <div>
-                        <span class="text-[10px] text-blue-200 font-bold uppercase tracking-wider block mb-0.5">Available Balance</span>
+                        <span class="text-[10px] text-blue-300 font-bold uppercase tracking-wider block mb-0.5">Available Balance</span>
                         <h3 class="text-3xl font-extrabold text-white tracking-tight">₹<span id="wallet-display">0.00</span></h3>
                     </div>
-                    <p class="text-[11px] text-slate-300 mt-2 font-medium">Ready for withdrawal (Min ₹30)</p>
+                    <p class="text-[11px] text-slate-400 mt-2 font-medium">Ready for withdrawal (Min ₹30)</p>
                 </div>
 
-                <div class="bg-white/5 rounded-xl p-4 border border-white/10 flex flex-col justify-between">
+                <div class="bg-[#08122b]/75 rounded-xl p-4 border border-blue-400/20 flex flex-col justify-between">
                     <div>
                         <span class="text-[10px] text-slate-300 font-bold uppercase tracking-wider block mb-0.5">Pending / Under Review</span>
                         <h4 class="text-3xl font-extrabold text-amber-300 tracking-tight">₹<span id="pending-display">0.00</span></h4>
                     </div>
-                    <p class="text-[11px] text-slate-300 mt-2 font-medium">Awaiting partner verification</p>
+                    <p class="text-[11px] text-slate-400 mt-2 font-medium">Awaiting partner verification</p>
                 </div>
             </div>
         </div>
 
         <!-- WITHDRAW FUNDS SECTION -->
-        <div class="bg-white rounded-2xl p-5 md:p-7 shadow-sm border border-slate-200">
-            <h3 class="font-extrabold text-slate-900 mb-4 text-base">Withdraw Funds</h3>
+        <div class="navy-card rounded-2xl p-5 md:p-7">
+            <h3 class="font-extrabold text-white mb-4 text-base">Withdraw Funds</h3>
 
             <div class="mb-4">
-                <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Payment Method</label>
-                <select id="paymentMethod" onchange="togglePaymentFields()" class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-700 bg-slate-50 focus:outline-none focus:border-[#2563EB] focus:bg-white transition-all">
+                <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1.5">Payment Method</label>
+                <select id="paymentMethod" onchange="togglePaymentFields()" class="w-full border border-blue-500/25 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white bg-[#08122b] focus:outline-none focus:border-blue-400 transition-all">
                     <option value="upi">UPI Transfer (Instant)</option>
                     <option value="bank">Bank Transfer (IMPS/NEFT)</option>
                 </select>
             </div>
 
             <div id="upiField" class="mb-4">
-                <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Your UPI ID</label>
-                <input type="text" id="upiId" placeholder="e.g. name@ybl or 9876543210@paytm" class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm font-semibold focus:outline-none focus:border-[#2563EB] focus:bg-white bg-slate-50 transition-all">
+                <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1.5">Your UPI ID</label>
+                <input type="text" id="upiId" placeholder="e.g. name@ybl or 9876543210@paytm" class="w-full border border-blue-500/25 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white placeholder-slate-500 focus:outline-none focus:border-blue-400 bg-[#08122b] transition-all">
             </div>
 
             <div id="bankFields" class="mb-4 hidden space-y-3">
                 <div>
-                    <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">Account Number</label>
-                    <input type="number" id="bankAcc" placeholder="Enter Bank A/c No." class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm font-semibold focus:outline-none focus:border-[#2563EB] focus:bg-white bg-slate-50 transition-all">
+                    <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1.5">Account Number</label>
+                    <input type="number" id="bankAcc" placeholder="Enter Bank A/c No." class="w-full border border-blue-500/25 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white placeholder-slate-500 focus:outline-none focus:border-blue-400 bg-[#08122b] transition-all">
                 </div>
                 <div>
-                    <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">IFSC Code</label>
-                    <input type="text" id="bankIfsc" placeholder="e.g. SBIN0001234" class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm uppercase font-semibold focus:outline-none focus:border-[#2563EB] focus:bg-white bg-slate-50 transition-all">
+                    <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1.5">IFSC Code</label>
+                    <input type="text" id="bankIfsc" placeholder="e.g. SBIN0001234" class="w-full border border-blue-500/25 rounded-xl px-3.5 py-2.5 text-sm uppercase font-semibold text-white placeholder-slate-500 focus:outline-none focus:border-blue-400 bg-[#08122b] transition-all">
                 </div>
             </div>
 
             <div class="mb-5">
-                <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Select Amount (Minimum ₹30)</label>
+                <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-2">Select Amount (Minimum ₹30)</label>
                 <div class="grid grid-cols-4 gap-2.5">
-                    <button type="button" onclick="selectAmount(30, this)" class="amount-btn bg-slate-50 border border-slate-200 hover:border-[#2563EB] text-slate-800 font-extrabold py-2.5 rounded-xl text-sm transition-all">₹30</button>
-                    <button type="button" onclick="selectAmount(50, this)" class="amount-btn bg-slate-50 border border-slate-200 hover:border-[#2563EB] text-slate-800 font-extrabold py-2.5 rounded-xl text-sm transition-all">₹50</button>
-                    <button type="button" onclick="selectAmount(100, this)" class="amount-btn bg-slate-50 border border-slate-200 hover:border-[#2563EB] text-slate-800 font-extrabold py-2.5 rounded-xl text-sm transition-all">₹100</button>
-                    <button type="button" onclick="selectAmount(500, this)" class="amount-btn bg-slate-50 border border-slate-200 hover:border-[#2563EB] text-slate-800 font-extrabold py-2.5 rounded-xl text-sm transition-all">₹500</button>
+                    <button type="button" onclick="selectAmount(30, this)" class="amount-btn bg-[#08122b] border border-blue-500/25 hover:border-blue-400 text-slate-200 font-extrabold py-2.5 rounded-xl text-sm transition-all">₹30</button>
+                    <button type="button" onclick="selectAmount(50, this)" class="amount-btn bg-[#08122b] border border-blue-500/25 hover:border-blue-400 text-slate-200 font-extrabold py-2.5 rounded-xl text-sm transition-all">₹50</button>
+                    <button type="button" onclick="selectAmount(100, this)" class="amount-btn bg-[#08122b] border border-blue-500/25 hover:border-blue-400 text-slate-200 font-extrabold py-2.5 rounded-xl text-sm transition-all">₹100</button>
+                    <button type="button" onclick="selectAmount(500, this)" class="amount-btn bg-[#08122b] border border-blue-500/25 hover:border-blue-400 text-slate-200 font-extrabold py-2.5 rounded-xl text-sm transition-all">₹500</button>
                 </div>
                 <input type="hidden" id="selectedWithdrawAmount" value="">
             </div>
 
-            <button onclick="requestWithdrawal()" class="w-full bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold py-3 rounded-xl shadow-sm transition-all text-sm sm:text-base">
+            <button onclick="requestWithdrawal()" class="w-full bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-600/25 border border-blue-400/30 transition-all text-sm sm:text-base">
                 Request Withdrawal
             </button>
         </div>
     </section>
 
-    <!-- ==================== SPIN PAGE (INTACT INSIDE SECTION) ==================== -->
+    <!-- ==================== SPIN PAGE ==================== -->
     <section id="spin" class="tab-content max-w-md mx-auto py-4">
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 text-center space-y-5 relative overflow-hidden">
+        <div class="navy-card rounded-2xl p-6 md:p-8 text-center space-y-5 relative overflow-hidden">
             <div class="flex justify-start">
-                <button onclick="showTab('dashboard')" class="text-[#2563EB] font-bold text-xs hover:underline">← Back to Home</button>
+                <button onclick="showTab('dashboard')" class="text-blue-400 font-bold text-xs hover:underline">← Back to Home</button>
             </div>
 
             <div>
-                <span class="text-[10px] font-extrabold tracking-widest uppercase text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">Daily Member Activity</span>
-                <h2 class="text-2xl font-extrabold text-slate-900 mt-2">Daily Bonus Spin</h2>
-                <p class="text-slate-500 text-xs font-medium mt-1">Wheel ghumayein aur rozana small bonus rewards jeetein!</p>
+                <span class="text-[10px] font-extrabold tracking-widest uppercase text-amber-300 bg-amber-500/15 border border-amber-400/25 px-3 py-1 rounded-full">Daily Member Activity</span>
+                <h2 class="text-2xl font-extrabold text-white mt-2">Daily Bonus Spin</h2>
+                <p class="text-slate-400 text-xs font-medium mt-1">Wheel ghumayein aur rozana small bonus rewards jeetein!</p>
             </div>
 
             <div class="relative flex items-center justify-center py-3">
                 <div class="absolute top-0 left-1/2 -translate-x-1/2 z-30 w-0 h-0 border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-t-[22px] border-t-rose-500 drop-shadow-md"></div>
 
-                <div class="p-2 rounded-full bg-slate-900 shadow-lg">
-                    <div id="spin-wheel" class="relative w-60 h-60 sm:w-64 sm:h-64 rounded-full wheel-gradient border-4 border-white shadow-inner flex items-center justify-center overflow-hidden">
+                <div class="p-2 rounded-full bg-[#060d1f] border border-blue-400/30 shadow-xl">
+                    <div id="spin-wheel" class="relative w-60 h-60 sm:w-64 sm:h-64 rounded-full wheel-gradient border-4 border-white/90 shadow-inner flex items-center justify-center overflow-hidden">
                         <div class="absolute inset-0 text-white font-extrabold text-xs drop-shadow pointer-events-none">
                             <span class="absolute top-5 left-1/2 -translate-x-1/2 rotate-[30deg] origin-[50%_100px]">₹0.01</span>
                             <span class="absolute top-5 left-1/2 -translate-x-1/2 rotate-[90deg] origin-[50%_100px]">₹0.02</span>
@@ -1049,43 +1127,43 @@
                             <span class="absolute top-5 left-1/2 -translate-x-1/2 rotate-[330deg] origin-[50%_100px] text-amber-200">₹0.50</span>
                         </div>
 
-                        <div class="relative z-20 w-16 h-16 bg-white rounded-full shadow-lg border-4 border-[#2563EB] flex flex-col items-center justify-center text-slate-900 font-black text-[10px] tracking-tight">
+                        <div class="relative z-20 w-16 h-16 bg-[#0b1736] rounded-full shadow-lg border-4 border-blue-400 flex flex-col items-center justify-center text-white font-black text-[10px] tracking-tight">
                             <span>SPIN</span>
-                            <span class="text-[8px] text-[#2563EB]">BONUS</span>
+                            <span class="text-[8px] text-blue-300">BONUS</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div>
-                <button id="spinBtn" onclick="earnovaSpin()" class="w-full max-w-[240px] mx-auto bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold py-3 px-6 rounded-xl shadow-sm transition-all text-sm flex items-center justify-center gap-2">
+                <button id="spinBtn" onclick="earnovaSpin()" class="w-full max-w-[240px] mx-auto bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-blue-600/25 border border-blue-400/30 transition-all text-sm flex items-center justify-center gap-2">
                     <span>SPIN NOW</span>
                 </button>
-                <p id="spinResult" class="font-bold text-[#2563EB] text-xs mt-2.5"></p>
+                <p id="spinResult" class="font-bold text-blue-300 text-xs mt-2.5"></p>
             </div>
         </div>
     </section>
 
-    <!-- ==================== SCRATCH CARD PAGE (INTACT INSIDE SECTION) ==================== -->
+    <!-- ==================== SCRATCH CARD PAGE ==================== -->
     <section id="scratch" class="tab-content max-w-md mx-auto py-4">
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 text-center space-y-4">
+        <div class="navy-card rounded-2xl p-6 md:p-8 text-center space-y-4">
             <div class="flex justify-start">
-                <button onclick="showTab('dashboard')" class="text-[#2563EB] font-bold text-xs hover:underline">← Back to Home</button>
+                <button onclick="showTab('dashboard')" class="text-blue-400 font-bold text-xs hover:underline">← Back to Home</button>
             </div>
 
             <div>
-                <span class="text-[10px] font-extrabold tracking-widest uppercase text-[#2563EB] bg-blue-50 border border-blue-100 px-3 py-1 rounded-full">Earnova Scratch</span>
-                <h2 class="text-2xl font-extrabold text-slate-900 mt-2">Daily Scratch Card</h2>
-                <p class="text-slate-500 text-xs mt-1">Card ko scratch karein ya tap karke apna daily bonus claim karein!</p>
+                <span class="text-[10px] font-extrabold tracking-widest uppercase text-blue-300 bg-blue-500/15 border border-blue-400/25 px-3 py-1 rounded-full">Earnova Scratch</span>
+                <h2 class="text-2xl font-extrabold text-white mt-2">Daily Scratch Card</h2>
+                <p class="text-slate-400 text-xs mt-1">Card ko scratch karein ya tap karke apna daily bonus claim karein!</p>
             </div>
 
-            <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
-                <p class="font-extrabold text-slate-500 text-[11px] uppercase tracking-wider mb-3">Your Daily Reward Card</p>
+            <div class="navy-subcard rounded-xl p-4">
+                <p class="font-extrabold text-slate-400 text-[11px] uppercase tracking-wider mb-3">Your Daily Reward Card</p>
 
-                <div id="tapScratchCard" onclick="claimTapScratch()" class="relative w-full aspect-[16/10] rounded-xl shadow overflow-hidden border-2 border-blue-500 bg-gradient-to-br from-[#0F172A] via-[#1E3A8A] to-[#2563EB] flex flex-col items-center justify-center p-4 text-center cursor-pointer select-none">
+                <div id="tapScratchCard" onclick="claimTapScratch()" class="relative w-full aspect-[16/10] rounded-xl shadow overflow-hidden border-2 border-blue-400/60 bg-gradient-to-br from-[#08122b] via-[#172c6b] to-[#2563EB] flex flex-col items-center justify-center p-4 text-center cursor-pointer select-none">
                     <div class="relative z-0 flex flex-col items-center">
                         <span class="text-3xl mb-1">🎉</span>
-                        <p class="text-xs text-blue-100 font-semibold uppercase tracking-wider">You Won</p>
+                        <p class="text-xs text-blue-200 font-semibold uppercase tracking-wider">You Won</p>
                         <h3 id="scratch-won-text" class="text-3xl font-black text-amber-300 tracking-tight">₹0.40</h3>
                         <span class="text-[11px] text-white/80 mt-1">Credited to Earnova Wallet</span>
                     </div>
@@ -1094,192 +1172,231 @@
                 </div>
             </div>
 
-            <p id="scratch-status-msg" class="font-bold text-amber-600 text-xs">✨ Card ko scratch karein ya tap karein!</p>
+            <p id="scratch-status-msg" class="font-bold text-amber-300 text-xs">✨ Card ko scratch karein ya tap karein!</p>
 
-            <div class="bg-blue-50 text-[#2563EB] rounded-xl p-3 text-xs font-semibold">
+            <div class="bg-blue-500/15 border border-blue-400/25 text-blue-200 rounded-xl p-3 text-xs font-semibold">
                 Ek free scratch card har 24 ghante mein unlock hota hai.
             </div>
         </div>
     </section>
 
-    <!-- ==================== DAILY CHECK-IN PAGE (INTACT INSIDE SECTION) ==================== -->
+    <!-- ==================== DAILY CHECK-IN PAGE ==================== -->
     <section id="checkin" class="tab-content max-w-xl mx-auto py-4">
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 text-center space-y-6">
+        <div class="navy-card rounded-2xl p-6 md:p-8 text-center space-y-6">
             <div class="flex justify-start">
-                <button onclick="showTab('dashboard')" class="text-[#2563EB] font-bold text-xs hover:underline">← Back to Home</button>
+                <button onclick="showTab('dashboard')" class="text-blue-400 font-bold text-xs hover:underline">← Back to Home</button>
             </div>
 
             <div>
-                <div class="inline-flex items-center justify-center w-14 h-14 bg-emerald-50 border border-emerald-200 rounded-2xl text-2xl mb-3 text-emerald-700">📅</div>
-                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900">Daily Check-in</h2>
-                <p class="text-slate-500 text-xs md:text-sm font-medium mt-1">Roz check-in karein aur apna 7-day reward streak complete karein!</p>
-                <div id="checkin-streak-badge" class="mt-3 inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold py-1.5 px-4 rounded-full">
-                    <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
+                <div class="inline-flex items-center justify-center w-14 h-14 bg-emerald-500/15 border border-emerald-400/30 rounded-2xl text-2xl mb-3 text-emerald-300">📅</div>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white">Daily Check-in</h2>
+                <p class="text-slate-400 text-xs md:text-sm font-medium mt-1">Roz check-in karein aur apna 7-day reward streak complete karein!</p>
+                <div id="checkin-streak-badge" class="mt-3 inline-flex items-center gap-2 bg-emerald-500/15 text-emerald-300 border border-emerald-400/30 text-xs font-bold py-1.5 px-4 rounded-full">
+                    <span class="w-2 h-2 bg-emerald-400 rounded-full"></span>
                     <span id="checkin-streak">Day 0 of 7</span>
                 </div>
             </div>
 
             <div id="checkin-grid" class="grid grid-cols-4 sm:grid-cols-7 gap-2.5 items-center justify-center">
-                <div data-day="1" class="checkin-day-card flex flex-col items-center gap-1 p-2 rounded-xl bg-slate-50 border border-slate-200">
-                    <div class="day-circle flex items-center justify-center w-10 h-10 rounded-full bg-white border-2 border-slate-200 text-slate-500 font-black text-sm">1</div>
-                    <span class="text-[10px] font-bold text-slate-500">Day 1</span>
-                    <span class="text-xs font-extrabold text-emerald-600">₹0.01</span>
+                <div data-day="1" class="checkin-day-card flex flex-col items-center gap-1 p-2 rounded-xl navy-subcard">
+                    <div class="day-circle flex items-center justify-center w-10 h-10 rounded-full bg-[#0f1d44] border-2 border-blue-400/30 text-slate-300 font-black text-sm">1</div>
+                    <span class="text-[10px] font-bold text-slate-400">Day 1</span>
+                    <span class="text-xs font-extrabold text-emerald-400">₹0.01</span>
                 </div>
-                <div data-day="2" class="checkin-day-card flex flex-col items-center gap-1 p-2 rounded-xl bg-slate-50 border border-slate-200">
-                    <div class="day-circle flex items-center justify-center w-10 h-10 rounded-full bg-white border-2 border-slate-200 text-slate-500 font-black text-sm">2</div>
-                    <span class="text-[10px] font-bold text-slate-500">Day 2</span>
-                    <span class="text-xs font-extrabold text-emerald-600">₹0.02</span>
+                <div data-day="2" class="checkin-day-card flex flex-col items-center gap-1 p-2 rounded-xl navy-subcard">
+                    <div class="day-circle flex items-center justify-center w-10 h-10 rounded-full bg-[#0f1d44] border-2 border-blue-400/30 text-slate-300 font-black text-sm">2</div>
+                    <span class="text-[10px] font-bold text-slate-400">Day 2</span>
+                    <span class="text-xs font-extrabold text-emerald-400">₹0.02</span>
                 </div>
-                <div data-day="3" class="checkin-day-card flex flex-col items-center gap-1 p-2 rounded-xl bg-slate-50 border border-slate-200">
-                    <div class="day-circle flex items-center justify-center w-10 h-10 rounded-full bg-white border-2 border-slate-200 text-slate-500 font-black text-sm">3</div>
-                    <span class="text-[10px] font-bold text-slate-500">Day 3</span>
-                    <span class="text-xs font-extrabold text-emerald-600">₹0.03</span>
+                <div data-day="3" class="checkin-day-card flex flex-col items-center gap-1 p-2 rounded-xl navy-subcard">
+                    <div class="day-circle flex items-center justify-center w-10 h-10 rounded-full bg-[#0f1d44] border-2 border-blue-400/30 text-slate-300 font-black text-sm">3</div>
+                    <span class="text-[10px] font-bold text-slate-400">Day 3</span>
+                    <span class="text-xs font-extrabold text-emerald-400">₹0.03</span>
                 </div>
-                <div data-day="4" class="checkin-day-card flex flex-col items-center gap-1 p-2 rounded-xl bg-slate-50 border border-slate-200">
-                    <div class="day-circle flex items-center justify-center w-10 h-10 rounded-full bg-white border-2 border-slate-200 text-slate-500 font-black text-sm">4</div>
-                    <span class="text-[10px] font-bold text-slate-500">Day 4</span>
-                    <span class="text-xs font-extrabold text-emerald-600">₹0.05</span>
+                <div data-day="4" class="checkin-day-card flex flex-col items-center gap-1 p-2 rounded-xl navy-subcard">
+                    <div class="day-circle flex items-center justify-center w-10 h-10 rounded-full bg-[#0f1d44] border-2 border-blue-400/30 text-slate-300 font-black text-sm">4</div>
+                    <span class="text-[10px] font-bold text-slate-400">Day 4</span>
+                    <span class="text-xs font-extrabold text-emerald-400">₹0.05</span>
                 </div>
-                <div data-day="5" class="checkin-day-card flex flex-col items-center gap-1 p-2 rounded-xl bg-slate-50 border border-slate-200">
-                    <div class="day-circle flex items-center justify-center w-10 h-10 rounded-full bg-white border-2 border-slate-200 text-slate-500 font-black text-sm">5</div>
-                    <span class="text-[10px] font-bold text-slate-500">Day 5</span>
-                    <span class="text-xs font-extrabold text-emerald-600">₹0.07</span>
+                <div data-day="5" class="checkin-day-card flex flex-col items-center gap-1 p-2 rounded-xl navy-subcard">
+                    <div class="day-circle flex items-center justify-center w-10 h-10 rounded-full bg-[#0f1d44] border-2 border-blue-400/30 text-slate-300 font-black text-sm">5</div>
+                    <span class="text-[10px] font-bold text-slate-400">Day 5</span>
+                    <span class="text-xs font-extrabold text-emerald-400">₹0.07</span>
                 </div>
-                <div data-day="6" class="checkin-day-card flex flex-col items-center gap-1 p-2 rounded-xl bg-slate-50 border border-slate-200">
-                    <div class="day-circle flex items-center justify-center w-10 h-10 rounded-full bg-white border-2 border-slate-200 text-slate-500 font-black text-sm">6</div>
-                    <span class="text-[10px] font-bold text-slate-500">Day 6</span>
-                    <span class="text-xs font-extrabold text-emerald-600">₹0.08</span>
+                <div data-day="6" class="checkin-day-card flex flex-col items-center gap-1 p-2 rounded-xl navy-subcard">
+                    <div class="day-circle flex items-center justify-center w-10 h-10 rounded-full bg-[#0f1d44] border-2 border-blue-400/30 text-slate-300 font-black text-sm">6</div>
+                    <span class="text-[10px] font-bold text-slate-400">Day 6</span>
+                    <span class="text-xs font-extrabold text-emerald-400">₹0.08</span>
                 </div>
-                <div data-day="7" class="checkin-day-card col-span-2 sm:col-span-1 flex flex-col items-center gap-1 p-2 rounded-xl bg-amber-50/70 border border-amber-200">
-                    <div class="day-circle flex items-center justify-center w-10 h-10 rounded-full bg-amber-500 border-2 border-amber-200 text-white font-black text-base">🎁</div>
-                    <span class="text-[10px] font-bold text-amber-700">Day 7</span>
-                    <span class="text-xs font-black text-amber-600">₹0.10</span>
+                <div data-day="7" class="checkin-day-card col-span-2 sm:col-span-1 flex flex-col items-center gap-1 p-2 rounded-xl bg-amber-500/10 border border-amber-400/30">
+                    <div class="day-circle flex items-center justify-center w-10 h-10 rounded-full bg-amber-500 border-2 border-amber-300 text-white font-black text-base">🎁</div>
+                    <span class="text-[10px] font-bold text-amber-300">Day 7</span>
+                    <span class="text-xs font-black text-amber-300">₹0.10</span>
                 </div>
             </div>
 
             <div class="pt-2">
-                <button id="checkinBtn" onclick="earnovaCheckin()" class="w-full max-w-sm mx-auto bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold py-3 px-8 rounded-xl shadow-sm transition-all text-sm md:text-base flex items-center justify-center gap-2">
+                <button id="checkinBtn" onclick="earnovaCheckin()" class="w-full max-w-sm mx-auto bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold py-3 px-8 rounded-xl shadow-lg shadow-blue-600/25 border border-blue-400/30 transition-all text-sm md:text-base flex items-center justify-center gap-2">
                     <span>Claim Daily Reward</span>
                     <span>✓</span>
                 </button>
-                <p id="checkinResult" class="font-bold text-emerald-600 text-xs mt-3"></p>
+                <p id="checkinResult" class="font-bold text-emerald-400 text-xs mt-3"></p>
             </div>
         </div>
     </section>
 </main>
 
-<!-- GENUINE WEBSITE FOOTER -->
-<footer class="bg-white border-t border-slate-200 mt-12">
+<!-- DARK NAVY WEBSITE FOOTER -->
+<footer class="bg-[#070f24] border-t border-blue-500/20 mt-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pb-6 border-b border-slate-100 text-xs text-slate-600">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pb-6 border-b border-blue-500/15 text-xs text-slate-400">
             <div>
-                <h3 class="font-extrabold text-slate-900 text-sm mb-2">Earnova</h3>
-                <p class="leading-relaxed text-slate-500">
+                <h3 class="font-extrabold text-white text-sm mb-2">Earnova</h3>
+                <p class="leading-relaxed text-slate-400">
                     An Indian partner-offers and rewards platform featuring verified Demat, digital banking, and finance app offers with transparent terms and UPI/IMPS payouts.
                 </p>
             </div>
 
             <div>
-                <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider mb-2">Quick Navigation</h4>
-                <div class="grid grid-cols-2 gap-1.5 font-semibold">
-                    <button onclick="showTab('dashboard')" class="text-left hover:text-[#2563EB] transition">Home</button>
-                    <button onclick="showTab('tasks')" class="text-left hover:text-[#2563EB] transition">Partner Offers</button>
-                    <button onclick="showTab('extra')" class="text-left hover:text-[#2563EB] transition">Banking Offers</button>
-                    <button onclick="showTab('refer')" class="text-left hover:text-[#2563EB] transition">Refer &amp; Earn</button>
-                    <button onclick="showTab('wallet')" class="text-left hover:text-[#2563EB] transition">Wallet &amp; Payouts</button>
-                    <button onclick="showTab('checkin')" class="text-left hover:text-[#2563EB] transition">Member Bonus</button>
+                <h4 class="font-bold text-white text-xs uppercase tracking-wider mb-2">Quick Navigation</h4>
+                <div class="grid grid-cols-2 gap-1.5 font-semibold text-slate-300">
+                    <button onclick="showTab('dashboard')" class="text-left hover:text-blue-400 transition">Home</button>
+                    <button onclick="showTab('tasks')" class="text-left hover:text-blue-400 transition">Partner Offers</button>
+                    <button onclick="showTab('extra')" class="text-left hover:text-blue-400 transition">Banking Offers</button>
+                    <button onclick="showTab('refer')" class="text-left hover:text-blue-400 transition">Refer &amp; Earn</button>
+                    <button onclick="showTab('wallet')" class="text-left hover:text-blue-400 transition">Wallet &amp; Payouts</button>
+                    <button onclick="showTab('checkin')" class="text-left hover:text-blue-400 transition">Member Bonus</button>
                 </div>
             </div>
 
             <div>
-                <h4 class="font-bold text-slate-900 text-xs uppercase tracking-wider mb-2">Support &amp; Policies</h4>
-                <ul class="space-y-1.5 font-semibold">
-                    <li><a href="privacy.html" target="_blank" class="hover:text-[#2563EB] transition">Privacy Policy</a></li>
-                    <li><a href="mailto:rajneshc510@gmail.com" class="hover:text-[#2563EB] transition">Support Email: rajneshc510@gmail.com</a></li>
+                <h4 class="font-bold text-white text-xs uppercase tracking-wider mb-2">Support &amp; Policies</h4>
+                <ul class="space-y-1.5 font-semibold text-slate-300">
+                    <li><a href="privacy.html" target="_blank" class="hover:text-blue-400 transition">Privacy Policy</a></li>
+                    <li><a href="mailto:rajneshc510@gmail.com" class="hover:text-blue-400 transition">Support Email: rajneshc510@gmail.com</a></li>
                 </ul>
             </div>
         </div>
 
-        <div class="pt-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+        <div class="pt-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-400">
             <span>© 2026 Earnova. All Rights Reserved.</span>
             <span>Partner offer rewards are subject to respective brand verification and terms.</span>
         </div>
     </div>
 </footer>
 
+<!-- MOBILE BOTTOM NAVIGATION BAR (SCREENSHOT INSPIRED) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 mobile-bottom-nav px-2 py-1.5" aria-label="Mobile Bottom Navigation">
+    <div class="max-w-md mx-auto grid grid-cols-5 items-center text-[11px] font-semibold text-slate-400">
+        <button id="mbtn-tasks" onclick="showTab('tasks')" class="mobile-nav-item flex flex-col items-center justify-center gap-0.5 py-1">
+            <span class="mobile-nav-icon-box w-8 h-8 rounded-xl border border-transparent flex items-center justify-center transition">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+            </span>
+            <span>Offers</span>
+        </button>
+
+        <button id="mbtn-extra" onclick="showTab('extra')" class="mobile-nav-item flex flex-col items-center justify-center gap-0.5 py-1">
+            <span class="mobile-nav-icon-box w-8 h-8 rounded-xl border border-transparent flex items-center justify-center transition">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+            </span>
+            <span>Banking</span>
+        </button>
+
+        <button id="mbtn-dashboard" onclick="showTab('dashboard')" class="mobile-nav-item flex flex-col items-center justify-center -mt-4">
+            <span class="w-12 h-12 rounded-full bg-gradient-to-tr from-[#2563EB] to-[#38bdf8] text-white border-4 border-[#08122b] shadow-lg shadow-sky-500/30 flex items-center justify-center">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            </span>
+        </button>
+
+        <button id="mbtn-wallet" onclick="showTab('wallet')" class="mobile-nav-item flex flex-col items-center justify-center gap-0.5 py-1">
+            <span class="mobile-nav-icon-box w-8 h-8 rounded-xl border border-transparent flex items-center justify-center transition">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+            </span>
+            <span>Wallet</span>
+        </button>
+
+        <button id="mbtn-refer" onclick="showTab('refer')" class="mobile-nav-item flex flex-col items-center justify-center gap-0.5 py-1">
+            <span class="mobile-nav-icon-box w-8 h-8 rounded-xl border border-transparent flex items-center justify-center transition">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+            </span>
+            <span>Refer</span>
+        </button>
+    </div>
+</nav>
+
 <!-- WITHDRAWAL SUCCESS POPUP MODAL -->
-<div id="withdrawalSuccessModal" class="hidden fixed inset-0 bg-slate-900/60 z-[110] items-center justify-center backdrop-blur-sm px-4">
-    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center">
-        <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">✓</div>
-        <h3 class="text-xl font-extrabold text-slate-900 mb-2">Withdrawal Requested!</h3>
-        <p class="text-xs md:text-sm text-slate-500 font-medium leading-relaxed mb-6">Your withdrawal request has been submitted successfully and will be credited to your account within 24 hours.</p>
+<div id="withdrawalSuccessModal" class="hidden fixed inset-0 bg-slate-950/75 z-[110] items-center justify-center backdrop-blur-sm px-4">
+    <div class="bg-[#0b1736] border border-blue-400/30 p-6 md:p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center">
+        <div class="w-14 h-14 bg-emerald-500/20 border border-emerald-400/30 text-emerald-400 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">✓</div>
+        <h3 class="text-xl font-extrabold text-white mb-2">Withdrawal Requested!</h3>
+        <p class="text-xs md:text-sm text-slate-300 font-medium leading-relaxed mb-6">Your withdrawal request has been submitted successfully and will be credited to your account within 24 hours.</p>
         <button onclick="closeWithdrawalSuccessModal()" class="w-full bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold py-2.5 rounded-xl shadow transition text-sm">Okay, Got It</button>
     </div>
 </div>
 
 <!-- TASK START SUCCESS MODAL -->
-<div id="taskSuccessModal" class="hidden fixed inset-0 bg-slate-900/60 z-[120] items-center justify-center backdrop-blur-sm px-4">
-    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center">
-        <div class="w-14 h-14 bg-blue-100 text-[#2563EB] rounded-full flex items-center justify-center text-2xl mx-auto mb-4">🚀</div>
-        <h3 class="text-xl font-extrabold text-slate-900 mb-1">Offer Started!</h3>
-        <p class="text-xs font-bold text-[#2563EB] mb-3" id="taskModalAmountDisplay">Pending Reward: ₹0</p>
-        <p class="text-xs md:text-sm text-slate-500 font-medium leading-relaxed mb-6">Partner link se sabhi required steps poora karein. Verification ke baad reward aapke wallet mein credit ho jayega.</p>
+<div id="taskSuccessModal" class="hidden fixed inset-0 bg-slate-950/75 z-[120] items-center justify-center backdrop-blur-sm px-4">
+    <div class="bg-[#0b1736] border border-blue-400/30 p-6 md:p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center">
+        <div class="w-14 h-14 bg-blue-500/20 border border-blue-400/30 text-blue-300 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">🚀</div>
+        <h3 class="text-xl font-extrabold text-white mb-1">Offer Started!</h3>
+        <p class="text-xs font-bold text-amber-300 mb-3" id="taskModalAmountDisplay">Pending Reward: ₹0</p>
+        <p class="text-xs md:text-sm text-slate-300 font-medium leading-relaxed mb-6">Partner link se sabhi required steps poora karein. Verification ke baad reward aapke wallet mein credit ho jayega.</p>
         <button onclick="closeTaskSuccessModal()" class="w-full bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold py-2.5 rounded-xl shadow transition text-sm">Okay, Understood</button>
     </div>
 </div>
 
 <!-- REWARD CLAIMED MODAL -->
-<div id="rewardClaimModal" class="hidden fixed inset-0 bg-slate-900/60 z-[120] items-center justify-center backdrop-blur-sm px-4">
-    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center">
-        <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">🎉</div>
-        <h3 class="text-xl font-extrabold text-slate-900 mb-1">Reward Claimed!</h3>
-        <p class="text-sm font-extrabold text-emerald-600 mb-3" id="rewardModalAmountDisplay">Reward: ₹0</p>
-        <p class="text-xs md:text-sm text-slate-500 font-medium leading-relaxed mb-6">Aapka reward aapke Earnova wallet mein successfully add ho gaya hai.</p>
+<div id="rewardClaimModal" class="hidden fixed inset-0 bg-slate-950/75 z-[120] items-center justify-center backdrop-blur-sm px-4">
+    <div class="bg-[#0b1736] border border-blue-400/30 p-6 md:p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center">
+        <div class="w-14 h-14 bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">🎉</div>
+        <h3 class="text-xl font-extrabold text-white mb-1">Reward Claimed!</h3>
+        <p class="text-sm font-extrabold text-emerald-400 mb-3" id="rewardModalAmountDisplay">Reward: ₹0</p>
+        <p class="text-xs md:text-sm text-slate-300 font-medium leading-relaxed mb-6">Aapka reward aapke Earnova wallet mein successfully add ho gaya hai.</p>
         <button onclick="closeRewardClaimModal()" class="w-full bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold py-2.5 rounded-xl shadow transition text-sm">Great, Thanks!</button>
     </div>
 </div>
 
 <!-- DYNAMIC WARNING MODAL -->
-<div id="taskWarningModal" class="hidden fixed inset-0 bg-slate-900/60 z-[125] items-center justify-center backdrop-blur-sm px-4">
-    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center">
-        <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">⚠️</div>
-        <h3 id="warningModalTitle" class="text-xl font-extrabold text-slate-900 mb-2">Notice</h3>
-        <p id="warningModalMessage" class="text-xs md:text-sm text-slate-500 font-medium leading-relaxed mb-6">You have already completed this action.</p>
-        <button onclick="closeTaskWarningModal()" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 rounded-xl shadow transition text-sm">Okay, Understood</button>
+<div id="taskWarningModal" class="hidden fixed inset-0 bg-slate-950/75 z-[125] items-center justify-center backdrop-blur-sm px-4">
+    <div class="bg-[#0b1736] border border-amber-400/30 p-6 md:p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center">
+        <div class="w-14 h-14 bg-amber-500/20 border border-amber-400/30 text-amber-300 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">⚠️</div>
+        <h3 id="warningModalTitle" class="text-xl font-extrabold text-white mb-2">Notice</h3>
+        <p id="warningModalMessage" class="text-xs md:text-sm text-slate-300 font-medium leading-relaxed mb-6">You have already completed this action.</p>
+        <button onclick="closeTaskWarningModal()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-2.5 rounded-xl shadow transition text-sm">Okay, Understood</button>
     </div>
 </div>
 
 <!-- LOGIN MODAL -->
-<div id="login-modal" class="hidden fixed inset-0 bg-slate-900/60 z-[100] items-center justify-center backdrop-blur-sm px-4">
-    <div class="bg-white p-7 rounded-2xl shadow-2xl max-w-sm w-full relative text-center">
-        <button onclick="closeLoginModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 font-bold text-sm flex items-center justify-center">✕</button>
-        <div class="text-xl font-extrabold mb-1 text-slate-900 tracking-tight">Sign In to Earnova</div>
-        <p class="text-xs text-slate-500 mb-6 font-medium">Save your wallet balance &amp; offer tracking safely</p>
+<div id="login-modal" class="hidden fixed inset-0 bg-slate-950/75 z-[100] items-center justify-center backdrop-blur-sm px-4">
+    <div class="bg-[#0b1736] border border-blue-400/30 p-7 rounded-2xl shadow-2xl max-w-sm w-full relative text-center">
+        <button onclick="closeLoginModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#0f1d44] hover:bg-[#16295c] border border-blue-400/25 text-slate-300 font-bold text-sm flex items-center justify-center">✕</button>
+        <div class="text-xl font-extrabold mb-1 text-white tracking-tight">Sign In to Earnova</div>
+        <p class="text-xs text-slate-400 mb-6 font-medium">Save your wallet balance &amp; offer tracking safely</p>
 
-        <input type="email" id="login-email" placeholder="Email Address" class="w-full mb-3 px-4 py-2.5 border border-slate-200 bg-slate-50 rounded-xl focus:outline-none focus:border-[#2563EB] focus:bg-white text-sm">
-        <input type="password" id="login-pass" placeholder="Password" class="w-full mb-5 px-4 py-2.5 border border-slate-200 bg-slate-50 rounded-xl focus:outline-none focus:border-[#2563EB] focus:bg-white text-sm">
+        <input type="email" id="login-email" placeholder="Email Address" class="w-full mb-3 px-4 py-2.5 border border-blue-500/25 bg-[#08122b] text-white placeholder-slate-500 rounded-xl focus:outline-none focus:border-blue-400 text-sm">
+        <input type="password" id="login-pass" placeholder="Password" class="w-full mb-5 px-4 py-2.5 border border-blue-500/25 bg-[#08122b] text-white placeholder-slate-500 rounded-xl focus:outline-none focus:border-blue-400 text-sm">
         <button onclick="simulateLogin()" class="w-full bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold py-2.5 rounded-xl mb-4 shadow text-sm transition">Sign In</button>
 
         <div class="flex items-center justify-center gap-2 mb-4">
-            <hr class="w-full border-slate-200"><span class="text-slate-400 text-[11px] font-bold">OR</span><hr class="w-full border-slate-200">
+            <hr class="w-full border-blue-500/20"><span class="text-slate-400 text-[11px] font-bold">OR</span><hr class="w-full border-blue-500/20">
         </div>
 
-        <button onclick="loginWithGoogle()" class="w-full flex items-center justify-center gap-2.5 border border-slate-200 rounded-xl py-2.5 hover:bg-slate-50 transition font-bold text-slate-700 text-sm">
+        <button onclick="loginWithGoogle()" class="w-full flex items-center justify-center gap-2.5 bg-white hover:bg-slate-100 rounded-xl py-2.5 transition font-bold text-slate-800 text-sm">
             <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="h-5 w-5" alt="Google"> Continue with Google
         </button>
     </div>
 </div>
 
 <!-- TASK TERMS POPUP -->
-<div id="taskPopup" class="fixed inset-0 bg-slate-900/60 hidden items-center justify-center z-50 px-4 backdrop-blur-sm">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl">
-        <h3 id="popupTitle" class="text-lg font-extrabold text-slate-900 mb-2">Task Name</h3>
-        <div class="bg-blue-50/70 border border-blue-100 p-3.5 rounded-xl mb-5">
-            <p class="text-xs font-bold text-[#2563EB] mb-2">Reward paane ke liye yeh steps poore karein:</p>
-            <ul id="popupTerms" class="text-xs text-slate-700 space-y-1.5 font-medium"></ul>
+<div id="taskPopup" class="fixed inset-0 bg-slate-950/75 hidden items-center justify-center z-50 px-4 backdrop-blur-sm">
+    <div class="bg-[#0b1736] border border-blue-400/30 rounded-2xl p-6 w-full max-w-sm shadow-2xl">
+        <h3 id="popupTitle" class="text-lg font-extrabold text-white mb-2">Task Name</h3>
+        <div class="bg-[#08122b] border border-blue-500/25 p-3.5 rounded-xl mb-5">
+            <p class="text-xs font-bold text-blue-300 mb-2">Reward paane ke liye yeh steps poore karein:</p>
+            <ul id="popupTerms" class="text-xs text-slate-300 space-y-1.5 font-medium"></ul>
         </div>
         <div class="flex justify-between items-center gap-3">
-            <button onclick="closePopup()" class="w-1/3 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition">Cancel</button>
+            <button onclick="closePopup()" class="w-1/3 py-2.5 rounded-xl border border-blue-500/25 bg-[#08122b] text-xs font-bold text-slate-300 hover:text-white transition">Cancel</button>
             <button id="popupStartBtn" class="w-2/3 py-2.5 rounded-xl bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold shadow-sm transition flex justify-center items-center gap-1.5">
                 Start Offer <span class="bg-white/20 px-2 py-0.5 rounded-md">₹<span id="popupAmount"></span></span>
             </button>
@@ -1414,6 +1531,23 @@
         }
     };
 
+    function syncBonusStatusBadges() {
+        const today = new Date().toDateString();
+        const spinStatus = document.getElementById('home-spin-status');
+        const scratchStatus = document.getElementById('home-scratch-status');
+        const checkinStatus = document.getElementById('home-checkin-status');
+
+        if (spinStatus) {
+            spinStatus.innerText = localStorage.getItem('earnova_spin_date') === today ? 'Done today' : 'Open';
+        }
+        if (scratchStatus) {
+            scratchStatus.innerText = localStorage.getItem('earnova_last_scratch') === today ? 'Done today' : 'Open';
+        }
+        if (checkinStatus) {
+            checkinStatus.innerText = localStorage.getItem('earnova_checkin_date') === today ? 'Done today' : 'Open';
+        }
+    }
+
     // Mobile Menu Controls
     window.toggleMobileMenu = function() {
         const menu = document.getElementById('mobileNavMenu');
@@ -1449,7 +1583,7 @@
         const container = document.getElementById('toast-container');
         if (!container) return;
         const toast = document.createElement('div');
-        toast.className = `px-4 py-2.5 rounded-xl shadow-xl text-xs font-bold text-white transition-all duration-300 ${isError ? 'bg-rose-600' : 'bg-slate-900'}`;
+        toast.className = `px-4 py-2.5 rounded-xl shadow-xl text-xs font-bold text-white border transition-all duration-300 ${isError ? 'bg-rose-600 border-rose-400/40' : 'bg-[#0f1d44] border-blue-400/35'}`;
         toast.innerText = msg;
         container.appendChild(toast);
         setTimeout(() => {
@@ -1530,8 +1664,8 @@
             const alreadyStarted = list.some(url => onclickAttr.includes(url));
             if (alreadyStarted) {
                 btn.innerText = 'Started ✓';
-                btn.classList.remove('bg-[#2563EB]', 'hover:bg-[#1D4ED8]', 'text-white');
-                btn.classList.add('bg-emerald-50', 'text-emerald-700', 'border', 'border-emerald-200');
+                btn.classList.remove('bg-[#2563EB]', 'hover:bg-[#1D4ED8]', 'text-white', 'border-blue-400/30');
+                btn.classList.add('bg-emerald-500/15', 'text-emerald-300', 'border', 'border-emerald-400/30');
             }
         });
     };
@@ -1743,8 +1877,8 @@
     function resetAmountSelection() {
         document.getElementById('selectedWithdrawAmount').value = '';
         document.querySelectorAll('.amount-btn').forEach(b => {
-            b.classList.remove('border-[#2563EB]', 'bg-blue-50', 'text-[#2563EB]');
-            b.classList.add('bg-slate-50', 'border-slate-200', 'text-slate-800');
+            b.classList.remove('border-blue-400', 'bg-blue-600/25', 'text-white');
+            b.classList.add('bg-[#08122b]', 'border-blue-500/25', 'text-slate-200');
         });
     }
 
@@ -1846,9 +1980,14 @@
         const activeBtn = document.getElementById('btn-' + tabId);
         if (activeBtn) activeBtn.classList.add('active-tab');
 
+        document.querySelectorAll('.mobile-nav-item').forEach(btn => btn.classList.remove('active-mobile-tab'));
+        const activeMobileBtn = document.getElementById('mbtn-' + tabId);
+        if (activeMobileBtn) activeMobileBtn.classList.add('active-mobile-tab');
+
         if (tabId === 'scratch') initScratchCanvas();
         if (tabId === 'checkin') renderCheckinUI();
         updateTaskButtonsUI(startedTasks);
+        syncBonusStatusBadges();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
@@ -1940,6 +2079,7 @@
         setTimeout(async () => {
             localStorage.setItem('earnova_spin_date', today);
             btn.innerText = 'Come Back Tomorrow ✓';
+            syncBonusStatusBadges();
 
             document.getElementById('rewardModalAmountDisplay').innerText = "Spin Reward: ₹" + selectedReward.amount.toFixed(2);
             const rewardModal = document.getElementById('rewardClaimModal');
@@ -1984,8 +2124,9 @@
         if (btn && lastDate === today) {
             btn.disabled = true;
             btn.innerHTML = '<span>Claimed Today ✓</span>';
-            btn.className = 'w-full max-w-sm mx-auto bg-slate-300 text-slate-600 font-bold py-3 px-8 rounded-xl cursor-not-allowed text-sm';
+            btn.className = 'w-full max-w-sm mx-auto bg-slate-800 text-slate-400 border border-slate-700 font-bold py-3 px-8 rounded-xl cursor-not-allowed text-sm';
         }
+        syncBonusStatusBadges();
     };
 
     window.earnovaCheckin = async function() {
@@ -2041,9 +2182,9 @@
 
         const ctx = canvas.getContext('2d');
         const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-        grad.addColorStop(0, '#94a3b8');
-        grad.addColorStop(0.5, '#cbd5e1');
-        grad.addColorStop(1, '#64748b');
+        grad.addColorStop(0, '#475569');
+        grad.addColorStop(0.5, '#94a3b8');
+        grad.addColorStop(1, '#334155');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -2101,6 +2242,7 @@
 
         const reward = 0.40;
         localStorage.setItem('earnova_last_scratch', today);
+        syncBonusStatusBadges();
 
         const statusMsg = document.getElementById('scratch-status-msg');
         if (statusMsg) statusMsg.innerText = "🎉 ₹0.40 aapke wallet mein add ho gaya!";
@@ -2120,12 +2262,12 @@
         if (hiddenInput) hiddenInput.value = amount;
 
         document.querySelectorAll('.amount-btn').forEach(b => {
-            b.classList.remove('border-[#2563EB]', 'bg-blue-50', 'text-[#2563EB]');
-            b.classList.add('bg-slate-50', 'border-slate-200', 'text-slate-800');
+            b.classList.remove('border-blue-400', 'bg-blue-600/25', 'text-white');
+            b.classList.add('bg-[#08122b]', 'border-blue-500/25', 'text-slate-200');
         });
 
-        btn.classList.remove('bg-slate-50', 'border-slate-200', 'text-slate-800');
-        btn.classList.add('border-[#2563EB]', 'bg-blue-50', 'text-[#2563EB]');
+        btn.classList.remove('bg-[#08122b]', 'border-blue-500/25', 'text-slate-200');
+        btn.classList.add('border-blue-400', 'bg-blue-600/25', 'text-white');
     };
 
     window.showWithdrawalSuccessModal = function() {
@@ -2142,6 +2284,7 @@
         window.showTab('dashboard');
         renderCheckinUI();
         updateTaskButtonsUI(startedTasks);
+        syncBonusStatusBadges();
 
         if (localStorage.getItem('earnova_spin_date') === new Date().toDateString()) {
             const btn = document.getElementById('spinBtn');
