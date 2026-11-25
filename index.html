@@ -1067,7 +1067,7 @@
             </div>
         </div>
 
-      <!-- EARNOVA GUIDE & FREQUENTLY ASKED QUESTIONS -->
+        <!-- EARNOVA GUIDE & FREQUENTLY ASKED QUESTIONS -->
         <div class="bg-white rounded-3xl p-5 md:p-6 shadow-sm border border-slate-200/80 space-y-5">
             <div>
                 <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#2563EB] bg-blue-50 border border-blue-100 px-3 py-1 rounded-full">Platform Guide</span>
@@ -1121,8 +1121,7 @@
                 </div>
             </div>
         </div>
-    
-       </section>
+    </section>
 
     <!-- SPIN PAGE START -->
     <section id="spin" class="tab-content max-w-md mx-auto py-4">
@@ -1725,6 +1724,48 @@
     window.auth = auth;
     window.db = db;
 
+    function toMoneyNumber(value, fallback = 0) {
+        const parsed = Number(value);
+        return Number.isFinite(parsed) ? parsed : fallback;
+    }
+
+    function formatMoney(value) {
+        return toMoneyNumber(value, 0).toFixed(2);
+    }
+
+    function renderWalletBalance(value) {
+        const formatted = formatMoney(value);
+        ['wallet-display', 'header-balance'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.innerText = formatted;
+        });
+    }
+
+    function renderPendingBalance(value) {
+        const el = document.getElementById('pending-display');
+        if (el) el.innerText = formatMoney(value);
+    }
+
+    // Single source of truth for adding wallet rewards
+    window.addRewardToWallet = async function(amount) {
+        const addAmt = toMoneyNumber(amount, 0);
+        if (addAmt <= 0) return;
+
+        if (auth.currentUser) {
+            const userRef = doc(db, "users", auth.currentUser.uid);
+            const snap = await getDoc(userRef);
+            const currentBal = snap.exists() ? toMoneyNumber(snap.data().walletBalance, 0) : 0;
+            const nextBal = Number((currentBal + addAmt).toFixed(2));
+            await setDoc(userRef, { walletBalance: nextBal }, { merge: true });
+            renderWalletBalance(nextBal);
+        } else {
+            const currentBal = toMoneyNumber(localStorage.getItem('earnova_saved_balance'), 2.36);
+            const nextBal = Number((currentBal + addAmt).toFixed(2));
+            localStorage.setItem('earnova_saved_balance', nextBal.toFixed(2));
+            renderWalletBalance(nextBal);
+        }
+    };
+
     // Profile Dropdown Controls
     window.toggleProfileMenu = function() {
         const dropdown = document.getElementById('profileDropdown');
@@ -1836,7 +1877,7 @@
         });
     };
 
-   window.startAppTask = async function(rewardAmount, taskUrl, taskName = 'Partner Task') {
+    window.startAppTask = async function(rewardAmount, taskUrl, taskName = 'Partner Task') {
         if (!auth.currentUser && localStorage.getItem("earnova_logged_in") !== "true") {
             showToast("Task start karne ke liye pehle login karein!", true);
             openLoginModal();
@@ -1847,10 +1888,8 @@
         isProcessingTask = true;
 
         try {
-            // 1. Check in local memory first
             let alreadyCompleted = startedTasks.includes(taskUrl);
 
-            // 2. Also check permanently in Firebase Firestore (so logout/cache clear cannot bypass)
             if (auth.currentUser && !alreadyCompleted) {
                 const userRef = doc(db, "users", auth.currentUser.uid);
                 const snap = await getDoc(userRef);
@@ -1865,7 +1904,6 @@
                 }
             }
 
-            // 3. Already started: Open link again, but DO NOT add reward again
             if (alreadyCompleted) {
                 if (taskUrl) window.open(taskUrl, '_blank');
                 showWarningModal(
@@ -1875,7 +1913,6 @@
                 return;
             }
 
-            // 4. First-time start: save locally, update button UI, open link & show modal
             startedTasks.push(taskUrl);
             localStorage.setItem('earnova_completed_tasks', JSON.stringify(startedTasks));
             updateTaskButtonsUI(startedTasks);
@@ -1889,25 +1926,29 @@
                 successModal.classList.add('flex');
             }
 
-            // 5. Save permanently in Firebase + credit pending reward once
+            const numericReward = toMoneyNumber(rewardAmount, 0);
+
             if (auth.currentUser) {
                 const userRef = doc(db, "users", auth.currentUser.uid);
                 const snap = await getDoc(userRef);
-                const currentPending = snap.exists() ? Number(snap.data().pendingWithdrawals || 0) : 0;
+                const currentPending = snap.exists() ? toMoneyNumber(snap.data().pendingWithdrawals, 0) : 0;
+                const nextPending = Number((currentPending + numericReward).toFixed(2));
 
                 const clickRecord = {
                     taskName: taskName,
                     taskUrl: taskUrl,
-                    reward: rewardAmount,
+                    reward: numericReward,
                     clickedAt: new Date().toISOString(),
                     status: "Pending Verification"
                 };
 
                 await setDoc(userRef, {
-                    pendingWithdrawals: Number((currentPending + Number(rewardAmount)).toFixed(2)),
+                    pendingWithdrawals: nextPending,
                     startedTasks: arrayUnion(taskUrl),
                     taskHistory: arrayUnion(clickRecord)
                 }, { merge: true });
+
+                renderPendingBalance(nextPending);
 
                 try {
                     await addDoc(collection(db, "task_clicks"), {
@@ -1920,12 +1961,10 @@
                     console.log("Global task_clicks log skipped (check Firestore rules):", logErr.message);
                 }
             } else {
-                let currentPending = Number(localStorage.getItem('earnova_saved_pending') || 0);
-                let updatedPending = (currentPending + Number(rewardAmount)).toFixed(2);
-                localStorage.setItem('earnova_saved_pending', updatedPending);
-                if (document.getElementById('pending-display')) {
-                    document.getElementById('pending-display').innerText = updatedPending;
-                }
+                const currentPending = toMoneyNumber(localStorage.getItem('earnova_saved_pending'), 0);
+                const nextPending = Number((currentPending + numericReward).toFixed(2));
+                localStorage.setItem('earnova_saved_pending', nextPending.toFixed(2));
+                renderPendingBalance(nextPending);
             }
         } catch (error) {
             console.error("Task start error:", error);
@@ -1985,11 +2024,12 @@
                 const snap = await getDoc(userRef);
 
                 if (snap.exists()) {
-                    const currentBal = Number(snap.data().walletBalance || 0);
+                    const currentBal = toMoneyNumber(snap.data().walletBalance, 0);
                     if (amount > currentBal) {
                         return showToast("Aapke wallet mein itna balance nahi hai!", true);
                     }
 
+                    const nextBal = Number((currentBal - amount).toFixed(2));
                     const withdrawalData = {
                         uid: auth.currentUser.uid,
                         userName: auth.currentUser.displayName || snap.data().name || "User",
@@ -2003,21 +2043,19 @@
                         requestedAt: new Date().toISOString()
                     };
 
-                    // 1. Sirf walletBalance deduct karein (pendingWithdrawals ko nahi chhedenge)
-                    // Aur user document ke andar bhi withdrawalHistory mein backup save karein
                     await updateDoc(userRef, {
-                        walletBalance: Number((currentBal - amount).toFixed(2)),
+                        walletBalance: nextBal,
                         withdrawalHistory: arrayUnion(withdrawalData)
                     });
 
-                    // 2. Firebase mein alag 'withdrawal_requests' collection mein save karein (Admin ke dekhne ke liye)
+                    renderWalletBalance(nextBal);
+
                     try {
                         await addDoc(collection(db, "withdrawal_requests"), withdrawalData);
                     } catch (reqErr) {
                         console.log("withdrawal_requests collection write skipped (check Firestore rules):", reqErr.message);
                     }
 
-                    // Inputs clear karein
                     document.getElementById('upiId').value = '';
                     document.getElementById('bankAcc').value = '';
                     document.getElementById('bankIfsc').value = '';
@@ -2025,14 +2063,13 @@
                     showWithdrawalSuccessModal();
                 }
             } else {
-                let currentBal = Number(localStorage.getItem('earnova_saved_balance') || 0);
+                const currentBal = toMoneyNumber(localStorage.getItem('earnova_saved_balance'), 0);
                 if (amount > currentBal) {
                     return showToast("Aapke wallet mein itna balance nahi hai!", true);
                 }
-                let updatedBal = (currentBal - amount).toFixed(2);
-                localStorage.setItem('earnova_saved_balance', updatedBal);
-                document.getElementById('wallet-display').innerText = updatedBal;
-                document.getElementById('header-balance').innerText = updatedBal;
+                const nextBal = Number((currentBal - amount).toFixed(2));
+                localStorage.setItem('earnova_saved_balance', nextBal.toFixed(2));
+                renderWalletBalance(nextBal);
                 resetAmountSelection();
                 showWithdrawalSuccessModal();
             }
@@ -2043,7 +2080,7 @@
             isProcessingWithdrawal = false;
         }
     };
-    
+
     function resetAmountSelection() {
         document.getElementById('selectedWithdrawAmount').value = '';
         document.querySelectorAll('.amount-btn').forEach(b => {
@@ -2095,12 +2132,9 @@
             onSnapshot(userRef, (docSnap) => {
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    const updateEl = (id, val) => { if (document.getElementById(id)) document.getElementById(id).innerText = val; };
-                    updateEl('wallet-display', (data.walletBalance || 0).toFixed(2));
-                    updateEl('header-balance', (data.walletBalance || 0).toFixed(2));
-                    updateEl('pending-display', (data.pendingWithdrawals || 0).toFixed(2));
+                    renderWalletBalance(data.walletBalance);
+                    renderPendingBalance(data.pendingWithdrawals);
 
-                    // Sync started tasks from Firestore to UI
                     const dbTasks = data.startedTasks || [];
                     startedTasks = Array.from(new Set([...startedTasks, ...dbTasks]));
                     localStorage.setItem('earnova_completed_tasks', JSON.stringify(startedTasks));
@@ -2113,17 +2147,17 @@
                 if (headerLoginBtn) headerLoginBtn.classList.add('hidden');
                 if (profileInfo) profileInfo.classList.remove('hidden');
 
-                let savedName = localStorage.getItem("earnova_user_name") || "Rajnesh Chauhan";
+                const savedName = localStorage.getItem("earnova_user_name") || "Rajnesh Chauhan";
                 const popupName = document.getElementById('popup-user-name');
                 if (popupName) popupName.innerText = savedName;
 
                 const userNameDisplay = document.getElementById('user-name-display');
                 if (userNameDisplay) userNameDisplay.innerText = savedName;
 
-                let savedBal = localStorage.getItem('earnova_saved_balance') || "2.36";
-                const updateEl = (id, val) => { if (document.getElementById(id)) document.getElementById(id).innerText = val; };
-                updateEl('wallet-display', savedBal);
-                updateEl('header-balance', savedBal);
+                const savedBal = toMoneyNumber(localStorage.getItem('earnova_saved_balance'), 2.36);
+                const savedPending = toMoneyNumber(localStorage.getItem('earnova_saved_pending'), 0);
+                renderWalletBalance(savedBal);
+                renderPendingBalance(savedPending);
                 updateTaskButtonsUI(startedTasks);
             } else {
                 if (gBtn) gBtn.classList.remove('hidden');
@@ -2131,6 +2165,8 @@
                 if (profileInfo) profileInfo.classList.add('hidden');
                 const userNameDisplay = document.getElementById('user-name-display');
                 if (userNameDisplay) userNameDisplay.innerText = 'Guest';
+                renderWalletBalance(0);
+                renderPendingBalance(0);
             }
         }
     });
@@ -2190,21 +2226,6 @@
         document.getElementById('taskPopup').classList.remove('flex');
     };
 
-    window.addRewardToWallet = async function(amount) {
-        if (auth.currentUser) {
-            const userRef = doc(db, "users", auth.currentUser.uid);
-            const snap = await getDoc(userRef);
-            let currentBal = snap.exists() ? Number(snap.data().walletBalance || 0) : 0;
-            await updateDoc(userRef, { walletBalance: currentBal + amount });
-        } else {
-            let currentBal = Number(localStorage.getItem('earnova_saved_balance') || 2.36);
-            let newBal = (currentBal + amount).toFixed(2);
-            localStorage.setItem('earnova_saved_balance', newBal);
-            if (document.getElementById('wallet-display')) document.getElementById('wallet-display').innerText = newBal;
-            if (document.getElementById('header-balance')) document.getElementById('header-balance').innerText = newBal;
-        }
-    };
-
     // SPIN LOGIC
     let currentWheelRotation = 0;
     window.earnovaSpin = async function() {
@@ -2252,7 +2273,7 @@
                 rewardModal.classList.remove('hidden');
                 rewardModal.classList.add('flex');
             }
-            await addRewardToWallet(selectedReward.amount);
+            await window.addRewardToWallet(selectedReward.amount);
         }, 3900);
     };
 
@@ -2403,7 +2424,7 @@
         const canvas = document.getElementById('scratchCanvas');
         if (canvas) canvas.style.display = 'none';
 
-        let reward = 0.40;
+        const reward = 0.40;
         localStorage.setItem('earnova_last_scratch', today);
 
         const statusMsg = document.getElementById('scratch-status-msg');
@@ -2415,7 +2436,7 @@
             rewardModal.classList.remove('hidden');
             rewardModal.classList.add('flex');
         }
-        await addRewardToWallet(reward);
+        await window.addRewardToWallet(reward);
         scratchClaiming = false;
     };
 
