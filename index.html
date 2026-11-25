@@ -7,6 +7,7 @@
     <meta name="google-site-verification" content="uOCKwwV-12hu4M7RoQWyRlfJUUPHop6cN7Gngzfg8S0" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffffff">
     <meta name="mitgo-verification" content="868f2c73-cb10-450f-96ad-c7f0f2c9762e" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5494788993941688" crossorigin="anonymous"></script>
 
@@ -579,6 +580,290 @@
 
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+    
+    /* ==========================================================
+       EARNOVA WEBSITE-FIRST REDESIGN
+       Presentation layer only: existing IDs and JavaScript remain.
+       ========================================================== */
+    :root {
+        --site-ink: #172033;
+        --site-muted: #64748b;
+        --site-blue: #245bdb;
+        --site-line: #e3e8f0;
+        --site-surface: #ffffff;
+        --site-bg: #f4f6fa;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+        background: var(--site-bg) !important;
+        color: var(--site-ink);
+        font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+    }
+
+    /* Conventional website header instead of an app-style dark bar */
+    nav.site-header {
+        position: sticky;
+        top: 0;
+        background: rgba(255,255,255,.97) !important;
+        border-bottom: 1px solid #e6eaf1 !important;
+        box-shadow: 0 3px 16px rgba(15,23,42,.045) !important;
+        backdrop-filter: blur(14px);
+    }
+    nav.site-header > div {
+        max-width: 1280px !important;
+        padding: 13px 28px !important;
+    }
+    nav.site-header > div > div {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        gap: 30px !important;
+    }
+    nav.site-header > div > div > div:first-child {
+        flex: 0 0 auto;
+        min-width: 190px;
+    }
+    nav.site-header > div > div > div:first-child > div:first-child {
+        background: #eef3ff !important;
+        border: 1px solid #dbe5ff !important;
+        border-radius: 10px !important;
+        width: 44px !important;
+        height: 44px !important;
+    }
+    nav.site-header > div > div > div:first-child span:first-child {
+        color: #172033 !important;
+        font-size: 21px !important;
+        letter-spacing: -.8px !important;
+    }
+    nav.site-header > div > div > div:first-child span:last-child {
+        color: #718096 !important;
+        letter-spacing: 1.15px !important;
+        font-size: 9px !important;
+    }
+    nav.site-header .nav-links {
+        flex: 1 1 auto !important;
+        width: auto !important;
+        order: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        gap: 5px !important;
+        overflow: visible !important;
+    }
+    nav.site-header .nav-btn {
+        color: #475569 !important;
+        background: transparent !important;
+        border-radius: 7px !important;
+        padding: 11px 15px !important;
+        font-size: 13px !important;
+        font-weight: 700 !important;
+        white-space: nowrap;
+    }
+    nav.site-header .nav-btn:hover {
+        color: var(--site-blue) !important;
+        background: #f1f5ff !important;
+    }
+    nav.site-header .nav-btn.active-tab {
+        color: var(--site-blue) !important;
+        background: #edf3ff !important;
+    }
+    nav.site-header .nav-btn.active-tab::after {
+        display: none !important;
+    }
+    nav.site-header > div > div > div:last-child {
+        flex: 0 0 auto;
+        margin-left: 0 !important;
+    }
+    nav.site-header > div > div > div:last-child > div:first-child {
+        color: #172033 !important;
+        background: #f5f7fb !important;
+        border: 1px solid #e1e7f0 !important;
+        border-radius: 8px !important;
+        padding: 10px 13px !important;
+        font-size: 13px !important;
+        box-shadow: none !important;
+    }
+    nav.site-header #header-login-btn {
+        background: var(--site-blue) !important;
+        border-radius: 8px !important;
+        padding: 10px 18px !important;
+        font-size: 13px !important;
+        box-shadow: none !important;
+    }
+
+    /* Main website canvas */
+    main.max-w-7xl {
+        max-width: 1240px !important;
+        padding: 28px 28px 42px !important;
+    }
+    .tab-content { animation-duration: .2s; }
+    .hero-carousel {
+        border-radius: 14px !important;
+        box-shadow: 0 12px 30px rgba(15,23,42,.10) !important;
+    }
+    .carousel-slide {
+        min-height: 300px !important;
+        padding: 42px 54px 48px !important;
+    }
+    .slide-text h1, .slide-text h2 {
+        font-size: clamp(27px, 3vw, 38px) !important;
+        line-height: 1.15 !important;
+        letter-spacing: -1.1px !important;
+    }
+    .slide-text p {
+        font-size: 15px !important;
+        line-height: 1.7 !important;
+        max-width: 570px !important;
+    }
+    .slide-badge {
+        font-size: 11px !important;
+        border-radius: 6px !important;
+        letter-spacing: .2px !important;
+    }
+    .btn-hero-primary, .btn-hero-glass {
+        border-radius: 8px !important;
+        padding: 12px 19px !important;
+        font-size: 13px !important;
+    }
+
+    /* Less app-like cards, more editorial website sections */
+    main .rounded-3xl, main .rounded-2xl {
+        border-radius: 12px !important;
+    }
+    main .shadow-sm {
+        box-shadow: 0 2px 8px rgba(15,23,42,.045) !important;
+    }
+    main .grid.grid-cols-2.lg\:grid-cols-4 > div {
+        min-height: 158px;
+        padding: 19px !important;
+        border-radius: 11px !important;
+    }
+    main h2, main h3 {
+        letter-spacing: -.45px;
+    }
+    main section:not(#dashboard) {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    main section#tasks, main section#extra {
+        max-width: 1000px !important;
+    }
+    main section#refer, main section#wallet {
+        max-width: 850px !important;
+    }
+
+    /* Footer should read as a website footer */
+    footer {
+        background: #fff !important;
+        border-top: 1px solid var(--site-line) !important;
+        margin-top: 48px !important;
+    }
+
+    /* Tablet and mobile: retain a normal website header, not a bottom app bar */
+    @media (max-width: 760px) {
+        nav.site-header {
+            position: sticky;
+            top: 0;
+        }
+        nav.site-header > div {
+            padding: 10px 16px 0 !important;
+        }
+        nav.site-header > div > div {
+            display: grid !important;
+            grid-template-columns: minmax(0,1fr) auto;
+            gap: 9px 10px !important;
+        }
+        nav.site-header > div > div > div:first-child {
+            grid-column: 1;
+            grid-row: 1;
+            min-width: 0;
+        }
+        nav.site-header > div > div > div:first-child > div:first-child {
+            width: 40px !important;
+            height: 40px !important;
+        }
+        nav.site-header > div > div > div:first-child span:first-child {
+            font-size: 19px !important;
+        }
+        nav.site-header .nav-links {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            width: calc(100% + 32px) !important;
+            margin-left: -16px !important;
+            padding: 7px 12px 9px !important;
+            border-top: 1px solid #edf0f5 !important;
+            justify-content: flex-start !important;
+            gap: 4px !important;
+            overflow-x: auto !important;
+            scrollbar-width: none;
+        }
+        nav.site-header .nav-links::-webkit-scrollbar { display: none; }
+        nav.site-header .nav-btn {
+            padding: 9px 12px !important;
+            font-size: 12px !important;
+            border-radius: 6px !important;
+        }
+        nav.site-header > div > div > div:last-child {
+            grid-column: 2;
+            grid-row: 1;
+            gap: 7px !important;
+        }
+        nav.site-header > div > div > div:last-child > div:first-child {
+            padding: 8px 10px !important;
+            font-size: 12px !important;
+        }
+        nav.site-header #header-login-btn {
+            padding: 9px 13px !important;
+            font-size: 12px !important;
+        }
+        main.max-w-7xl {
+            padding: 18px 16px 32px !important;
+        }
+        .hero-carousel { border-radius: 12px !important; }
+        .carousel-slide {
+            min-height: 245px !important;
+            padding: 24px 22px 39px !important;
+        }
+        .slide-content { gap: 12px !important; }
+        .slide-text h1, .slide-text h2 {
+            font-size: clamp(22px, 6vw, 29px) !important;
+            line-height: 1.2 !important;
+        }
+        .slide-text p {
+            font-size: 13px !important;
+            line-height: 1.55 !important;
+            display: block !important;
+            -webkit-line-clamp: unset !important;
+            margin-bottom: 15px !important;
+        }
+        .slide-badge {
+            font-size: 10px !important;
+            padding: 5px 9px !important;
+            margin-bottom: 10px !important;
+        }
+        .btn-hero-primary, .btn-hero-glass {
+            padding: 10px 13px !important;
+            font-size: 12px !important;
+        }
+        .carousel-dots { left: 22px !important; bottom: 12px !important; }
+        .slide-visual { display: none !important; }
+        main .grid.grid-cols-2.lg\:grid-cols-4 > div {
+            min-height: 145px;
+            padding: 14px !important;
+        }
+    }
+
+    @media (max-width: 390px) {
+        nav.site-header > div { padding-left: 12px !important; padding-right: 12px !important; }
+        nav.site-header .nav-links { width: calc(100% + 24px) !important; margin-left: -12px !important; }
+        main.max-w-7xl { padding-left: 12px !important; padding-right: 12px !important; }
+        .carousel-slide { padding-left: 17px !important; padding-right: 17px !important; }
+        .carousel-dots { left: 17px !important; }
+    }
+
     </style>
 </head>
 <body class="text-slate-800 relative min-h-screen flex flex-col">
@@ -587,7 +872,7 @@
 <div id="toast-container" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[200] flex flex-col gap-2 pointer-events-none w-max max-w-[90vw]"></div>
 
 <!-- MAIN HEADER START -->
-<nav class="bg-[#0F172A]/95 backdrop-blur-md border-b border-slate-800 shadow-md sticky top-0 z-50">
+<nav class="site-header sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 py-2.5">
         <div class="flex flex-wrap items-center justify-between gap-y-2">
 
@@ -603,7 +888,7 @@
             </div>
 
             <!-- Navigation Tabs -->
-            <div class="w-full md:w-auto md:flex-1 order-last md:order-none mt-1 md:mt-0 pt-2 md:pt-0 border-t border-slate-800 md:border-none flex items-center justify-between md:justify-center gap-1 sm:gap-2 overflow-x-auto">
+            <div class="nav-links w-full md:w-auto md:flex-1 order-last md:order-none mt-1 md:mt-0 pt-2 md:pt-0 border-t border-slate-800 md:border-none flex items-center justify-between md:justify-center gap-1 sm:gap-2 overflow-x-auto">
                 <button id="btn-dashboard" class="nav-btn text-[11px] sm:text-xs font-semibold py-1.5 px-3 sm:px-4 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition-all outline-none shrink-0" onclick="showTab('dashboard')">Home</button>
                 <button id="btn-tasks" class="nav-btn text-[11px] sm:text-xs font-semibold py-1.5 px-3 sm:px-4 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition-all outline-none shrink-0" onclick="showTab('tasks')">Tasks</button>
                 <button id="btn-refer" class="nav-btn text-[11px] sm:text-xs font-semibold py-1.5 px-3 sm:px-4 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition-all outline-none shrink-0" onclick="showTab('refer')">Refer</button>
@@ -717,7 +1002,7 @@
                                 <span>Welcome, <span id="user-name-display" class="text-blue-300 font-extrabold">Guest</span> • Verified Tasks</span>
                             </span>
                             <h1>Earn up to <span class="highlight-gold">₹550</span> on Verified Tasks</h1>
-                            <p>Complete simple KYC &amp; brand tasks with fast 24h UPI settlement — zero investment.</p>
+                            <p>Complete simple KYC &amp; brand tasks with zero-investment partner tasks. Check each offer’s terms before starting.</p>
                             <div class="slide-actions">
                                 <button onclick="showTab('tasks')" class="btn-hero-primary">
                                     <span>Start Earning</span>
@@ -730,11 +1015,11 @@
                         <div class="slide-visual">
                             <div class="glass-card">
                                 <div class="glass-card-top">
-                                    <span class="gc-label">Recent Verified Payout</span>
+                                    <span class="gc-label">Example Partner Reward</span>
                                     <span class="gc-status">● Settled</span>
                                 </div>
-                                <div class="gc-amount">+ ₹350.00</div>
-                                <div class="gc-sub">Kotak Securities Demat • UPI Instant</div>
+                                <div class="gc-amount">Up to ₹550</div>
+                                <div class="gc-sub">Actual reward depends on partner terms and verification</div>
                                 <div class="gc-bar"><div class="gc-bar-fill" style="width: 84%;"></div></div>
                             </div>
                         </div>
@@ -775,7 +1060,7 @@
                                     <span class="mini-av">R</span>
                                     <span class="mini-av">A</span>
                                     <span class="mini-av">P</span>
-                                    <span class="mini-av-more">+10k users earning</span>
+                                    <span class="mini-av-more">Share your invite link</span>
                                 </div>
                             </div>
                         </div>
@@ -843,8 +1128,8 @@
                     <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                 </div>
                 <div>
-                    <p class="text-[11px] md:text-xs font-extrabold text-slate-800 whitespace-nowrap">Instant UPI</p>
-                    <p class="text-[10px] md:text-[11px] text-slate-400 font-medium hidden sm:block">Fast 24h settlement</p>
+                    <p class="text-[11px] md:text-xs font-extrabold text-slate-800 whitespace-nowrap">UPI Payouts</p>
+                    <p class="text-[10px] md:text-[11px] text-slate-400 font-medium hidden sm:block">Payout after verification</p>
                 </div>
             </div>
             <div class="bg-white rounded-2xl p-3 md:p-4 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center text-center sm:text-left gap-2 sm:gap-3 hover:border-blue-200 transition">
