@@ -463,58 +463,68 @@
                 </div>
 
                 <!-- Right Editorial Category List (Screenshot Horizontal Row Style) -->
-                <div class="lg:col-span-5 bg-[#08112a]/85 border-t lg:border-t-0 lg:border-l border-blue-500/20 p-5 sm:p-7 space-y-3">
-                    <h2 class="text-xs font-extrabold text-slate-300 uppercase tracking-wider mb-1">Popular Categories</h2>
+               <div class="lg:col-span-5 bg-[#08112a]/85 border-t lg:border-t-0 lg:border-l border-blue-500/20 p-5 sm:p-7 space-y-3">
+    <div class="flex items-center justify-between mb-1">
+        <h2 class="text-xs font-extrabold text-slate-300 uppercase tracking-wider">Bonus Earnings</h2>
+        <button onclick="showTab('refer')" class="text-[11px] font-bold text-blue-300 hover:underline">Refer ₹25 ›</button>
+    </div>
 
-                    <div onclick="showTab('tasks')" class="navy-row-card p-3.5 rounded-2xl cursor-pointer flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-3 min-w-0">
-                            <div class="w-11 h-11 rounded-xl bg-blue-500/15 border border-blue-400/25 text-blue-400 flex items-center justify-center shrink-0">
-                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
-                            </div>
-                            <div class="min-w-0">
-                                <p class="text-sm font-bold text-white truncate">Demat &amp; Trading</p>
-                                <p class="text-xs text-slate-400 truncate">Upstox, Kotak, Bajaj, Angel</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2 shrink-0">
-                            <span class="text-xs font-bold text-emerald-300 bg-emerald-500/15 border border-emerald-400/25 px-2.5 py-1 rounded-lg">Up to ₹550</span>
-                            <span class="text-slate-400 text-sm">›</span>
-                        </div>
-                    </div>
-
-                    <div onclick="showTab('extra')" class="navy-row-card p-3.5 rounded-2xl cursor-pointer flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-3 min-w-0">
-                            <div class="w-11 h-11 rounded-xl bg-emerald-500/15 border border-emerald-400/25 text-emerald-400 flex items-center justify-center shrink-0">
-                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-                            </div>
-                            <div class="min-w-0">
-                                <p class="text-sm font-bold text-white truncate">Digital Savings A/c</p>
-                                <p class="text-xs text-slate-400 truncate">Kotak 811, Jio Payments Bank</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2 shrink-0">
-                            <span class="text-xs font-bold text-emerald-300 bg-emerald-500/15 border border-emerald-400/25 px-2.5 py-1 rounded-lg">Up to ₹350</span>
-                            <span class="text-slate-400 text-sm">›</span>
-                        </div>
-                    </div>
-
-                    <div onclick="showTab('tasks')" class="navy-row-card p-3.5 rounded-2xl cursor-pointer flex items-center justify-between gap-3">
-                        <div class="flex items-center gap-3 min-w-0">
-                            <div class="w-11 h-11 rounded-xl bg-violet-500/15 border border-violet-400/25 text-violet-400 flex items-center justify-center shrink-0">
-                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                            </div>
-                            <div class="min-w-0">
-                                <p class="text-sm font-bold text-white truncate">UPI &amp; Finance Apps</p>
-                                <p class="text-xs text-slate-400 truncate">Navi App, HeroWallet App</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2 shrink-0">
-                            <span class="text-xs font-bold text-emerald-300 bg-emerald-500/15 border border-emerald-400/25 px-2.5 py-1 rounded-lg">₹15 – ₹50</span>
-                            <span class="text-slate-400 text-sm">›</span>
-                        </div>
-                    </div>
-                </div>
+    <div onclick="showTab('spin')" class="navy-row-card p-3.5 rounded-2xl cursor-pointer flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3 min-w-0">
+            <div class="w-11 h-11 rounded-xl bg-emerald-500/15 border border-emerald-400/25 text-emerald-400 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="9"/>
+                    <circle cx="12" cy="12" r="2.5"/>
+                    <path stroke-linecap="round" d="M12 3v6.5M12 14.5V21M3 12h6.5M14.5 12H21"/>
+                </svg>
             </div>
+            <div class="min-w-0">
+                <p class="text-sm font-bold text-white truncate">Spin and Win</p>
+                <p class="text-xs text-slate-400 truncate">Spin the Lucky Wheel</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-1.5 shrink-0 text-xs font-bold text-emerald-300">
+            <span id="home-spin-status">Open</span>
+            <span class="text-slate-400 text-sm">›</span>
+        </div>
+    </div>
+
+    <div onclick="showTab('scratch')" class="navy-row-card p-3.5 rounded-2xl cursor-pointer flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3 min-w-0">
+            <div class="w-11 h-11 rounded-xl bg-fuchsia-500/15 border border-fuchsia-400/25 text-fuchsia-400 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/>
+                </svg>
+            </div>
+            <div class="min-w-0">
+                <p class="text-sm font-bold text-white truncate">Scratch Card</p>
+                <p class="text-xs text-slate-400 truncate">Daily instant bonus card</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-1.5 shrink-0 text-xs font-bold text-fuchsia-300">
+            <span id="home-scratch-status">Open</span>
+            <span class="text-slate-400 text-sm">›</span>
+        </div>
+    </div>
+
+    <div onclick="showTab('checkin')" class="navy-row-card p-3.5 rounded-2xl cursor-pointer flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3 min-w-0">
+            <div class="w-11 h-11 rounded-xl bg-blue-500/15 border border-blue-400/25 text-blue-400 flex items-center justify-center shrink-0">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+            </div>
+            <div class="min-w-0">
+                <p class="text-sm font-bold text-white truncate">Daily Check-in</p>
+                <p class="text-xs text-slate-400 truncate">7-day reward streak</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-1.5 shrink-0 text-xs font-bold text-blue-300">
+            <span id="home-checkin-status">Open</span>
+            <span class="text-slate-400 text-sm">›</span>
+        </div>
+    </div>
+</div>
         </div>
 
         <!-- SIGN IN BANNER (Only shown when logged out) -->
