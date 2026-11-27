@@ -465,6 +465,28 @@
                 </svg>
                 <span>Wallet</span>
             </button>
+            <div class="my-2 border-t border-blue-500/20"></div>
+
+            <a href="mailto:rajneshc510@gmail.com" onclick="closeMobileSidebar();" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-blue-500/15 transition text-left">
+                <svg class="w-4 h-4 shrink-0 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+                </svg>
+                <span>Help &amp; Support</span>
+            </a>
+
+            <a href="privacy.html" target="_blank" onclick="closeMobileSidebar();" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:text-white hover:bg-blue-500/15 transition text-left">
+                <svg class="w-4 h-4 shrink-0 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span>Privacy Policy</span>
+            </a>
+
+            <button id="sbtn-logout" onclick="closeMobileSidebar(); logout();" class="sidebar-nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-rose-400 hover:text-rose-300 hover:bg-rose-500/15 transition text-left">
+                <svg class="w-4 h-4 shrink-0 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/>
+                </svg>
+                <span>Sign Out</span>
+            </button>
         </nav>
     </div>
 
@@ -1917,6 +1939,7 @@
                 if (gBtn) gBtn.classList.add('hidden');
                 if (headerLoginBtn) headerLoginBtn.classList.add('hidden');
                 if (profileInfo) profileInfo.classList.remove('hidden');
+                const sLogout = document.getElementById('sbtn-logout'); if (sLogout) sLogout.classList.remove('hidden');
 
                 const savedName = localStorage.getItem("earnova_user_name") || "Rajnesh Chauhan";
                 const popupName = document.getElementById('popup-user-name');
@@ -1934,6 +1957,7 @@
                 if (gBtn) gBtn.classList.remove('hidden');
                 if (headerLoginBtn) headerLoginBtn.classList.remove('hidden');
                 if (profileInfo) profileInfo.classList.add('hidden');
+                const sLogout = document.getElementById('sbtn-logout'); if (sLogout) sLogout.classList.add('hidden');
                 const userNameDisplay = document.getElementById('user-name-display');
                 if (userNameDisplay) userNameDisplay.innerText = 'Guest';
                 renderWalletBalance(0);
