@@ -2282,5 +2282,40 @@
         }
     });
 </script>
+
+<style>
+  .earnova-back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: rgba(30, 58, 138, 0.28);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    color: #38bdf8;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+  .earnova-back-btn:hover {
+    background: rgba(56, 189, 248, 0.18);
+    border-color: rgba(56, 189, 248, 0.5);
+    transform: translateX(-2px);
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("button, a").forEach((el) => {
+      if (el.textContent.trim().includes("Back to Home")) {
+        el.className = "earnova-back-btn";
+        el.setAttribute("aria-label", "Back to Home");
+        el.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>`;
+      }
+    });
+  });
+</script>
+    
 </body>
 </html>
