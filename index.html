@@ -2319,108 +2319,240 @@
 
 <style>
   .earnova-toggle-bar {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
-    margin: 16px 0 8px 0;
+    margin: 14px 0 12px 0;
+    width: 100%;
+    box-sizing: border-box;
   }
+
   .earnova-toggle-btn {
-    flex: 1 1 140px;
-    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
     border-radius: 12px;
     background: linear-gradient(135deg, rgba(29, 78, 216, 0.28), rgba(14, 165, 233, 0.16));
     border: 1px solid rgba(56, 189, 248, 0.35);
     color: #e0f2fe;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
+    line-height: 1.25;
     text-align: center;
     cursor: pointer;
+    box-sizing: border-box;
     transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
   }
-  .earnova-toggle-btn:hover,
+
+  .earnova-toggle-btn::after {
+    content: "▾";
+    font-size: 12px;
+    opacity: 0.85;
+    transition: transform 0.2s ease;
+  }
+
   .earnova-toggle-btn.active {
     background: linear-gradient(135deg, #2563eb, #0284c7);
     border-color: #38bdf8;
     color: #ffffff;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
   }
+
+  .earnova-toggle-btn.active::after {
+    transform: rotate(180deg);
+  }
+
   .earnova-hidden-section {
     display: none !important;
   }
-  .earnova-visible-section {
-    display: block !important;
+
+  @keyframes earnovaSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .earnova-panel-open {
+    animation: earnovaSlideIn 0.2s ease-out;
+  }
+
+  @media (max-width: 768px) {
+    .earnova-compact-mobile {
+      max-height: 62vh;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 14px !important;
+    }
   }
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const headings = Array.from(document.querySelectorAll("h1, h2, h3, h4"));
+  (function () {
+    function findHeading(type) {
+      const candidates = Array.from(
+        document.querySelectorAll("h1, h2, h3, h4, h5, h6, p, span, div")
+      );
 
-    const howHeading = headings.find((el) =>
-      el.textContent.trim().toLowerCase().includes("how earnova works")
-    );
-    const faqHeading = headings.find((el) => {
-      const t = el.textContent.trim().toLowerCase();
-      return t.includes("frequently asked questions") || t === "faqs" || t.includes("(faqs)");
-    });
+      return candidates.find((el) => {
+        if (el.closest(".earnova-toggle-bar")) return false;
+        // Skip large wrapper containers that hold multiple block elements
+        if (el.querySelector("h1, h2, h3, h4, section, article")) return false;
 
-    function getSectionContainer(headingEl) {
-      if (!headingEl) return null;
-      let curr = headingEl.parentElement;
-      while (curr && curr.parentElement && curr.parentElement !== document.body) {
-        const parent = curr.parentElement;
-        const rect = parent.getBoundingClientRect();
-        if (rect.height > 260 && parent.children.length >= 2) {
-          return curr;
+        const text = (el.textContent || "").replace(/\s+/g, " ").trim().toLowerCase();
+        if (!text || text.length > 65) return false;
+
+        if (type === "how") {
+          return text === "how earnova works" || text.includes("how earnova works");
         }
+        if (type === "faq") {
+          return (
+            text.includes("frequently asked questions") ||
+            text === "faqs" ||
+            text.includes("(faqs)")
+          );
+        }
+        return false;
+      });
+    }
+
+    function getSectionContainer(headingEl, otherHeadingEl) {
+      if (!headingEl) return null;
+
+      let curr = headingEl;
+      let bestCard = headingEl.parentElement;
+
+      while (
+        curr &&
+        curr.parentElement &&
+        curr.parentElement !== document.body &&
+        curr.parentElement !== document.documentElement
+      ) {
+        const parent = curr.parentElement;
+        const tag = parent.tagName;
+
+        // Stop before stepping into main page shell or container holding the other section
+        if (
+          tag === "MAIN" ||
+          parent.querySelector("header, nav") ||
+          (otherHeadingEl && parent.contains(otherHeadingEl))
+        ) {
+          bestCard = curr;
+          break;
+        }
+
+        const style = window.getComputedStyle(curr);
+        const hasRadius = parseFloat(style.borderRadius) > 0;
+        const hasBorder = parseFloat(style.borderTopWidth) > 0;
+        const hasBg =
+          style.backgroundColor &&
+          style.backgroundColor !== "rgba(0, 0, 0, 0)" &&
+          style.backgroundColor !== "transparent";
+
+        if (hasRadius && (hasBorder || hasBg)) {
+          bestCard = curr;
+        }
+
         curr = parent;
       }
-      return headingEl.parentElement;
+
+      return bestCard || headingEl.parentElement;
     }
 
-    const howBox = getSectionContainer(howHeading);
-    const faqBox = getSectionContainer(faqHeading);
+    function initEarnovaToggles() {
+      if (document.querySelector(".earnova-toggle-bar")) return;
 
-    const bar = document.createElement("div");
-    bar.className = "earnova-toggle-bar";
+      const howHeading = findHeading("how");
+      const faqHeading = findHeading("faq");
 
-    let anchorTarget = null;
+      if (!howHeading && !faqHeading) return;
 
-    if (howBox) {
-      howBox.classList.add("earnova-hidden-section");
-      const btnHow = document.createElement("button");
-      btnHow.type = "button";
-      btnHow.className = "earnova-toggle-btn";
-      btnHow.textContent = "How Earnova Works";
-      btnHow.addEventListener("click", () => {
-        const isOpen = howBox.classList.contains("earnova-visible-section");
-        howBox.classList.toggle("earnova-visible-section", !isOpen);
-        howBox.classList.toggle("earnova-hidden-section", isOpen);
-        btnHow.classList.toggle("active", !isOpen);
+      const howBox = getSectionContainer(howHeading, faqHeading);
+      const faqBox = getSectionContainer(faqHeading, howHeading);
+
+      if (!howBox && !faqBox) return;
+      if (howBox && faqBox && howBox === faqBox) return;
+
+      const bar = document.createElement("div");
+      bar.className = "earnova-toggle-bar";
+
+      const sections = [];
+
+      function registerSection(box, label) {
+        if (!box) return;
+        box.classList.add("earnova-hidden-section", "earnova-compact-mobile");
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "earnova-toggle-btn";
+        btn.textContent = label;
+        btn.setAttribute("aria-expanded", "false");
+
+        const entry = { box, btn };
+        sections.push(entry);
+
+        btn.addEventListener("click", () => {
+          const isCurrentlyHidden = box.classList.contains("earnova-hidden-section");
+
+          // Accordion: close all sections first so phone screen stays clean
+          sections.forEach((item) => {
+            item.box.classList.add("earnova-hidden-section");
+            item.box.classList.remove("earnova-panel-open");
+            item.btn.classList.remove("active");
+            item.btn.setAttribute("aria-expanded", "false");
+          });
+
+          if (isCurrentlyHidden) {
+            box.classList.remove("earnova-hidden-section");
+            box.classList.add("earnova-panel-open");
+            btn.classList.add("active");
+            btn.setAttribute("aria-expanded", "true");
+          }
+        });
+
+        bar.appendChild(btn);
+      }
+
+      registerSection(howBox, "How Earnova Works");
+      registerSection(faqBox, "FAQs");
+
+      const anchorTarget = howBox || faqBox;
+      if (anchorTarget && anchorTarget.parentElement && bar.children.length > 0) {
+        anchorTarget.parentElement.insertBefore(bar, anchorTarget);
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initEarnovaToggles);
+    } else {
+      initEarnovaToggles();
+    }
+
+    // Re-check if sections load dynamically (React/Next/API fetch)
+    const observer = new MutationObserver(() => {
+      if (!document.querySelector(".earnova-toggle-bar")) {
+        initEarnovaToggles();
+      }
+    });
+
+    if (document.body) {
+      observer.observe(document.body, { childList: true, subtree: true });
+    } else {
+      document.addEventListener("DOMContentLoaded", () => {
+        observer.observe(document.body, { childList: true, subtree: true });
       });
-      bar.appendChild(btnHow);
-      anchorTarget = howBox;
     }
-
-    if (faqBox) {
-      faqBox.classList.add("earnova-hidden-section");
-      const btnFaq = document.createElement("button");
-      btnFaq.type = "button";
-      btnFaq.className = "earnova-toggle-btn";
-      btnFaq.textContent = "FAQs";
-      btnFaq.addEventListener("click", () => {
-        const isOpen = faqBox.classList.contains("earnova-visible-section");
-        faqBox.classList.toggle("earnova-visible-section", !isOpen);
-        faqBox.classList.toggle("earnova-hidden-section", isOpen);
-        btnFaq.classList.toggle("active", !isOpen);
-      });
-      bar.appendChild(btnFaq);
-      if (!anchorTarget) anchorTarget = faqBox;
-    }
-
-    if (anchorTarget && anchorTarget.parentElement && bar.children.length > 0) {
-      anchorTarget.parentElement.insertBefore(bar, anchorTarget);
-    }
-  });
+  })();
 </script>
     
 </body>
