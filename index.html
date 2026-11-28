@@ -2316,6 +2316,109 @@
     });
   });
 </script>
+
+<style>
+  @media (max-width: 640px) {
+    /* How Earnova Works & FAQs boxes ko phone mein compact banana */
+    [class*="how-it-works"],
+    [class*="faq"],
+    [id*="how-it-works"],
+    [id*="faq"] {
+      padding-top: 12px !important;
+      padding-bottom: 12px !important;
+      margin-top: 10px !important;
+      margin-bottom: 10px !important;
+    }
+
+    /* Step aur FAQ inner cards ki padding aur gap kam karna */
+    .earnova-compact-item {
+      padding: 12px 14px !important;
+      margin-bottom: 8px !important;
+      border-radius: 12px !important;
+    }
+
+    .earnova-faq-answer {
+      display: none;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(56, 189, 248, 0.14);
+      font-size: 13px !important;
+      line-height: 1.45 !important;
+    }
+
+    .earnova-faq-item.open .earnova-faq-answer {
+      display: block;
+    }
+
+    .earnova-faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      cursor: pointer;
+      font-size: 14px !important;
+      line-height: 1.35 !important;
+      font-weight: 600;
+    }
+
+    .earnova-faq-question::after {
+      content: "+";
+      color: #38bdf8;
+      font-size: 18px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .earnova-faq-item.open .earnova-faq-question::after {
+      content: "−";
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    if (window.innerWidth > 640) return;
+
+    document.querySelectorAll("div, section").forEach((box) => {
+      const heading = box.querySelector("h2, h3");
+      if (!heading) return;
+      const titleText = heading.textContent.trim().toLowerCase();
+
+      // How Earnova Works cards ko compact banana
+      if (titleText.includes("how earnova works")) {
+        box.querySelectorAll("div").forEach((card) => {
+          const txt = card.textContent || "";
+          if (
+            (txt.includes("Step 1") || txt.includes("Step 2") || txt.includes("Step 3")) &&
+            card.querySelector("p") &&
+            card.children.length <= 4
+          ) {
+            card.classList.add("earnova-compact-item");
+          }
+        });
+      }
+
+      // FAQs ko tap-to-expand accordion banana taaki page neeche tak na khiche
+      if (titleText.includes("frequently asked questions") || titleText.includes("faqs")) {
+        box.querySelectorAll("div").forEach((card) => {
+          const qEl = card.querySelector("h3, h4, p:first-child");
+          const pList = card.querySelectorAll("p");
+          if (qEl && pList.length >= 2 && !card.dataset.faqReady) {
+            card.dataset.faqReady = "1";
+            card.classList.add("earnova-faq-item", "earnova-compact-item");
+            qEl.classList.add("earnova-faq-question");
+            for (let i = 1; i < pList.length; i++) {
+              pList[i].classList.add("earnova-faq-answer");
+            }
+            qEl.addEventListener("click", () => {
+              card.classList.toggle("open");
+            });
+          }
+        });
+      }
+    });
+  });
+</script>
     
 </body>
 </html>
