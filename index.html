@@ -862,7 +862,7 @@
                     </div>
                 </div>
 
-                <!-- CREDITMANTRI -->
+                <!-- CREDITMANTRI ROW CARD -->
 <div class="navy-row-card p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-3">
     <div class="flex items-center gap-3.5 min-w-0">
         <div class="h-12 w-12 shrink-0 rounded-xl overflow-hidden bg-[#08122b] border border-blue-400/25 flex items-center justify-center">
@@ -876,9 +876,311 @@
     </div>
     <div class="flex flex-col items-end shrink-0 ml-2">
         <span class="font-extrabold text-amber-300 text-base mb-1">₹8</span>
-        <a href="https://inr.deals/track?id=raj479299851&src=merchant-detail-backend&campaign=cpl&url=https%3A%2F%2Fwww.creditmantri.com%2Fcampaign%2Fequifax%2Fcredit-score%2F" target="_blank" rel="noopener noreferrer nofollow" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-xl border border-blue-400/30 transition inline-block text-center">Start ›</a>
+        <button type="button" onclick="openCreditMantriDetails()" class="bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-bold px-4 py-1.5 rounded-xl border border-blue-400/30 transition">Start ›</button>
     </div>
 </div>
+
+<!-- OFFER DETAILS OVERLAY (CREDITMANTRI) -->
+<div id="creditmantriOfferDetails" class="cm-details-backdrop" aria-hidden="true">
+    <div class="cm-details-panel">
+        <div class="cm-details-header">
+            <button type="button" onclick="closeCreditMantriDetails()" class="cm-back-btn" aria-label="Back">←</button>
+            <h2 class="cm-details-heading">Offer Details</h2>
+        </div>
+
+        <div class="cm-hero-card">
+            <div class="cm-hero-top">
+                <span class="cm-verified-pill">✓ VERIFIED TASK</span>
+                <span class="cm-reward-pill">+₹8</span>
+            </div>
+            <div class="cm-hero-main">
+                <div class="cm-hero-icon">₹CM</div>
+                <div>
+                    <div class="cm-hero-title">CREDITMANTRI</div>
+                    <p class="cm-hero-desc">Free credit score check with OTP &amp; PAN profiling</p>
+                    <div class="cm-status-tag">Cashback Allowed • Age 25–55 • PAN India</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cm-path-label">COMPLETION PATH</div>
+
+        <div class="cm-step-wrap">
+            <div class="cm-step-num">01</div>
+            <div class="cm-step-card">
+                <div class="cm-step-head">
+                    <span class="cm-step-title">Credit Score Profiling</span>
+                    <span class="cm-step-meta">FINAL • +₹8</span>
+                </div>
+                <ol class="cm-step-list">
+                    <li>Click <strong>Start Now</strong> button below to open CreditMantri</li>
+                    <li>Enter your mobile number and verify with OTP</li>
+                    <li>Fill basic details (Email, PAN, DOB, City) to view Credit Score</li>
+                    <li>Eligible age: 25–55 years on Mobile Web or Desktop</li>
+                    <li>Validation takes 45–60 days (Organic/Bio traffic only; no paid ads)</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="cm-bottom-cta-wrap">
+            <a href="https://inr.deals/track?id=raj479299851&src=merchant-detail-backend&campaign=cpl&url=https%3A%2F%2Fwww.creditmantri.com%2Fcampaign%2Fequifax%2Fcredit-score%2F" target="_blank" rel="noopener noreferrer nofollow" class="cm-start-now-btn">
+                Start Now →
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .cm-details-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: #050c1d;
+        overflow-y: auto;
+        font-family: Arial, sans-serif;
+        color: #ffffff;
+    }
+
+    .cm-details-backdrop.is-open {
+        display: block;
+    }
+
+    .cm-details-panel {
+        max-width: 520px;
+        min-height: 100vh;
+        margin: 0 auto;
+        padding: 18px 16px 96px;
+        background: linear-gradient(180deg, #07132c 0%, #050d21 100%);
+        position: relative;
+    }
+
+    .cm-details-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 18px;
+    }
+
+    .cm-back-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: rgba(15, 36, 77, 0.9);
+        border: 1px solid rgba(96, 165, 250, 0.35);
+        color: #93c5fd;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .cm-details-heading {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 700;
+        color: #f8fafc;
+    }
+
+    .cm-hero-card {
+        background: linear-gradient(145deg, #0d224c 0%, #091736 100%);
+        border: 1px solid rgba(96, 165, 250, 0.25);
+        border-radius: 20px;
+        padding: 16px;
+        margin-bottom: 22px;
+    }
+
+    .cm-hero-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+    }
+
+    .cm-verified-pill {
+        font-size: 11px;
+        font-weight: 700;
+        color: #7dd3fc;
+        background: rgba(14, 165, 233, 0.14);
+        border: 1px solid rgba(125, 211, 252, 0.3);
+        padding: 5px 10px;
+        border-radius: 999px;
+    }
+
+    .cm-reward-pill {
+        font-size: 14px;
+        font-weight: 800;
+        color: #fbbf24;
+        background: rgba(245, 158, 11, 0.16);
+        border: 1px solid rgba(251, 191, 36, 0.45);
+        padding: 5px 12px;
+        border-radius: 999px;
+    }
+
+    .cm-hero-main {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .cm-hero-icon {
+        width: 58px;
+        height: 58px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #1d4ed8, #0284c7);
+        border: 1px solid rgba(125, 211, 252, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: 800;
+        color: #ffffff;
+        flex-shrink: 0;
+    }
+
+    .cm-hero-title {
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: 0.4px;
+        color: #ffffff;
+    }
+
+    .cm-hero-desc {
+        margin: 4px 0 8px;
+        font-size: 13px;
+        color: #cbd5e1;
+        line-height: 1.4;
+    }
+
+    .cm-status-tag {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 600;
+        color: #93c5fd;
+        background: rgba(30, 58, 138, 0.45);
+        border: 1px solid rgba(96, 165, 250, 0.3);
+        padding: 4px 10px;
+        border-radius: 999px;
+    }
+
+    .cm-path-label {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.4px;
+        color: #94a3b8;
+        margin-bottom: 12px;
+    }
+
+    .cm-step-wrap {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .cm-step-num {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        background: #0d234d;
+        border: 1px solid rgba(96, 165, 250, 0.35);
+        color: #93c5fd;
+        font-size: 13px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    .cm-step-card {
+        flex: 1;
+        background: linear-gradient(155deg, #0b1f44 0%, #08152f 100%);
+        border: 1px solid rgba(96, 165, 250, 0.25);
+        border-radius: 18px;
+        padding: 14px;
+    }
+
+    .cm-step-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+    }
+
+    .cm-step-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+    .cm-step-meta {
+        font-size: 11px;
+        font-weight: 700;
+        color: #fbbf24;
+        background: rgba(245, 158, 11, 0.14);
+        border: 1px solid rgba(251, 191, 36, 0.35);
+        padding: 3px 9px;
+        border-radius: 999px;
+    }
+
+    .cm-step-list {
+        margin: 0;
+        padding-left: 18px;
+        font-size: 13px;
+        line-height: 1.55;
+        color: #cbd5e1;
+    }
+
+    .cm-step-list li {
+        margin-bottom: 5px;
+    }
+
+    .cm-bottom-cta-wrap {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 14px 16px;
+        background: rgba(5, 13, 33, 0.94);
+        border-top: 1px solid rgba(96, 165, 250, 0.2);
+        display: flex;
+        justify-content: center;
+    }
+
+    .cm-start-now-btn {
+        width: 100%;
+        max-width: 488px;
+        text-align: center;
+        text-decoration: none;
+        background: linear-gradient(90deg, #1d4ed8 0%, #38bdf8 100%);
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 14px 18px;
+        border-radius: 14px;
+        box-shadow: 0 8px 24px rgba(2, 132, 199, 0.35);
+    }
+</style>
+
+<script>
+    function openCreditMantriDetails() {
+        var el = document.getElementById("creditmantriOfferDetails");
+        if (el) {
+            el.classList.add("is-open");
+            el.setAttribute("aria-hidden", "false");
+        }
+    }
+
+    function closeCreditMantriDetails() {
+        var el = document.getElementById("creditmantriOfferDetails");
+        if (el) {
+            el.classList.remove("is-open");
+            el.setAttribute("aria-hidden", "true");
+        }
+    }
+</script>
                 
                 <!-- UPSTOX -->
                 <div class="navy-row-card p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-3">
